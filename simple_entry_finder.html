@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Google Form Entry ID Finder</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .method { background: #f0f8ff; border-left: 4px solid #0066cc; padding: 20px; margin: 20px 0; }
+        .step { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+        .highlight { background: #ffeb3b; padding: 2px 5px; font-weight: bold; }
+        .copy-button { background: #4CAF50; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Simple Google Form Entry ID Finder</h1>
+    
+    <div class="method">
+        <h2>✅ EASIEST Method - Browser Console</h2>
+        <div class="step">
+            <h3>Step 1: Open Your Google Form</h3>
+            <p>Go to: <a href="https://docs.google.com/forms/d/e/1FAIpQLScY-HN56LmhX33E0m7BuMDMDGgFucGSFuiZWxW7bB9dEKZsIQ/viewform" target="_blank">Your SeamlessFlow Form</a></p>
+        </div>
+        
+        <div class="step">
+            <h3>Step 2: Open Browser Console</h3>
+            <p>Press <code>F12</code> or <code>Ctrl+Shift+I</code> → Click <strong>Console</strong> tab</p>
+        </div>
+        
+        <div class="step">
+            <h3>Step 3: Paste This Code & Press Enter</h3>
+            <textarea id="consoleCode" style="width: 100%; height: 200px; font-family: monospace;" readonly>
+// Google Form Entry ID Extractor
+console.log("=== GOOGLE FORM ENTRY IDs ===");
+
+// Find all input fields
+const inputs = document.querySelectorAll('input[name*="entry"], select[name*="entry"], textarea[name*="entry"]');
+
+if (inputs.length > 0) {
+    inputs.forEach((input, index) => {
+        const label = input.closest('.Xb9hP') ? input.closest('.Xb9hP').querySelector('.M7eMe') : null;
+        const labelText = label ? label.textContent.trim() : `Field ${index + 1}`;
+        console.log(`${labelText}: name="${input.name}"`);
+    });
+    console.log("\n=== COPY THESE ENTRY IDs FOR YOUR WEBSITE ===");
+    console.log("Full Name: " + (inputs[0] ? inputs[0].name : 'NOT FOUND'));
+    console.log("Business Name: " + (inputs[1] ? inputs[1].name : 'NOT FOUND'));
+    console.log("Email: " + (inputs[2] ? inputs[2].name : 'NOT FOUND'));
+    console.log("Phone: " + (inputs[3] ? inputs[3].name : 'NOT FOUND'));
+    console.log("Service Type: " + (inputs[4] ? inputs[4].name : 'NOT FOUND'));
+    console.log("Message: " + (inputs[5] ? inputs[5].name : 'NOT FOUND'));
+} else {
+    console.log("❌ No entry fields found. Make sure you're on the Google Form page.");
+}
+            </textarea>
+            <button class="copy-button" onclick="copyConsoleCode()">📋 Copy Code</button>
+        </div>
+        
+        <div class="step">
+            <h3>Step 4: Copy the Results</h3>
+            <p>The console will show something like:</p>
+            <code>
+                Full Name: entry.123456789<br>
+                Business Name: entry.987654321<br>
+                Email: entry.555666777<br>
+                etc...
+            </code>
+            <p><strong>Copy these entry numbers and send them to me!</strong></p>
+        </div>
+    </div>
+    
+    <div class="method">
+        <h2>🔧 Alternative Method - View Source</h2>
+        <div class="step">
+            <h3>If Console Method Doesn't Work:</h3>
+            <ol>
+                <li>Go to your Google Form</li>
+                <li>Right-click on the page → <strong>"View Page Source"</strong></li>
+                <li>Press <code>Ctrl+F</code> and search for: <code>entry.</code></li>
+                <li>Look for patterns like <code>name="entry.123456789"</code></li>
+                <li>Copy all the entry numbers you find</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="method">
+        <h2>📞 Need Help?</h2>
+        <p>If both methods fail, you can:</p>
+        <ul>
+            <li>Send me a screenshot of your form's source code</li>
+            <li>Or just tell me "skip the integration" and I'll make the form redirect to your Google Form</li>
+            <li>Call me and we'll figure it out together: <strong>(347) 749-8958</strong></li>
+        </ul>
+    </div>
+    
+    <script>
+        function copyConsoleCode() {
+            const textArea = document.getElementById('consoleCode');
+            textArea.select();
+            document.execCommand('copy');
+            alert('Code copied! Now paste it in your browser console.');
+        }
+    </script>
+</body>
+</html>
