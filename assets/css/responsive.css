@@ -11,55 +11,82 @@
 
 /* Mobile First - Base styles are mobile */
 
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--pure-white);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 2rem;
+        gap: 2rem;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    
+    .nav-menu.active {
+        transform: translateY(-100vh);
+    }
+    
+    .nav-menu a {
+        font-size: 1.5rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+        text-align: center;
+    }
+}
+
 /* Small Mobile (320px - 479px) */
 @media (max-width: 479px) {
     .container {
-        padding: 0 10px;
+        padding: 0 15px;
     }
     
     .header {
-        padding: 0.8rem 0;
+        padding: 1rem 0;
     }
     
     .header-content {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: stretch;
+        align-items: center;
     }
     
     .logo {
-        text-align: center;
-        font-size: 1.3rem;
-    }
-    
-    .header-cta {
-        font-size: 0.85rem;
-        padding: 8px 12px;
-        justify-content: center;
+        font-size: 1.4rem;
     }
     
     .hero {
-        padding: 90px 0 50px;
+        padding: 120px 0 80px;
+        min-height: 90vh;
     }
     
     .hero h1 {
-        font-size: 1.8rem;
-        line-height: 1.3;
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
     }
     
-    .value-item {
-        font-size: 0.75rem;
-        padding: 6px 12px;
-    }
-    
-    .btn-primary, .btn-secondary {
-        padding: 12px 20px;
-        font-size: 1rem;
-        width: 100%;
+    .btn-call {
+        padding: 16px 24px;
+        font-size: 1.1rem;
+        width: 90%;
+        max-width: 300px;
+        justify-content: center;
     }
     
     .section-title {
@@ -103,30 +130,26 @@
 
 /* Large Mobile (480px - 767px) */
 @media (min-width: 480px) and (max-width: 767px) {
+    .hero {
+        padding: 130px 0 90px;
+        min-height: 80vh;
+    }
+    
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+        margin-bottom: 1.2rem;
     }
     
     .hero-subtitle {
         font-size: 1.2rem;
+        margin-bottom: 2.5rem;
     }
     
-    .value-items {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    .hero-buttons {
-        flex-direction: row;
-        justify-content: center;
-        max-width: 400px;
-        margin: 3rem auto 0;
-    }
-    
-    .btn-primary, .btn-secondary {
-        flex: 1;
-        min-width: 0;
+    .btn-call {
+        padding: 18px 32px;
+        font-size: 1.2rem;
+        width: 80%;
+        max-width: 350px;
     }
     
     .trust-grid {

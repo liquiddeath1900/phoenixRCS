@@ -159,9 +159,16 @@
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">PhoenixRCS</a>
-                <a href="tel:(301)555-0199" class="header-cta" onclick="trackCall('header')">
-                    📞 Call (301) 555-0199
-                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#services">Services</a>
+                    <a href="#process">Process</a>
+                    <a href="#contact">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
@@ -172,20 +179,9 @@
             <h1>Fast, Affordable Roofing &amp; Siding</h1>
             <p class="hero-subtitle">Maryland's Most Reliable Home Improvement Contractors</p>
             
-            <div class="hero-values">
-                <div class="value-items">
-                    <span class="value-item">⚡ Quick Turnaround</span>
-                    <span class="value-item">💰 Transparent Pricing</span>
-                    <span class="value-item">⭐ Top Quality Results</span>
-                </div>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#contact" class="btn-primary" onclick="trackClick('hero_primary')">
-                    Get Free Estimate
-                </a>
-                <a href="#services" class="btn-secondary" onclick="trackClick('hero_secondary')">
-                    Our Services
+            <div class="hero-cta">
+                <a href="tel:(301)555-0199" class="btn-call" onclick="trackCall('hero')">
+                    📞 Call Now (301) 555-0199
                 </a>
             </div>
         </div>
