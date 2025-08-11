@@ -351,24 +351,27 @@ a:hover {
 /* Services Section */
 .services {
     background: var(--pure-white);
-    padding: 80px 0;
+    padding: 60px 0;
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .service-card {
     background: var(--pure-white);
     border: 1px solid var(--border-gray);
     border-radius: 10px;
-    padding: 2.5rem;
+    padding: 1.8rem 1.5rem;
     text-align: center;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
 
 .service-card:hover {
@@ -378,21 +381,22 @@ a:hover {
 }
 
 .service-icon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
     display: block;
 }
 
 .service-card h3 {
     color: var(--dark-black);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
 }
 
 .service-card p {
     color: var(--text-gray);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    font-size: 0.95rem;
 }
 
 .btn-service {
@@ -466,25 +470,41 @@ a:hover {
 .final-cta {
     background: linear-gradient(135deg, var(--dark-black) 0%, #333333 100%);
     color: var(--pure-white);
-    padding: 80px 0;
+    padding: 70px 0;
     text-align: center;
     position: relative;
 }
 
+.final-cta .container {
+    max-width: 800px;
+}
+
 .final-cta h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
     color: var(--pure-white);
+    line-height: 1.2;
 }
 
 .cta-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
     color: var(--light-gray);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+}
+
+.btn-large {
+    font-size: 1.2rem;
+    padding: 18px 36px;
+    margin-bottom: 1.5rem;
+    display: inline-block;
 }
 
 .service-area {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     font-size: 1rem;
     color: var(--light-gray);
 }

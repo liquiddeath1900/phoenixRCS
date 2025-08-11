@@ -24,40 +24,46 @@
         
         if (!mobileMenuBtn || !navMenu) return;
 
-        mobileMenuBtn.addEventListener('click', function() {
-            // Toggle menu
-            mobileMenuBtn.classList.toggle('active');
-            navMenu.classList.toggle('active');
+        // Ensure menu starts closed
+        mobileMenuBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            // Prevent body scroll when menu is open
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            // Toggle menu
+            const isActive = mobileMenuBtn.classList.contains('active');
+            
+            if (isActive) {
+                // Close menu
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                // Open menu
+                mobileMenuBtn.classList.add('active');
+                navMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
             
             // Track menu usage
             if (typeof trackEvent === 'function') {
-                trackEvent('mobile_menu', 'navigation', navMenu.classList.contains('active') ? 'open' : 'close');
+                trackEvent('mobile_menu', 'navigation', isActive ? 'close' : 'open');
             }
         });
 
-        // Close menu when clicking nav links
+        // Keep menu open when clicking nav links - just scroll to section
         const navLinks = navMenu.querySelectorAll('a');
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
+            link.addEventListener('click', function(e) {
+                // Let the smooth scroll work, don't close menu automatically
+                // User must click hamburger to close
             });
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && navMenu.classList.contains('active')) {
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Close menu on escape key
+        // Only close menu on escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                 mobileMenuBtn.classList.remove('active');
@@ -346,16 +352,16 @@
                     }
                 });
             }, {
-                rootMargin: '0px 0px -50px 0px',
-                threshold: 0.1
+                rootMargin: '0px 0px 50px 0px',
+                threshold: 0.05
             });
 
-            // Animate elements on scroll
+            // Animate elements on scroll - faster trigger
             const animateElements = document.querySelectorAll('.trust-item, .service-card, .process-step');
             animateElements.forEach((element, index) => {
                 element.style.opacity = '0';
-                element.style.transform = 'translateY(30px)';
-                element.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = `opacity 0.4s ease ${index * 0.05}s, transform 0.4s ease ${index * 0.05}s`;
                 animationObserver.observe(element);
             });
         }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhoenixRCS - Fast, Affordable Roofing &amp; Siding in Maryland</title>
-    <meta name="description" content="Maryland's most reliable roofing and siding contractors. Same-day estimates, transparent pricing, quick turnaround. Licensed &amp; insured. Call (301) 555-0199">
+    <meta name="description" content="Maryland's most reliable roofing and siding contractors. Same-day estimates, transparent pricing, quick turnaround. Licensed &amp; insured. Call (301) 450-9487">
     
     <!-- Open Graph Tags -->
     <meta property="og:title" content="PhoenixRCS - Fast, Affordable Roofing &amp; Siding in Maryland">
@@ -106,12 +106,36 @@
             align-items: center;
         }
         
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #1a1a1a;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
+            .nav-menu { display: none; }
+            .hero { padding: 120px 0 80px; min-height: 80vh; }
             .hero h1 { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1.1rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+            .btn-call { width: 90%; max-width: 300px; }
         }
     </style>
     
@@ -127,7 +151,7 @@
       "name": "PhoenixRCS",
       "description": "Maryland's most reliable roofing and siding contractors",
       "url": "https://phoenixrcs.com",
-      "telephone": "(301) 555-0199",
+      "telephone": "(301) 450-9487",
       "email": "info@phoenixrcs.com",
       "address": {
         "@type": "PostalAddress",
@@ -180,8 +204,8 @@
             <p class="hero-subtitle">Maryland's Most Reliable Home Improvement Contractors</p>
             
             <div class="hero-cta">
-                <a href="tel:(301)555-0199" class="btn-call" onclick="trackCall('hero')">
-                    📞 Call Now (301) 555-0199
+                <a href="tel:(301)450-9487" class="btn-call" onclick="trackCall('hero')">
+                    📞 Call Now (301) 450-9487
                 </a>
             </div>
         </div>
@@ -224,7 +248,7 @@
                     <div class="service-icon">🏠</div>
                     <h3>Roof Replacement</h3>
                     <p>Complete roof replacement with premium materials and expert installation. Lifetime warranties available.</p>
-                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_roof_replacement')">
+                    <a href="tel:(301)450-9487" class="btn-service" onclick="trackCall('service_roof_replacement')">
                         Get Quote
                     </a>
                 </div>
@@ -232,7 +256,7 @@
                     <div class="service-icon">🔧</div>
                     <h3>Roof Repair</h3>
                     <p>Fast, reliable roof repairs. Emergency services available 24/7 for urgent issues.</p>
-                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_roof_repair')">
+                    <a href="tel:(301)450-9487" class="btn-service" onclick="trackCall('service_roof_repair')">
                         Get Quote
                     </a>
                 </div>
@@ -240,7 +264,7 @@
                     <div class="service-icon">🏗️</div>
                     <h3>Siding Installation</h3>
                     <p>Professional siding installation to protect and beautify your home. Multiple material options.</p>
-                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_siding')">
+                    <a href="tel:(301)450-9487" class="btn-service" onclick="trackCall('service_siding')">
                         Get Quote
                     </a>
                 </div>
@@ -282,8 +306,8 @@
         <div class="container">
             <h2>Ready to Get Started?</h2>
             <p class="cta-subtitle">Join hundreds of satisfied Maryland homeowners</p>
-            <a href="tel:(301)555-0199" class="btn-primary btn-large" onclick="trackCall('final_cta')">
-                📞 Call Now (301) 555-0199
+            <a href="tel:(301)450-9487" class="btn-primary btn-large" onclick="trackCall('final_cta')">
+                📞 Call Now (301) 450-9487
             </a>
             <p class="service-area">Serving All of Maryland</p>
         </div>
@@ -295,7 +319,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Contact Info</h3>
-                    <p><strong>Phone:</strong> <a href="tel:(301)555-0199">(301) 555-0199</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:(301)450-9487">(301) 450-9487</a></p>
                     <p><strong>Email:</strong> <a href="mailto:info@phoenixrcs.com">info@phoenixrcs.com</a></p>
                     <p><strong>Service Area:</strong> All of Maryland</p>
                     <p><strong>License:</strong> MHIC #123456</p>
@@ -327,7 +351,7 @@
 
     <!-- Floating Call Button -->
     <div class="floating-call-btn">
-        <a href="tel:(301)555-0199" class="float-btn" onclick="trackCall('floating')" aria-label="Call PhoenixRCS">
+        <a href="tel:(301)450-9487" class="float-btn" onclick="trackCall('floating')" aria-label="Call PhoenixRCS">
             📞
         </a>
     </div>
