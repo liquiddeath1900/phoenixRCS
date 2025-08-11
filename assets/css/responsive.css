@@ -203,7 +203,7 @@
 }
 
 /* Tablet Portrait (768px - 1023px) */
-@media (min-width: 769px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023px) {
     .container {
         padding: 0 30px;
     }
@@ -534,7 +534,7 @@
 }
 
 /* Tablet Landscape Specific */
-@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .trust-grid {
         grid-template-columns: repeat(4, 1fr);
     }

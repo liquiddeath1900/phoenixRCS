@@ -24,12 +24,10 @@
         
         if (!mobileMenuBtn || !navMenu) return;
 
-        // Ensure menu starts closed on page load
-        setTimeout(() => {
-            mobileMenuBtn.classList.remove('active');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        }, 100);
+        // Ensure menu starts closed immediately (no flash)
+        mobileMenuBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = '';
 
         mobileMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -52,18 +50,8 @@
             }
         });
 
-        // Close menu when clicking nav links for better UX
-        const navLinks = navMenu.querySelectorAll('a[href^="#"]');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Close menu after clicking a section link
-                setTimeout(() => {
-                    mobileMenuBtn.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                }, 300);
-            });
-        });
+        // User wants menu to stay open when selecting options
+        // Don't auto-close the menu on link clicks
 
         // Close menu on escape key
         document.addEventListener('keydown', function(e) {
