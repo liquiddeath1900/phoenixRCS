@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoenixRCS - Fast, Affordable Roofing &amp; Siding in Maryland</title>
+    <meta name="description" content="Maryland's most reliable roofing and siding contractors. Same-day estimates, transparent pricing, quick turnaround. Licensed &amp; insured. Call (301) 555-0199">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="PhoenixRCS - Fast, Affordable Roofing &amp; Siding in Maryland">
+    <meta property="og:description" content="Maryland's most reliable roofing and siding contractors. Same-day estimates, transparent pricing, quick turnaround.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://phoenixrcs.com">
+    <meta property="og:image" content="https://phoenixrcs.com/assets/images/hero/phoenixrcs-og.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preload Critical CSS -->
+    <style>
+        /* Critical CSS - Above the fold styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #1a1a1a; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header Styles */
+        .header { 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            background: #ffffff; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            z-index: 1000; 
+            padding: 1rem 0;
+        }
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            text-decoration: none; 
+        }
+        .header-cta { 
+            background: #dc2626; 
+            color: white; 
+            padding: 12px 24px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 700;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%); 
+            color: white; 
+            padding: 120px 0 80px; 
+            text-align: center; 
+        }
+        .hero h1 { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            font-weight: 700; 
+        }
+        .hero-subtitle { 
+            font-size: 1.3rem; 
+            margin-bottom: 2rem; 
+            color: #f5f5f5; 
+        }
+        .hero-buttons { 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            margin-top: 2rem; 
+        }
+        .btn-primary { 
+            background: #dc2626; 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        .btn-secondary { 
+            background: transparent; 
+            color: white; 
+            border: 2px solid white; 
+            padding: 14px 30px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+        }
+    </style>
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    
+    <!-- Schema Markup for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RoofingContractor",
+      "name": "PhoenixRCS",
+      "description": "Maryland's most reliable roofing and siding contractors",
+      "url": "https://phoenixrcs.com",
+      "telephone": "(301) 555-0199",
+      "email": "info@phoenixrcs.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "MD",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Maryland"
+      },
+      "serviceType": [
+        "Roof Replacement",
+        "Roof Repair", 
+        "Siding Installation",
+        "Emergency Roof Repair"
+      ],
+      "priceRange": "$$",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "150"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">PhoenixRCS</a>
+                <a href="tel:(301)555-0199" class="header-cta" onclick="trackCall('header')">
+                    📞 Call (301) 555-0199
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1>Fast, Affordable Roofing &amp; Siding</h1>
+            <p class="hero-subtitle">Maryland's Most Reliable Home Improvement Contractors</p>
+            
+            <div class="hero-values">
+                <div class="value-items">
+                    <span class="value-item">⚡ Quick Turnaround</span>
+                    <span class="value-item">💰 Transparent Pricing</span>
+                    <span class="value-item">⭐ Top Quality Results</span>
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-primary" onclick="trackClick('hero_primary')">
+                    Get Free Estimate
+                </a>
+                <a href="#services" class="btn-secondary" onclick="trackClick('hero_secondary')">
+                    Our Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators Section -->
+    <section class="trust-indicators" id="trust">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">⚡</div>
+                    <h3>Fast Response</h3>
+                    <p>Same-day estimates and quick project completion</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">💰</div>
+                    <h3>Honest Pricing</h3>
+                    <p>No hidden fees, transparent quotes every time</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🛡️</div>
+                    <h3>Licensed &amp; Insured</h3>
+                    <p>MHIC licensed #123456, fully insured</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">⭐</div>
+                    <h3>5-Star Service</h3>
+                    <p>Communication focused, customer satisfaction guaranteed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Roof Replacement</h3>
+                    <p>Complete roof replacement with premium materials and expert installation. Lifetime warranties available.</p>
+                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_roof_replacement')">
+                        Get Quote
+                    </a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Roof Repair</h3>
+                    <p>Fast, reliable roof repairs. Emergency services available 24/7 for urgent issues.</p>
+                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_roof_repair')">
+                        Get Quote
+                    </a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Siding Installation</h3>
+                    <p>Professional siding installation to protect and beautify your home. Multiple material options.</p>
+                    <a href="tel:(301)555-0199" class="btn-service" onclick="trackCall('service_siding')">
+                        Get Quote
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <h2 class="section-title">Our Simple Process</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Free Consultation</h3>
+                    <p>We assess your needs and provide a detailed, transparent quote with no hidden fees.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Transparent Planning</h3>
+                    <p>Clear timeline, material selection, and project planning with daily progress updates.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Quality Installation</h3>
+                    <p>Expert installation using premium materials by our licensed and insured professionals.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Final Walkthrough</h3>
+                    <p>Complete inspection with you to ensure everything meets our high quality standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta" id="contact">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p class="cta-subtitle">Join hundreds of satisfied Maryland homeowners</p>
+            <a href="tel:(301)555-0199" class="btn-primary btn-large" onclick="trackCall('final_cta')">
+                📞 Call Now (301) 555-0199
+            </a>
+            <p class="service-area">Serving All of Maryland</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p><strong>Phone:</strong> <a href="tel:(301)555-0199">(301) 555-0199</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:info@phoenixrcs.com">info@phoenixrcs.com</a></p>
+                    <p><strong>Service Area:</strong> All of Maryland</p>
+                    <p><strong>License:</strong> MHIC #123456</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li>Roof Replacement</li>
+                        <li>Roof Repair</li>
+                        <li>Siding Installation</li>
+                        <li>Emergency Repairs</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Why Choose Us</h3>
+                    <ul>
+                        <li>Same-day estimates</li>
+                        <li>Transparent pricing</li>
+                        <li>Licensed &amp; insured</li>
+                        <li>5-star customer service</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PhoenixRCS. All rights reserved. Licensed contractor serving Maryland.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Call Button -->
+    <div class="floating-call-btn">
+        <a href="tel:(301)555-0199" class="float-btn" onclick="trackCall('floating')" aria-label="Call PhoenixRCS">
+            📞
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/analytics.js"></script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</body>
+</html>

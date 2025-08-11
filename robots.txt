@@ -1,0 +1,42 @@
+# PhoenixRCS - Robots.txt
+
+User-agent: *
+Allow: /
+
+# Important pages
+Allow: /index.html
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# Block sensitive files
+Disallow: /assets/fonts/
+Disallow: /*.log
+Disallow: /*.txt
+Disallow: /.*
+
+# Sitemap location
+Sitemap: https://phoenixrcs.com/sitemap.xml
+
+# Crawl-delay (optional)
+# Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

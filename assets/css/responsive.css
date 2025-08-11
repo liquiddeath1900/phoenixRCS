@@ -1,0 +1,529 @@
+/* PhoenixRCS - Responsive CSS */
+
+/* Breakpoint Variables */
+:root {
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --tablet-max: 1023px;
+    --desktop-min: 1024px;
+    --large-desktop-min: 1200px;
+}
+
+/* Mobile First - Base styles are mobile */
+
+/* Small Mobile (320px - 479px) */
+@media (max-width: 479px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .header {
+        padding: 0.8rem 0;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+    
+    .logo {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    
+    .header-cta {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        justify-content: center;
+    }
+    
+    .hero {
+        padding: 90px 0 50px;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .value-item {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 12px 20px;
+        font-size: 1rem;
+        width: 100%;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .trust-item, .service-card, .process-step {
+        padding: 1rem;
+    }
+    
+    .trust-icon, .service-icon {
+        font-size: 2.5rem;
+    }
+    
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .final-cta h2 {
+        font-size: 1.8rem;
+    }
+    
+    .btn-large {
+        font-size: 1.1rem;
+        padding: 16px 24px;
+    }
+    
+    .floating-call-btn {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .float-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+}
+
+/* Large Mobile (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .value-items {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero-buttons {
+        flex-direction: row;
+        justify-content: center;
+        max-width: 400px;
+        margin: 3rem auto 0;
+    }
+    
+    .btn-primary, .btn-secondary {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 2rem auto 0;
+    }
+    
+    .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet Portrait (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.6rem;
+    }
+    
+    .hero {
+        padding: 130px 0 70px;
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .value-items {
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: row;
+        max-width: 500px;
+        margin: 3rem auto 0;
+    }
+    
+    .btn-primary, .btn-secondary {
+        flex: 1;
+    }
+    
+    .section-title {
+        font-size: 2.3rem;
+    }
+    
+    .trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .service-card:nth-child(3) {
+        grid-column: 1 / -1;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(3, 1fr);
+        text-align: left;
+    }
+}
+
+/* Desktop and Large Screens (1024px+) */
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 40px;
+    }
+    
+    .header {
+        padding: 1.2rem 0;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .header-cta {
+        font-size: 1.1rem;
+        padding: 14px 28px;
+    }
+    
+    .hero {
+        padding: 140px 0 80px;
+    }
+    
+    .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .value-items {
+        gap: 3rem;
+    }
+    
+    .value-item {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+    
+    .hero-buttons {
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 18px 36px;
+        font-size: 1.2rem;
+        width: auto;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+        margin-bottom: 4rem;
+    }
+    
+    .trust-indicators, .services, .process, .final-cta {
+        padding: 100px 0;
+    }
+    
+    .trust-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+    }
+    
+    .service-card {
+        padding: 3rem 2rem;
+    }
+    
+    .process-steps {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+    
+    .final-cta h2 {
+        font-size: 3.5rem;
+    }
+    
+    .footer {
+        padding: 80px 0 40px;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+    
+    /* Hover Effects Only on Desktop */
+    .trust-item:hover,
+    .service-card:hover,
+    .process-step:hover {
+        transform: translateY(-8px);
+    }
+    
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .btn-service:hover,
+    .header-cta:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 20px;
+    }
+    
+    .hero h1 {
+        font-size: 4.5rem;
+    }
+    
+    .section-title {
+        font-size: 3.2rem;
+    }
+    
+    .trust-indicators, .services, .process, .final-cta {
+        padding: 120px 0;
+    }
+    
+    .trust-grid,
+    .services-grid {
+        gap: 3rem;
+    }
+    
+    .service-card {
+        padding: 3.5rem 2.5rem;
+    }
+    
+    .process-steps {
+        gap: 2.5rem;
+    }
+    
+    .final-cta h2 {
+        font-size: 4rem;
+    }
+}
+
+/* Ultra Wide Screens (1400px+) */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .hero {
+        padding: 160px 0 100px;
+    }
+    
+    .hero h1 {
+        font-size: 5rem;
+    }
+    
+    .trust-indicators, .services, .process, .final-cta {
+        padding: 140px 0;
+    }
+}
+
+/* Landscape Mobile Orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 100px 0 60px;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .value-items {
+        flex-direction: row;
+        gap: 1rem;
+    }
+    
+    .value-item {
+        font-size: 0.8rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: row;
+        margin-top: 2rem;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .trust-indicators, .services, .process {
+        padding: 60px 0;
+    }
+}
+
+/* Tablet Landscape Specific */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+    .trust-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .service-card:nth-child(3) {
+        grid-column: auto;
+        max-width: none;
+    }
+    
+    .process-steps {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Print Styles */
+@media print {
+    * {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    .header,
+    .floating-call-btn {
+        display: none;
+    }
+    
+    .hero {
+        background: white;
+        color: black;
+        padding: 40px 0;
+    }
+    
+    .trust-indicators,
+    .services,
+    .process,
+    .final-cta {
+        padding: 40px 0;
+    }
+    
+    a[href^="tel:"]::after {
+        content: " (" attr(href) ")";
+    }
+    
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+}
+
+/* High Resolution Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero::before {
+        background-size: 50px 50px;
+    }
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .float-btn {
+        animation: none;
+    }
+    
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Dark Mode Support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles would go here if needed */
+    /* For now, maintaining light theme as per brand requirements */
+}
+
+/* Container Query Support (Future Enhancement) */
+@supports (container-type: inline-size) {
+    .services {
+        container-type: inline-size;
+    }
+    
+    @container (max-width: 600px) {
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+/* Aspect Ratio Support for Future Image Containers */
+@supports (aspect-ratio: 1) {
+    .service-icon,
+    .trust-icon {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
