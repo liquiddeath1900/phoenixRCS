@@ -24,48 +24,59 @@
         
         if (!mobileMenuBtn || !navMenu) return;
 
-        // Ensure menu starts closed
-        mobileMenuBtn.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.body.style.overflow = '';
+        // Ensure menu starts closed on page load
+        setTimeout(() => {
+            mobileMenuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }, 100);
 
         mobileMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
             // Toggle menu
-            const isActive = mobileMenuBtn.classList.contains('active');
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
             
-            if (isActive) {
-                // Close menu
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                // Open menu
-                mobileMenuBtn.classList.add('active');
-                navMenu.classList.add('active');
+            // Handle body scroll
+            if (navMenu.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
             }
             
             // Track menu usage
             if (typeof trackEvent === 'function') {
-                trackEvent('mobile_menu', 'navigation', isActive ? 'close' : 'open');
+                trackEvent('mobile_menu', 'navigation', navMenu.classList.contains('active') ? 'open' : 'close');
             }
         });
 
-        // Keep menu open when clicking nav links - just scroll to section
-        const navLinks = navMenu.querySelectorAll('a');
+        // Close menu when clicking nav links for better UX
+        const navLinks = navMenu.querySelectorAll('a[href^="#"]');
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Let the smooth scroll work, don't close menu automatically
-                // User must click hamburger to close
+                // Close menu after clicking a section link
+                setTimeout(() => {
+                    mobileMenuBtn.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }, 300);
             });
         });
 
-        // Only close menu on escape key
+        // Close menu on escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Ensure menu is hidden on window resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
                 mobileMenuBtn.classList.remove('active');
                 navMenu.classList.remove('active');
                 document.body.style.overflow = '';

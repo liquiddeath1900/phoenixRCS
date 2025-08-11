@@ -128,10 +128,26 @@
             border-radius: 2px;
         }
         
+        /* Navigation */
+        .nav-menu { display: flex; gap: 2rem; align-items: center; }
+        .nav-menu a { color: #1a1a1a; text-decoration: none; font-weight: 600; }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .mobile-menu-btn { display: flex; }
-            .nav-menu { display: none; }
+            .nav-menu { 
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
             .hero { padding: 120px 0 80px; min-height: 80vh; }
             .hero h1 { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1.1rem; }
@@ -142,6 +158,29 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    
+    <!-- Override Styles to Fix Conflicts -->
+    <style>
+        /* Ensure nav menu works properly */
+        @media (min-width: 769px) {
+            .nav-menu {
+                display: flex !important;
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                left: auto !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: flex !important;
+            }
+        }
+    </style>
     
     <!-- Schema Markup for Local Business -->
     <script type="application/ld+json">
