@@ -368,10 +368,13 @@ a:hover {
     background: var(--pure-white);
     border: 1px solid var(--border-gray);
     border-radius: 10px;
-    padding: 1.8rem 1.5rem;
+    padding: 1.2rem 1rem;
     text-align: center;
     transition: all 0.3s ease;
     box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-card:hover {
@@ -381,35 +384,39 @@ a:hover {
 }
 
 .service-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
     display: block;
 }
 
 .service-card h3 {
     color: var(--dark-black);
-    margin-bottom: 0.8rem;
-    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.2rem;
 }
 
 .service-card p {
     color: var(--text-gray);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    font-size: 0.9rem;
+    flex-grow: 1;
 }
 
 .btn-service {
     background: var(--primary-red);
     color: var(--pure-white);
-    padding: 12px 24px;
+    padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     font-weight: 700;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s ease;
     min-height: 44px;
     line-height: 20px;
+    margin-top: auto;
 }
 
 .btn-service:hover {
