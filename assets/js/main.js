@@ -123,10 +123,11 @@
                 if (targetElement) {
                     e.preventDefault();
                     
-                    // Calculate offset for fixed header with better accuracy
+                    // Calculate offset for fixed header with precise section positioning
                     const header = document.querySelector('.header');
                     const headerHeight = header ? header.getBoundingClientRect().height : 0;
-                    const additionalOffset = 30; // Extra padding for better visual spacing
+                    // Increased offset to ensure clean section starts without previous section bleeding
+                    const additionalOffset = 20; 
                     
                     // Get accurate position accounting for current scroll
                     const elementPosition = targetElement.getBoundingClientRect().top;
