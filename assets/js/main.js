@@ -14,6 +14,7 @@
         initFormValidation();
         initClickTracking();
         initScrollAnimations();
+        initCounterAnimations();
         initAccessibility();
     });
 
@@ -414,6 +415,54 @@
                 animationObserver.observe(element);
             });
         }
+    }
+
+    // Counter Animations for Statistics
+    function initCounterAnimations() {
+        if ('IntersectionObserver' in window) {
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const targetCount = parseInt(counter.getAttribute('data-count'));
+                        
+                        animateCounter(counter, 0, targetCount, 2000);
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            const counters = document.querySelectorAll('.stat-number[data-count]');
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        }
+    }
+
+    function animateCounter(element, start, end, duration) {
+        const range = end - start;
+        const startTime = performance.now();
+        
+        function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Ease out animation
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = Math.floor(start + (range * easeOutQuart));
+            
+            element.textContent = current.toLocaleString();
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = end.toLocaleString();
+            }
+        }
+        
+        requestAnimationFrame(updateCounter);
     }
 
     // Accessibility Improvements
