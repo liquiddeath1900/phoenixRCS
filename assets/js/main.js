@@ -16,7 +16,6 @@
         initScrollAnimations();
         initCounterAnimations();
         initAccessibility();
-        initHeroVideo();
     });
 
     // Mobile Menu Functionality
@@ -516,39 +515,6 @@
         document.body.appendChild(liveRegion);
     }
 
-    // Hero Video Management
-    function initHeroVideo() {
-        const video = document.querySelector('.hero-video');
-        if (!video) {
-            console.log('No hero video element found');
-            return;
-        }
-
-        console.log('Hero video element found, attempting to play...');
-        
-        // Simple play attempt
-        video.addEventListener('canplay', () => {
-            console.log('Video can play, starting playback...');
-            video.play().catch(e => {
-                console.log('Autoplay blocked, will try on user interaction:', e);
-            });
-        });
-
-        // Error handling
-        video.addEventListener('error', (e) => {
-            console.error('Video failed to load:', e);
-            console.error('Error details:', video.error);
-            // Hide video if it fails
-            video.style.display = 'none';
-        });
-
-        // Force play on any user interaction
-        document.addEventListener('click', () => {
-            if (video.paused) {
-                video.play().catch(e => console.log('Manual play failed:', e));
-            }
-        }, { once: true });
-    }
 
     // Utility Functions
     function throttle(func, wait) {
