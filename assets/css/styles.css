@@ -324,7 +324,6 @@ a:hover {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .trust-item:hover {
@@ -333,9 +332,19 @@ a:hover {
 }
 
 .trust-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background: var(--dark-black);
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .trust-item h3 {
@@ -379,12 +388,9 @@ a:hover {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
     margin-top: 2rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .service-card {
@@ -402,9 +408,19 @@ a:hover {
 }
 
 .service-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
     display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background: var(--dark-black);
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .service-card h3 {
@@ -481,6 +497,9 @@ a:hover {
     grid-template-columns: 1.5fr 1fr;
     gap: 3rem;
     align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .insurance-benefits {

@@ -124,11 +124,11 @@
                 if (targetElement) {
                     e.preventDefault();
                     
-                    // Calculate offset for fixed header with precise section positioning
+                    // Calculate offset for fixed header - flush with navbar bottom
                     const header = document.querySelector('.header');
                     const headerHeight = header ? header.getBoundingClientRect().height : 0;
-                    // Increased offset to ensure clean section starts without previous section bleeding
-                    const additionalOffset = 20; 
+                    // NO additional offset - flush with navbar
+                    const additionalOffset = 0; 
                     
                     // Get accurate position accounting for current scroll
                     const elementPosition = targetElement.getBoundingClientRect().top;
@@ -180,16 +180,8 @@
                 header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
             }
             
-            // Hide/show header on scroll (optional enhancement)
-            if (scrollY > 100) {
-                if (scrollY > lastScrollY && scrollY > 200) {
-                    // Scrolling down - hide header
-                    header.style.transform = 'translateY(-100%)';
-                } else {
-                    // Scrolling up - show header
-                    header.style.transform = 'translateY(0)';
-                }
-            }
+            // Keep header always visible for easy navigation access
+            header.style.transform = 'translateY(0)';
             
             lastScrollY = scrollY;
             ticking = false;
