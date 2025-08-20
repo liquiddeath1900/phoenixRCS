@@ -16,6 +16,7 @@
         initScrollAnimations();
         initCounterAnimations();
         initAccessibility();
+        initHeroVideo();
     });
 
     // Mobile Menu Functionality
@@ -513,6 +514,38 @@
         liveRegion.className = 'sr-only';
         liveRegion.id = 'live-region';
         document.body.appendChild(liveRegion);
+    }
+
+    // Hero Video Management
+    function initHeroVideo() {
+        const video = document.querySelector('.hero-video');
+        if (!video) return;
+
+        // Switch video source based on screen size
+        function updateVideoSource() {
+            const isMobile = window.innerWidth <= 767;
+            const currentSrc = video.querySelector('source').src;
+            const desiredSrc = isMobile ? 'assets/images/hero/mobile.mp4' : 'assets/images/hero/desktop.mp4';
+            
+            if (!currentSrc.includes(desiredSrc)) {
+                video.innerHTML = `<source src="${desiredSrc}" type="video/mp4">`;
+                video.load();
+            }
+        }
+
+        // Initial setup
+        updateVideoSource();
+        
+        // Update on resize
+        window.addEventListener('resize', debounce(updateVideoSource, 250));
+        
+        // Ensure video plays on mobile
+        video.addEventListener('canplaythrough', function() {
+            this.play().catch(e => {
+                // Fallback for browsers that block autoplay
+                console.log('Video autoplay prevented:', e);
+            });
+        });
     }
 
     // Utility Functions

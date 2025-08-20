@@ -156,8 +156,8 @@
     </style>
     
     <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css?v=2">
-    <link rel="stylesheet" href="assets/css/responsive.css?v=2">
+    <link rel="stylesheet" href="assets/css/styles.css?v=3">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=3">
     
     
     <!-- Schema Markup for Local Business -->
@@ -201,7 +201,9 @@
     <header class="header" id="header">
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">PhoenixRCS</a>
+                <a href="#" class="logo">
+                    <img src="assets/images/logo/websitehomelogo.png" alt="PhoenixRCS" class="logo-img">
+                </a>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -219,6 +221,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/images/hero/desktop.mp4" type="video/mp4" media="(min-width: 768px)">
+            <source src="assets/images/hero/mobile.mp4" type="video/mp4" media="(max-width: 767px)">
+            <source src="assets/images/hero/desktop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
         <div class="container">
             <h1>24/7 Emergency Restoration Services</h1>
             <p class="hero-subtitle">Restoring Homes and Lives Back Together When Disaster Strikes<br>
@@ -458,8 +466,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="assets/js/main.js?v=2"></script>
-    <script src="assets/js/analytics.js?v=2"></script>
+    <script src="assets/js/main.js?v=3"></script>
+    <script src="assets/js/analytics.js?v=3"></script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
