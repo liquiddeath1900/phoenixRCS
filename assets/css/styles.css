@@ -307,19 +307,19 @@ a:hover {
 /* Trust Indicators Section */
 .trust-indicators {
     background: var(--light-gray);
-    padding: 60px 0;
+    padding: 20px 0;
 }
 
 .trust-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .trust-item {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
     background: var(--pure-white);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -377,26 +377,26 @@ a:hover {
 /* Services Section */
 .services {
     background: var(--pure-white);
-    padding: 50px 0;
+    padding: 20px 0;
 }
 
 /* Restoration Services Section */
 .restoration-services {
     background: var(--light-gray);
-    padding: 50px 0;
+    padding: 20px 0;
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .service-card {
     background: var(--pure-white);
     border-radius: 10px;
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     position: relative;
@@ -489,7 +489,7 @@ a:hover {
 /* Insurance Section */
 .insurance-help {
     background: var(--light-gray);
-    padding: 60px 0;
+    padding: 20px 0;
 }
 
 .insurance-content {
@@ -565,19 +565,19 @@ a:hover {
 /* Process Section */
 .process {
     background: var(--light-gray);
-    padding: 60px 0;
+    padding: 20px 0;
 }
 
 .process-steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .process-step {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
     background: var(--pure-white);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -749,6 +749,25 @@ a:hover {
     }
     60% {
         transform: translateY(-5px);
+    }
+}
+
+/* Responsive Grid Optimizations */
+@media (min-width: 1400px) {
+    .trust-grid, .services-grid, .process-steps {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1399px) {
+    .trust-grid, .services-grid, .process-steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+    .trust-grid, .services-grid, .process-steps {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
