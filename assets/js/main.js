@@ -524,43 +524,28 @@
             return;
         }
 
-        console.log('Hero video element found:', video);
-
-        // Switch video source based on screen size
-        function updateVideoSource() {
-            const isMobile = window.innerWidth <= 767;
-            const desiredSrc = isMobile ? 'assets/images/hero/mobile.mp4' : 'assets/images/hero/desktop.mp4';
-            
-            console.log('Setting video source to:', desiredSrc);
-            video.src = desiredSrc;
-            video.load();
-        }
-
-        // Initial setup
-        updateVideoSource();
+        console.log('Hero video element found, attempting to play...');
         
-        // Add comprehensive event listeners for debugging
-        video.addEventListener('loadstart', () => console.log('Video load started'));
-        video.addEventListener('loadeddata', () => {
-            console.log('Video data loaded');
+        // Simple play attempt
+        video.addEventListener('canplay', () => {
+            console.log('Video can play, starting playback...');
             video.play().catch(e => {
-                console.log('Video autoplay prevented:', e);
+                console.log('Autoplay blocked, will try on user interaction:', e);
             });
         });
-        video.addEventListener('canplay', () => console.log('Video can start playing'));
+
+        // Error handling
         video.addEventListener('error', (e) => {
-            console.error('Video error:', e);
-            console.error('Video error details:', video.error);
+            console.error('Video failed to load:', e);
+            console.error('Error details:', video.error);
+            // Hide video if it fails
+            video.style.display = 'none';
         });
-        
-        // Update on resize with debounce
-        window.addEventListener('resize', debounce(updateVideoSource, 250));
-        
-        // Force play attempt on interaction
-        document.addEventListener('click', function() {
+
+        // Force play on any user interaction
+        document.addEventListener('click', () => {
             if (video.paused) {
-                console.log('Attempting to play video on user interaction');
-                video.play().catch(e => console.log('Video play failed:', e));
+                video.play().catch(e => console.log('Manual play failed:', e));
             }
         }, { once: true });
     }
