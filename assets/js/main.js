@@ -519,38 +519,47 @@
     // Hero Video Management
     function initHeroVideo() {
         const video = document.querySelector('.hero-video');
-        if (!video) return;
+        if (!video) {
+            console.log('No hero video element found');
+            return;
+        }
+
+        console.log('Hero video element found:', video);
 
         // Switch video source based on screen size
         function updateVideoSource() {
             const isMobile = window.innerWidth <= 767;
             const desiredSrc = isMobile ? 'assets/images/hero/mobile.mp4' : 'assets/images/hero/desktop.mp4';
             
-            // Only update if source has changed
-            if (video.currentSrc && !video.currentSrc.includes(desiredSrc)) {
-                video.src = desiredSrc;
-                video.load();
-            } else if (!video.currentSrc) {
-                video.src = desiredSrc;
-            }
+            console.log('Setting video source to:', desiredSrc);
+            video.src = desiredSrc;
+            video.load();
         }
 
         // Initial setup
         updateVideoSource();
         
-        // Update on resize with debounce
-        window.addEventListener('resize', debounce(updateVideoSource, 250));
-        
-        // Ensure video plays
-        video.addEventListener('loadeddata', function() {
-            this.play().catch(e => {
+        // Add comprehensive event listeners for debugging
+        video.addEventListener('loadstart', () => console.log('Video load started'));
+        video.addEventListener('loadeddata', () => {
+            console.log('Video data loaded');
+            video.play().catch(e => {
                 console.log('Video autoplay prevented:', e);
             });
         });
-
+        video.addEventListener('canplay', () => console.log('Video can start playing'));
+        video.addEventListener('error', (e) => {
+            console.error('Video error:', e);
+            console.error('Video error details:', video.error);
+        });
+        
+        // Update on resize with debounce
+        window.addEventListener('resize', debounce(updateVideoSource, 250));
+        
         // Force play attempt on interaction
         document.addEventListener('click', function() {
             if (video.paused) {
+                console.log('Attempting to play video on user interaction');
                 video.play().catch(e => console.log('Video play failed:', e));
             }
         }, { once: true });
