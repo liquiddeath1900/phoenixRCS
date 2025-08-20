@@ -524,28 +524,36 @@
         // Switch video source based on screen size
         function updateVideoSource() {
             const isMobile = window.innerWidth <= 767;
-            const currentSrc = video.querySelector('source').src;
             const desiredSrc = isMobile ? 'assets/images/hero/mobile.mp4' : 'assets/images/hero/desktop.mp4';
             
-            if (!currentSrc.includes(desiredSrc)) {
-                video.innerHTML = `<source src="${desiredSrc}" type="video/mp4">`;
+            // Only update if source has changed
+            if (video.currentSrc && !video.currentSrc.includes(desiredSrc)) {
+                video.src = desiredSrc;
                 video.load();
+            } else if (!video.currentSrc) {
+                video.src = desiredSrc;
             }
         }
 
         // Initial setup
         updateVideoSource();
         
-        // Update on resize
+        // Update on resize with debounce
         window.addEventListener('resize', debounce(updateVideoSource, 250));
         
-        // Ensure video plays on mobile
-        video.addEventListener('canplaythrough', function() {
+        // Ensure video plays
+        video.addEventListener('loadeddata', function() {
             this.play().catch(e => {
-                // Fallback for browsers that block autoplay
                 console.log('Video autoplay prevented:', e);
             });
         });
+
+        // Force play attempt on interaction
+        document.addEventListener('click', function() {
+            if (video.paused) {
+                video.play().catch(e => console.log('Video play failed:', e));
+            }
+        }, { once: true });
     }
 
     // Utility Functions

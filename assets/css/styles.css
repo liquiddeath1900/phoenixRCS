@@ -104,7 +104,8 @@ a:hover {
 .logo-img {
     height: 50px;
     width: auto;
-    max-width: 200px;
+    object-fit: contain;
+    max-width: none;
 }
 
 /* Mobile Menu Button */
@@ -809,7 +810,8 @@ a:hover {
     
     .logo-img {
         height: 40px;
-        max-width: 160px;
+        width: auto;
+        object-fit: contain;
     }
     
     .header-cta {
