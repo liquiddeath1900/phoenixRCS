@@ -16,7 +16,7 @@ Disallow: /*.txt
 Disallow: /.*
 
 # Sitemap location
-Sitemap: https://phoenixrcs.com/sitemap.xml
+Sitemap: https://phxrcs.com/sitemap.xml
 
 # Crawl-delay (optional)
 # Crawl-delay: 1
