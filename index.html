@@ -33,8 +33,20 @@
     <style>
         /* Critical CSS - Above the fold styles */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #1a1a1a; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #1a1a1a; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* SEO Content Hiding - Keep content for SEO but visually hidden */
+        .seo-content { 
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .verbose-content {
+            display: none !important;
+        }
         
         /* Header Styles */
         .header { 
@@ -57,6 +69,10 @@
             color: #1a1a1a; 
             text-decoration: none; 
         }
+        .logo-img {
+            max-height: 50px;
+            width: auto;
+        }
         .header-cta { 
             background: #dc2626; 
             color: white; 
@@ -76,6 +92,28 @@
             text-align: center; 
             position: relative;
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+            z-index: -1;
         }
         .hero h1 { 
             font-size: 3rem; 
@@ -120,11 +158,28 @@
             align-items: center;
         }
         
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-menu a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #dc2626;
+        }
+        
         /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             width: 30px;
             height: 30px;
             background: none;
@@ -142,13 +197,169 @@
             border-radius: 2px;
         }
         
-        /* Navigation */
-        .nav-menu { display: flex; gap: 2rem; align-items: center; }
-        .nav-menu a { color: #1a1a1a; text-decoration: none; font-weight: 600; }
+        /* Services Dropdown */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .nav-services {
+            cursor: pointer;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: #1a1a1a !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem !important;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #dc2626 !important;
+        }
+        
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
         
         /* Mobile Responsive */
+        /* Service Cards Grid Layout */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .service-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .service-bullets li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+        .btn-service {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #dc2626;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .btn-service:hover {
+            background: #b91c1c;
+        }
+        
+        /* Trust Grid */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .trust-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .trust-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Clean Section Spacing */
+        section {
+            padding: 80px 0;
+        }
+        
+        /* Desktop Layout Improvements */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1400px;
+                padding: 0 40px;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+                max-width: 1000px;
+                margin: 3rem auto;
+            }
+            .trust-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+        
+        .restoration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        .compact-card {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* Better button layout on desktop */
+        .hero-buttons {
+            margin-top: 3rem;
+        }
+        .btn-large {
+            padding: 18px 36px;
+            font-size: 1.2rem;
+            min-width: 280px;
+        }
+        
         @media (max-width: 768px) {
-            .mobile-menu-btn { display: flex; }
+            .mobile-menu-btn { 
+                display: flex; 
+            }
             .nav-menu { 
                 position: fixed;
                 top: 0;
@@ -158,14 +369,48 @@
                 background: white;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
+                gap: 3rem;
                 transition: left 0.3s ease;
                 z-index: 999;
             }
-            .nav-menu.active { left: 0; }
+            .nav-menu.active { 
+                left: 0; 
+            }
+            .nav-menu a {
+                font-size: 1.5rem;
+                color: #1a1a1a;
+            }
+            
+            /* Mobile dropdown styles */
+            .dropdown-content {
+                position: static;
+                display: none;
+                background-color: #f8f9fa;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 1rem;
+                border-radius: 5px;
+            }
+            
+            .nav-dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-content a {
+                font-size: 1.2rem !important;
+                padding: 1rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
             .hero { padding: 120px 0 80px; min-height: 80vh; }
             .hero h1 { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1.1rem; }
             .btn-call { width: 90%; max-width: 300px; }
+            .services-grid,
+            .trust-grid,
+            .restoration-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     
@@ -323,14 +568,19 @@
                     <span></span>
                 </button>
                 <nav class="nav-menu" id="navMenu">
-                    <a href="#emergency-services">Emergency Services</a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Services ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/water-damage-restoration-maryland/">Water Damage</a>
+                            <a href="/fire-damage-restoration-maryland/">Fire Damage</a>
+                            <a href="/mold-remediation-maryland/">Mold Remediation</a>
+                            <a href="/storm-damage-restoration-maryland/">Storm Damage</a>
+                        </div>
+                    </div>
                     <a href="#process">Our Process</a>
                     <a href="#insurance">Insurance</a>
                     <a href="#contact">Contact</a>
                 </nav>
-                <a href="tel:3014509487" class="header-cta" onclick="trackCall('header')">
-                    📞 (301) 450-9487
-                </a>
             </div>
         </div>
     </header>
@@ -343,25 +593,21 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="container">
-            <div class="emergency-badge">24/7 EMERGENCY RESPONSE</div>
-            <h1>Maryland's #1 Emergency Restoration - 60-Minute Response Guaranteed</h1>
-            <p class="hero-subtitle">Water • Fire • Mold • Storm Damage Experts Serving Baltimore Metro & All of Maryland</p>
-            <p class="hero-description">
-                When water damage threatens your investment, PhxRCS delivers immediate, 
+            <h1>Maryland's Fastest Emergency Restoration</h1>
+            <p class="hero-subtitle">60-Minute Response Guaranteed • 24/7 Emergency Service</p>
+            <div class="hero-buttons">
+                <a href="tel:3014509487" class="btn-primary btn-large" onclick="trackCall('hero')">
+                    📞 Call Now
+                </a>
+            </div>
+            <!-- SEO Content - Hidden but indexed -->
+            <div class="seo-content">
+                <p>When water damage threatens your investment, PhxRCS delivers immediate, 
                 white-glove restoration services. Trusted by Maryland's most discerning 
                 homeowners for our discretion, expertise, and insurance claim management.
-            </p>
-            <div class="hero-cta">
-                <a href="tel:3014509487" class="btn-primary btn-large" onclick="trackCall('hero')">
-                    🚨 EMERGENCY HOTLINE: (301) 450-9487
-                </a>
-                <p class="hero-trust">✅ 60-MINUTE RESPONSE GUARANTEED • Insurance Direct Billing • Free Assessment</p>
-            </div>
-            <div class="service-areas-premium">
-                <span class="area-badge">MONTGOMERY COUNTY</span>
-                <span class="area-badge">HOWARD COUNTY</span>
-                <span class="area-badge">ANNE ARUNDEL</span>
-                <span class="area-badge">BALTIMORE</span>
+                Water • Fire • Mold • Storm Damage Experts Serving Baltimore Metro & All of Maryland</p>
+                <p>MONTGOMERY COUNTY • HOWARD COUNTY • ANNE ARUNDEL • BALTIMORE</p>
+                <p>✅ 60-MINUTE RESPONSE GUARANTEED • Insurance Direct Billing • Free Assessment</p>
             </div>
         </div>
     </section>
@@ -374,30 +620,27 @@
                 <div class="trust-item urgent-response">
                     <div class="trust-icon">⚡</div>
                     <h3>60-Minute Response</h3>
-                    <p>GUARANTEED emergency response within 60 minutes, 24/7/365. Every minute counts in damage control.</p>
+                    <p>Guaranteed 24/7 emergency response</p>
+                    <p class="verbose-content">GUARANTEED emergency response within 60 minutes, 24/7/365. Every minute counts in damage control.</p>
                 </div>
                 <div class="trust-item">
                     <div class="trust-icon">🛡️</div>
-                    <h3>All Insurance Companies</h3>
-                    <p>Preferred contractor for State Farm, Allstate, USAA, and 50+ major insurance providers</p>
+                    <h3>Insurance Approved</h3>
+                    <p>Direct billing to all major carriers</p>
+                    <p class="verbose-content">Preferred contractor for State Farm, Allstate, USAA, and 50+ major insurance providers</p>
                 </div>
                 <div class="trust-item">
                     <div class="trust-icon">🏆</div>
-                    <h3>IICRC Certified Team</h3>
-                    <p>Licensed, bonded, insured with IICRC certified technicians and ongoing professional training</p>
+                    <h3>IICRC Certified</h3>
+                    <p>Professional certified technicians</p>
+                    <p class="verbose-content">Licensed, bonded, insured with IICRC certified technicians and ongoing professional training</p>
                 </div>
                 <div class="trust-item">
                     <div class="trust-icon">💯</div>
                     <h3>100% Satisfaction</h3>
-                    <p>Work guaranteed until you're completely satisfied. We restore properties to better-than-new condition</p>
+                    <p>Work guaranteed</p>
+                    <p class="verbose-content">Work guaranteed until you're completely satisfied. We restore properties to better-than-new condition</p>
                 </div>
-            </div>
-            <div class="credentials-bar">
-                <span class="credential">Licensed MHIC #123456</span>
-                <span class="credential">Bonded & Insured</span>
-                <span class="credential">IICRC Certified</span>
-                <span class="credential">EPA Approved</span>
-                <span class="credential">BBB A+ Rating</span>
             </div>
         </div>
     </section>
@@ -406,68 +649,68 @@
     <section class="services" id="emergency-services">
         <div class="container">
             <h2 class="section-title">Maryland's Premier Emergency Restoration Services</h2>
-            <div class="services-intro">
+            <div class="services-intro verbose-content">
                 <p class="services-description">From Baltimore to Annapolis, Montgomery County to Howard County - when disaster strikes, Phoenix RCS responds in 60 minutes or less. Our certified technicians are equipped to handle any restoration emergency.</p>
             </div>
             <div class="services-grid">
                 <div class="service-card emergency-card">
                     <div class="service-icon">💧</div>
-                    <h3>Water Damage Restoration Maryland</h3>
-                    <div class="service-details">
+                    <h3>Water Damage Restoration</h3>
+                    <ul class="service-bullets">
+                        <li>24/7 Water extraction</li>
+                        <li>Structural drying</li>
+                        <li>Mold prevention</li>
+                    </ul>
+                    <a href="/water-damage-restoration-maryland/" class="btn-service">Learn More</a>
+                    <div class="seo-content">
                         <p><strong>Emergency Response:</strong> Burst pipes, flooding, sewage backups, appliance leaks</p>
-                        <ul class="service-list">
-                            <li>✅ Industrial water extraction equipment</li>
-                            <li>✅ Advanced moisture detection technology</li>
-                            <li>✅ Dehumidification and structural drying</li>
-                            <li>✅ Mold prevention treatment</li>
-                        </ul>
-                        <p class="service-cta"><a href="tel:3014509487">📞 Water Emergency? Call Now!</a></p>
+                        <p>Industrial water extraction equipment, Advanced moisture detection technology, Dehumidification and structural drying, Mold prevention treatment</p>
                     </div>
                 </div>
                 <div class="service-card emergency-card">
                     <div class="service-icon">🔥</div>
-                    <h3>Fire Damage Restoration Maryland</h3>
-                    <div class="service-details">
+                    <h3>Fire Damage Restoration</h3>
+                    <ul class="service-bullets">
+                        <li>Smoke & odor removal</li>
+                        <li>Structural repair</li>
+                        <li>Full reconstruction</li>
+                    </ul>
+                    <a href="/fire-damage-restoration-maryland/" class="btn-service">Learn More</a>
+                    <div class="seo-content">
                         <p><strong>Complete Recovery:</strong> Fire, smoke, and soot damage restoration</p>
-                        <ul class="service-list">
-                            <li>✅ Smoke and odor elimination</li>
-                            <li>✅ Structural cleaning and repair</li>
-                            <li>✅ Content cleaning and restoration</li>
-                            <li>✅ Full reconstruction services</li>
-                        </ul>
-                        <p class="service-cta"><a href="tel:3014509487">📞 Fire Damage? Call Now!</a></p>
+                        <p>Smoke and odor elimination, Structural cleaning and repair, Content cleaning and restoration, Full reconstruction services</p>
                     </div>
                 </div>
                 <div class="service-card emergency-card">
                     <div class="service-icon">🦠</div>
-                    <h3>Mold Remediation Maryland</h3>
-                    <div class="service-details">
+                    <h3>Mold Remediation</h3>
+                    <ul class="service-bullets">
+                        <li>EPA-approved testing</li>
+                        <li>Safe mold removal</li>
+                        <li>Prevention treatment</li>
+                    </ul>
+                    <a href="/mold-remediation-maryland/" class="btn-service">Learn More</a>
+                    <div class="seo-content">
                         <p><strong>Health Protection:</strong> Complete mold inspection, removal, and prevention</p>
-                        <ul class="service-list">
-                            <li>✅ EPA-approved mold testing</li>
-                            <li>✅ Containment and safe removal</li>
-                            <li>✅ HEPA air filtration systems</li>
-                            <li>✅ Post-remediation verification</li>
-                        </ul>
-                        <p class="service-cta"><a href="tel:3014509487">📞 Mold Problem? Call Now!</a></p>
+                        <p>EPA-approved mold testing, Containment and safe removal, HEPA air filtration systems, Post-remediation verification</p>
                     </div>
                 </div>
                 <div class="service-card emergency-card">
                     <div class="service-icon">⛈️</div>
-                    <h3>Storm Damage Restoration Maryland</h3>
-                    <div class="service-details">
+                    <h3>Storm Damage Restoration</h3>
+                    <ul class="service-bullets">
+                        <li>Emergency board-up</li>
+                        <li>Roof repairs</li>
+                        <li>Insurance documentation</li>
+                    </ul>
+                    <a href="/storm-damage-restoration-maryland/" class="btn-service">Learn More</a>
+                    <div class="seo-content">
                         <p><strong>Weather Emergencies:</strong> High winds, hail, flooding, tree damage</p>
-                        <ul class="service-list">
-                            <li>✅ Emergency board-up and tarping</li>
-                            <li>✅ Roof and structural repairs</li>
-                            <li>✅ Water intrusion mitigation</li>
-                            <li>✅ Insurance claim documentation</li>
-                        </ul>
-                        <p class="service-cta"><a href="tel:3014509487">📞 Storm Damage? Call Now!</a></p>
+                        <p>Emergency board-up and tarping, Roof and structural repairs, Water intrusion mitigation, Insurance claim documentation</p>
                     </div>
                 </div>
             </div>
-            <div class="emergency-guarantee">
+            <div class="emergency-guarantee verbose-content">
                 <h3>🚨 EMERGENCY GUARANTEE: 60-MINUTE RESPONSE OR YOUR FIRST HOUR IS FREE</h3>
                 <p>Available 24/7/365 throughout Maryland. Don't wait - damage gets worse every hour.</p>
             </div>
@@ -586,7 +829,7 @@
     </section>
 
     <!-- Premium Service Areas Section -->
-    <section class="premium-service-areas" id="service-areas">
+    <section class="premium-service-areas verbose-content" id="service-areas">
         <div class="container">
             <h2>Specialized Restoration Services for Maryland's Premier Communities</h2>
             
@@ -677,15 +920,11 @@
                 <div class="footer-column">
                     <h3>Phoenix RCS - Emergency Restoration Maryland</h3>
                     <div class="nap-info">
-                        <p><strong>📞 24/7 Emergency Hotline:</strong> <a href="tel:3014509487">(301) 450-9487</a></p>
+                        <p class="verbose-content"><strong>📞 24/7 Emergency Hotline:</strong> <a href="tel:3014509487">(301) 450-9487</a></p>
                         <p><strong>📧 Email:</strong> <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
                         <p><strong>📍 Address:</strong> 10334 Vista Meadow Way, Lanham, MD 20706</p>
                         <p><strong>🌐 Website:</strong> <a href="https://phxrcs.com">phxrcs.com</a></p>
                         <p><strong>📱 Instagram:</strong> <a href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">@phoenix.rcs</a></p>
-                    </div>
-                    <div class="credentials">
-                        <p><strong>License:</strong> MHIC #123456 | <strong>EPA Certified</strong> | <strong>IICRC Certified</strong></p>
-                        <p><strong>Insurance:</strong> Licensed, Bonded & Insured</p>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -732,7 +971,7 @@
                 <p>&copy; 2024 Phoenix RCS - Restoration &amp; Construction Services. All rights reserved.</p>
                 <p>Licensed Maryland contractor specializing in emergency water damage restoration, fire damage restoration, mold remediation, and storm damage repair throughout Baltimore Metro, Montgomery County, Howard County, and Anne Arundel County.</p>
                 <div class="footer-emergency">
-                    <p><strong>EMERGENCY? DON'T WAIT - CALL NOW: <a href="tel:3014509487">(301) 450-9487</a></strong></p>
+                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call Now</a></strong></p>
                 </div>
             </div>
         </div>
@@ -748,6 +987,30 @@
     <!-- Scripts -->
     <script src="assets/js/main.js?v=7"></script>
     <script src="assets/js/analytics.js?v=7"></script>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+        
+        // Services dropdown mobile functionality
+        const navDropdown = document.querySelector('.nav-dropdown');
+        const navServices = document.querySelector('.nav-services');
+        
+        if (navServices) {
+            navServices.addEventListener('click', function(e) {
+                e.preventDefault();
+                navDropdown.classList.toggle('active');
+            });
+        }
+    </script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>

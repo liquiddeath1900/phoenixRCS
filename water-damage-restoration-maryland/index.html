@@ -32,6 +32,164 @@
     <link rel="stylesheet" href="../assets/css/styles.css?v=7">
     <link rel="stylesheet" href="../assets/css/responsive.css?v=7">
     
+    <!-- Enhanced Mobile Navigation Styles -->
+    <style>
+        /* Header Base Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .logo-img {
+            max-height: 50px;
+            width: auto;
+        }
+        
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-menu a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #dc2626;
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #1a1a1a;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        /* Services Dropdown */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .nav-services {
+            cursor: pointer;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: #1a1a1a !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem !important;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #dc2626 !important;
+        }
+        
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn { 
+                display: flex; 
+            }
+            .nav-menu { 
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            .nav-menu.active { 
+                left: 0; 
+            }
+            .nav-menu a {
+                font-size: 1.5rem;
+                color: #1a1a1a;
+            }
+            
+            /* Mobile dropdown styles */
+            .dropdown-content {
+                position: static;
+                display: none;
+                background-color: #f8f9fa;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 1rem;
+                border-radius: 5px;
+            }
+            
+            .nav-dropdown.active .dropdown-content {
+                display: block;
+            }
+            
+            .dropdown-content a {
+                font-size: 1.2rem !important;
+                padding: 1rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+        }
+    </style>
+    
     <!-- Water Damage Service Schema Markup -->
     <script type="application/ld+json">
     {
@@ -124,10 +282,18 @@
     <style>
         /* Page-specific styles */
         .service-hero {
-            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
-            color: white;
+            background: white;
+            color: #000000;
             padding: 120px 0 80px;
             text-align: center;
+        }
+        
+        .service-hero h1 {
+            color: #000000;
+        }
+        
+        .service-hero p {
+            color: #000000;
         }
         
         .breadcrumb {
@@ -137,7 +303,7 @@
         }
         
         .breadcrumb a {
-            color: #1e40af;
+            color: #1a1a1a;
             text-decoration: none;
         }
         
@@ -180,16 +346,25 @@
             background: #f8f9fa;
             padding: 1.5rem;
             border-radius: 8px;
-            border-left: 4px solid #1e40af;
+            border-left: 4px solid #dc2626;
         }
         
         .cta-box {
-            background: #1e40af;
-            color: white;
+            background: #dc2626;
+            color: #000000;
             padding: 2rem;
             border-radius: 8px;
             text-align: center;
             margin: 2rem 0;
+        }
+        
+        .cta-box h2, .cta-box h3, .cta-box p {
+            color: #000000;
+        }
+        
+        .cta-box .emergency-cta {
+            background: #000000;
+            color: white;
         }
         
         .locations-grid {
@@ -207,7 +382,7 @@
         }
         
         .insurance-benefits {
-            background: #f0f9ff;
+            background: #f8f9fa;
             padding: 2rem;
             border-radius: 8px;
             margin: 2rem 0;
@@ -226,10 +401,6 @@
     </style>
 </head>
 <body>
-    <!-- Emergency Banner -->
-    <div class="emergency-banner">
-        🚨 WATER EMERGENCY? DON'T WAIT! CALL NOW: (301) 450-9487 - 60-MINUTE RESPONSE GUARANTEED
-    </div>
 
     <!-- Header -->
     <header class="header" id="header">
@@ -238,15 +409,25 @@
                 <a href="../" class="logo">
                     <img src="../assets/images/logo/websitehomelogo.png" alt="Phoenix RCS - Emergency Restoration Maryland" class="logo-img">
                 </a>
-                <nav class="nav-menu">
-                    <a href="../#emergency-services">Emergency Services</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Services ▼</a>
+                        <div class="dropdown-content">
+                            <a href="../water-damage-restoration-maryland/">Water Damage</a>
+                            <a href="../fire-damage-restoration-maryland/">Fire Damage</a>
+                            <a href="../mold-remediation-maryland/">Mold Remediation</a>
+                            <a href="../storm-damage-restoration-maryland/">Storm Damage</a>
+                        </div>
+                    </div>
                     <a href="../#process">Our Process</a>
                     <a href="../#insurance">Insurance</a>
                     <a href="../#contact">Contact</a>
                 </nav>
-                <a href="tel:3014509487" class="header-cta" onclick="trackCall('header')">
-                    📞 (301) 450-9487
-                </a>
             </div>
         </div>
     </header>
@@ -264,8 +445,8 @@
             <h1>Water Damage Restoration Maryland</h1>
             <p class="hero-subtitle">60-Minute Emergency Response Throughout Prince George's & Montgomery Counties</p>
             <p class="hero-description">Professional water damage restoration based in Lanham, MD. Serving Prince George's County, Montgomery County, and surrounding Maryland areas. Licensed, bonded, insured with IICRC certified technicians.</p>
-            <a href="tel:3014509487" class="emergency-cta">📞 EMERGENCY HOTLINE: (301) 450-9487</a>
-            <p>Available 24/7/365 | Licensed MHIC #123456 | Insurance Direct Billing</p>
+            <a href="tel:3014509487" class="emergency-cta">Call Now</a>
+            <p>Available 24/7/365 | Insurance Direct Billing</p>
         </div>
     </section>
 
@@ -283,7 +464,7 @@
                 <div class="cta-box">
                     <h3>🚨 WATER EMERGENCY IN MARYLAND?</h3>
                     <p>Don't wait for damage to get worse. Our emergency response team is standing by.</p>
-                    <a href="tel:3014509487" class="emergency-cta">CALL NOW: (301) 450-9487</a>
+                    <a href="tel:3014509487" class="emergency-cta">Call Now</a>
                     <p>60-Minute Response Guaranteed | Available 24/7/365</p>
                 </div>
             </section>
@@ -527,14 +708,14 @@
                 <div class="cta-box">
                     <h2>🚨 Maryland Water Damage Emergency? We're Here 24/7!</h2>
                     <p>Based in Lanham, MD - we're your local water damage restoration experts. Don't let water damage get worse while waiting for help.</p>
-                    <a href="tel:3014509487" class="emergency-cta">📞 CALL NOW: (301) 450-9487</a>
-                    <p><strong>60-Minute Response Guaranteed</strong> | Licensed MHIC #123456 | Available 24/7/365</p>
+                    <a href="tel:3014509487" class="emergency-cta">Call Now</a>
+                    <p><strong>60-Minute Response Guaranteed</strong> | Available 24/7/365</p>
                     <p>Serving Prince George's County, Montgomery County & Surrounding Maryland Areas</p>
                 </div>
                 
                 <p style="text-align: center; margin-top: 2rem;">
-                    <a href="../" style="color: #1e40af; text-decoration: none;">← Return to Phoenix RCS Homepage</a> |
-                    <a href="../fire-damage-restoration-maryland/" style="color: #1e40af; text-decoration: none;">Fire Damage Restoration →</a>
+                    <a href="../" style="color: #1a1a1a; text-decoration: none;">← Return to Phoenix RCS Homepage</a> |
+                    <a href="../fire-damage-restoration-maryland/" style="color: #1a1a1a; text-decoration: none;">Fire Damage Restoration →</a>
                 </p>
             </section>
 
@@ -548,7 +729,7 @@
                 <div class="footer-column">
                     <h3>Phoenix RCS Water Damage Restoration</h3>
                     <div class="nap-info">
-                        <p><strong>📞 24/7 Emergency:</strong> <a href="tel:3014509487">(301) 450-9487</a></p>
+                        <p><strong>📞 24/7 Emergency:</strong> <a href="tel:3014509487">Call Now</a></p>
                         <p><strong>📧 Email:</strong> <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
                         <p><strong>📍 Address:</strong> 10334 Vista Meadow Way, Lanham, MD 20706</p>
                         <p><strong>🌐 Website:</strong> <a href="https://phxrcs.com">phxrcs.com</a></p>
@@ -582,7 +763,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Phoenix RCS Water Damage Restoration Maryland. Licensed MHIC #123456, Bonded & Insured.</p>
+                <p>&copy; 2024 Phoenix RCS Water Damage Restoration Maryland. Licensed, Bonded & Insured.</p>
                 <p>Professional water damage restoration serving Prince George's County, Montgomery County and surrounding Maryland areas from our Lanham headquarters.</p>
             </div>
         </div>
@@ -592,5 +773,27 @@
     <script src="../assets/js/main.js?v=7"></script>
     <script src="../assets/js/analytics.js?v=7"></script>
 
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const navDropdown = document.querySelector('.nav-dropdown');
+        const navServices = document.querySelector('.nav-services');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+        
+        // Mobile services dropdown toggle
+        if (navServices) {
+            navServices.addEventListener('click', function(e) {
+                e.preventDefault();
+                navDropdown.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 </html>
