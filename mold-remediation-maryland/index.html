@@ -51,6 +51,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
         }
         .logo {
             display: flex;
@@ -90,6 +91,8 @@
             border: none;
             cursor: pointer;
             z-index: 1001;
+            position: absolute;
+            right: 20px;
         }
         .mobile-menu-btn span {
             display: block;
@@ -142,8 +145,19 @@
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem 0;
+            }
+            .logo-img {
+                max-height: 30px;
+                width: auto;
+            }
             .mobile-menu-btn { 
-                display: flex; 
+                display: flex;
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
             }
             .nav-menu { 
                 position: fixed;
