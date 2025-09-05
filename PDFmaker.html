@@ -799,7 +799,7 @@
                 // Bottom signatures
                 y = 250;
                 doc.text('Contractor Name: Phoenix R&C Solutions', 15, y);
-                doc.text('Client Name: ' + formData.get('clientName'), 110, y);
+                doc.text('Client Name: ' + clientName, 110, y);
                 
                 y += 10;
                 doc.text('Contractor Signature: _____________________', 15, y);
@@ -810,8 +810,8 @@
                 doc.text('Date: _____________________', 110, y);
                 
                 // Save the PDF
-                const clientName = formData.get('clientName').replace(/[^a-z0-9]/gi, '_');
-                const fileName = `Phoenix_Contract_${clientName}_${formattedDate.replace(/\//g, '-')}.pdf`;
+                const clientNameFile = clientName.replace(/[^a-z0-9]/gi, '_');
+                const fileName = `Phoenix_Contract_${clientNameFile}_${formattedDate.replace(/\//g, '-')}.pdf`;
                 doc.save(fileName);
                 
                 document.getElementById('loadingSpinner').classList.remove('active');
