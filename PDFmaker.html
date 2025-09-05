@@ -1,1 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix R&C Solutions - Contract Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #cc0000;
+        }
+        
+        .logo-container {
+            margin: 0 auto 20px;
+        }
+        
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-left: 4px solid #cc0000;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .service-row {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .service-row .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .service-row .remove-btn:hover {
+            background: #c82333;
+        }
+        
+        .add-service-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .add-service-btn:hover {
+            background: #218838;
+        }
+        
+        .amount-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #cc0000;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #aa0000;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .info-text {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #cc0000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-fields {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <img src="https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png" 
+                     alt="Phoenix RCS Logo" 
+                     crossorigin="anonymous">
+            </div>
+            <h1>Contract Generator</h1>
+            <p>10334 Vista Meadow Way, Lanham, MD 20706 | Phone: 301.450.9487 | MHIC #164678</p>
+        </div>
 
+        <div class="info-text">
+            <strong>Instructions:</strong> Fill in all fields to generate a professional contract. Add multiple services as needed. The generated PDF will match your standard contract format.
+        </div>
+
+        <form id="contractForm">
+            <!-- Client Information -->
+            <div class="section">
+                <h3>Client Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Client Name *</label>
+                        <input type="text" name="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Document Date *</label>
+                        <input type="date" name="documentDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" name="phone" required placeholder="(301) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" required placeholder="client@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Job Address *</label>
+                    <input type="text" name="jobAddress" required placeholder="Street Address, City, State ZIP">
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="section">
+                <h3>Services & Pricing</h3>
+                <div id="servicesContainer">
+                    <!-- Default service row -->
+                    <div class="service-row" data-service-id="1">
+                        <button type="button" class="remove-btn" onclick="removeService(this)">Remove</button>
+                        <div class="form-group">
+                            <label>Service Name</label>
+                            <input type="text" name="serviceName[]" placeholder="e.g., Gutters, Downspouts & Leaf Guards">
+                        </div>
+                        <div class="form-group">
+                            <label>Amount (use range for variable pricing, e.g., $5,036 – $5,336)</label>
+                            <input type="text" name="serviceAmount[]" placeholder="$0.00 or $0.00 – $0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Description (use dash - for bullet points)</label>
+                            <textarea name="serviceDescription[]" placeholder="- Remove existing gutters/downspouts.
+- Install 5&quot; gutters (approximately 245 LF), $10.00 per LF
+- Install leaf guards (approximately 245 LF), $6.00 per LF"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="add-service-btn" onclick="addService()">+ Add Another Service</button>
+            </div>
+
+            <!-- Additional Terms -->
+            <div class="section">
+                <h3>Additional Terms</h3>
+                <div class="form-group">
+                    <label>Decking/Plywood Board Replacement (or other terms)</label>
+                    <textarea name="additionalTerms" placeholder="Phoenix RCS will cover the first 10 rotted Decking/Plywood boards found that will need to be replaced, then the homeowner will cover any others exceeding that amount, at $35 per board replaced."></textarea>
+                </div>
+            </div>
+
+            <!-- Payment Details -->
+            <div class="section">
+                <h3>Payment Structure</h3>
+                <div class="form-group">
+                    <label>Total Amount (or range) *</label>
+                    <input type="text" name="totalAmount" placeholder="$28,538.19 – $28,838.19" required>
+                </div>
+                <div class="form-group">
+                    <label>Total Note (optional)</label>
+                    <input type="text" name="totalNote" placeholder="(Final total will vary depending on the final LF of gutters and downspouts.)">
+                </div>
+                <div class="amount-fields">
+                    <div class="form-group">
+                        <label>Insurance RCV</label>
+                        <input type="text" name="insuranceRCV" placeholder="$0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>1st Payment</label>
+                        <input type="text" name="firstPayment" placeholder="$0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Final Due Upon Completion</label>
+                        <input type="text" name="finalPayment" placeholder="$0.00">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Timeline -->
+            <div class="section">
+                <h3>Project Timeline (Optional)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Approximate Start Date</label>
+                        <input type="date" name="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Approximate Completion Date</label>
+                        <input type="date" name="completionDate">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="action-buttons">
+            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+            <button type="button" class="btn btn-primary" onclick="generatePDF()">Generate PDF Contract</button>
+            <button type="button" class="btn btn-success" onclick="saveTemplate()">Save as Template</button>
+        </div>
+
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>Generating contract...</p>
+        </div>
+    </div>
+
+    <script>
+        // Logo URL from GitHub repo
+        const LOGO_URL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
+        
+        let serviceCount = 1;
+
+        // Set today's date as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelector('input[name="documentDate"]').value = today;
+            
+            // Load saved template if exists
+            loadTemplate();
+        });
+
+        function addService() {
+            serviceCount++;
+            const container = document.getElementById('servicesContainer');
+            const newService = document.createElement('div');
+            newService.className = 'service-row';
+            newService.setAttribute('data-service-id', serviceCount);
+            newService.innerHTML = `
+                <button type="button" class="remove-btn" onclick="removeService(this)">Remove</button>
+                <div class="form-group">
+                    <label>Service Name</label>
+                    <input type="text" name="serviceName[]" placeholder="e.g., Soffit & Fascia Board">
+                </div>
+                <div class="form-group">
+                    <label>Amount (use range for variable pricing)</label>
+                    <input type="text" name="serviceAmount[]" placeholder="$0.00 or $0.00 – $0.00">
+                </div>
+                <div class="form-group">
+                    <label>Description (use dash - for bullet points)</label>
+                    <textarea name="serviceDescription[]" placeholder="Enter service description..."></textarea>
+                </div>
+            `;
+            container.appendChild(newService);
+        }
+
+        function removeService(btn) {
+            const serviceRows = document.querySelectorAll('.service-row');
+            if (serviceRows.length > 1) {
+                btn.parentElement.remove();
+            } else {
+                alert('You must have at least one service.');
+            }
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all fields?')) {
+                document.getElementById('contractForm').reset();
+                // Reset to single service row
+                const container = document.getElementById('servicesContainer');
+                const serviceRows = container.querySelectorAll('.service-row');
+                serviceRows.forEach((row, index) => {
+                    if (index > 0) row.remove();
+                });
+                serviceCount = 1;
+                // Set today's date again
+                const today = new Date().toISOString().split('T')[0];
+                document.querySelector('input[name="documentDate"]').value = today;
+            }
+        }
+
+        function saveTemplate() {
+            const formData = new FormData(document.getElementById('contractForm'));
+            const template = {};
+            for (let [key, value] of formData.entries()) {
+                if (!template[key]) {
+                    template[key] = [];
+                }
+                template[key].push(value);
+            }
+            localStorage.setItem('phoenixContractTemplate', JSON.stringify(template));
+            alert('Template saved successfully! It will be loaded automatically next time.');
+        }
+
+        function loadTemplate() {
+            const saved = localStorage.getItem('phoenixContractTemplate');
+            if (saved) {
+                try {
+                    const template = JSON.parse(saved);
+                    // Basic loading - can be enhanced
+                    console.log('Template loaded from storage');
+                } catch(e) {
+                    console.log('Could not load saved template');
+                }
+            }
+        }
+
+        async function generatePDF() {
+            const form = document.getElementById('contractForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            document.getElementById('loadingSpinner').classList.add('active');
+
+            // Load logo as base64 for PDF embedding
+            const logoBase64 = await getBase64FromUrl(LOGO_URL);
+
+            setTimeout(() => {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Get form data
+                const formData = new FormData(form);
+                
+                // Page 1 - Contract Details
+                let startY = 20;
+                
+                // Add Logo if available
+                if (logoBase64) {
+                    try {
+                        doc.addImage(logoBase64, 'PNG', 75, 10, 60, 25);
+                        startY = 40;
+                    } catch(e) {
+                        console.log('Logo could not be added to PDF');
+                    }
+                }
+                
+                // Company Header
+                doc.setFontSize(18);
+                doc.setFont(undefined, 'bold');
+                doc.text('Phoenix R&C Solutions', 105, startY, { align: 'center' });
+                
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('10334 Vista Meadow Way, Lanham, MD 20706', 105, startY + 8, { align: 'center' });
+                doc.text('Phone: 301.450.9487', 105, startY + 14, { align: 'center' });
+                doc.text('MHIC #164678', 105, startY + 20, { align: 'center' });
+                
+                // Document Title
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('DOCUMENT', 105, startY + 35, { align: 'center' });
+                
+                // Document Date Box
+                doc.setDrawColor(0);
+                doc.rect(15, startY + 42, 180, 8);
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.text('Document Date', 18, startY + 47);
+                doc.setFont(undefined, 'normal');
+                const docDate = formData.get('documentDate');
+                const formattedDate = new Date(docDate).toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric'
+                });
+                doc.text(formattedDate, 60, startY + 47);
+                
+                // Client Information Boxes
+                let y = startY + 55;
+                
+                // Row 1: For and Phone
+                doc.rect(15, y, 90, 8);
+                doc.rect(105, y, 90, 8);
+                doc.setFont(undefined, 'bold');
+                doc.text('For:', 18, y + 5);
+                doc.text('Phone:', 108, y + 5);
+                doc.setFont(undefined, 'normal');
+                doc.text(formData.get('clientName'), 30, y + 5);
+                doc.text(formData.get('phone'), 125, y + 5);
+                
+                y += 8;
+                
+                // Row 2: Job Address and Email
+                doc.rect(15, y, 120, 8);
+                doc.rect(135, y, 60, 8);
+                doc.setFont(undefined, 'bold');
+                doc.text('Job Address:', 18, y + 5);
+                doc.text('Email:', 138, y + 5);
+                doc.setFont(undefined, 'normal');
+                
+                const address = formData.get('jobAddress');
+                const maxAddressWidth = 75;
+                let displayAddress = address;
+                if (doc.getTextWidth(address) > maxAddressWidth) {
+                    displayAddress = address.substring(0, 40) + '...';
+                }
+                doc.text(displayAddress, 45, y + 5);
+                
+                const email = formData.get('email');
+                const maxEmailWidth = 35;
+                let displayEmail = email;
+                if (doc.getTextWidth(email) > maxEmailWidth) {
+                    displayEmail = email.substring(0, 15) + '...';
+                }
+                doc.text(displayEmail, 150, y + 5);
+                
+                y += 15;
+                
+                // Services Table
+                const serviceNames = formData.getAll('serviceName[]');
+                const serviceAmounts = formData.getAll('serviceAmount[]');
+                const serviceDescriptions = formData.getAll('serviceDescription[]');
+                
+                // Prepare table data
+                const tableData = [];
+                serviceNames.forEach((name, index) => {
+                    if (name) {
+                        const description = serviceDescriptions[index] || '';
+                        const descLines = description.split('\n').filter(line => line.trim());
+                        const formattedDesc = descLines.join('\n');
+                        
+                        tableData.push([
+                            name,
+                            serviceAmounts[index] || '',
+                            formattedDesc
+                        ]);
+                    }
+                });
+                
+                // Add additional terms row if exists
+                const additionalTerms = formData.get('additionalTerms');
+                if (additionalTerms) {
+                    tableData.push([
+                        'Decking/Plywood Board Replacement',
+                        '',
+                        additionalTerms
+                    ]);
+                }
+                
+                // Generate table
+                doc.autoTable({
+                    startY: y,
+                    head: [['Name', 'Amount', 'Description']],
+                    body: tableData,
+                    theme: 'grid',
+                    headStyles: {
+                        fillColor: [240, 240, 240],
+                        textColor: [0, 0, 0],
+                        fontStyle: 'bold',
+                        fontSize: 10
+                    },
+                    bodyStyles: {
+                        fontSize: 9,
+                        cellPadding: 3
+                    },
+                    columnStyles: {
+                        0: { cellWidth: 45 },
+                        1: { cellWidth: 30, halign: 'center' },
+                        2: { cellWidth: 105 }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+                
+                // Get the Y position after the table
+                y = doc.lastAutoTable.finalY + 10;
+                
+                // Totals Section
+                doc.setFont(undefined, 'bold');
+                doc.text('Total', 15, y);
+                doc.text(formData.get('totalAmount'), 195, y, { align: 'right' });
+                
+                y += 5;
+                doc.setFontSize(8);
+                doc.setFont(undefined, 'italic');
+                const totalNote = formData.get('totalNote');
+                if (totalNote) {
+                    doc.text(totalNote, 15, y);
+                    y += 7;
+                } else {
+                    y += 2;
+                }
+                
+                // Payment breakdown
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                
+                const insuranceRCV = formData.get('insuranceRCV');
+                if (insuranceRCV) {
+                    doc.text('Insurance RCV', 15, y);
+                    doc.text(insuranceRCV, 195, y, { align: 'right' });
+                    y += 6;
+                }
+                
+                const firstPayment = formData.get('firstPayment');
+                if (firstPayment) {
+                    doc.text('1st payment', 15, y);
+                    doc.text(firstPayment, 195, y, { align: 'right' });
+                    y += 6;
+                }
+                
+                const finalPayment = formData.get('finalPayment');
+                if (finalPayment) {
+                    doc.text('Final due upon completion', 15, y);
+                    doc.text(finalPayment, 195, y, { align: 'right' });
+                    y += 10;
+                }
+                
+                // Signature Section
+                if (y < 240) {
+                    y = 240;
+                }
+                
+                // Draw signature boxes
+                doc.rect(15, y, 80, 20);
+                doc.rect(115, y, 80, 20);
+                doc.text('Customer Rep Signature', 55, y + 25, { align: 'center' });
+                doc.text('Customer Signature', 155, y + 25, { align: 'center' });
+                
+                // Page 2 - Terms and Conditions
+                doc.addPage();
+                
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text('TERMS AND CONDITIONS', 105, 20, { align: 'center' });
+                
+                doc.setFontSize(10);
+                y = 35;
+                
+                // Warranties
+                doc.setFont(undefined, 'bold');
+                doc.text('Warranties:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                const warranties = [
+                    'The Contractor warrants that all materials will be free from defects for the period of the',
+                    'specific material\'s manufacturer\'s warranty.',
+                    'The Contractor warrants that all workmanship or installation issues will be covered at no cost',
+                    'to the Client for the period five years from the installation date.'
+                ];
+                warranties.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+                y += 5;
+                
+                // Insurance and Licenses
+                doc.setFont(undefined, 'bold');
+                doc.text('Insurance and Licenses:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                const insurance = [
+                    'The Contractor will maintain necessary insurance and licenses required to perform the work',
+                    'under this Contract.',
+                    'Proof of insurance and licenses will be provided upon request.'
+                ];
+                insurance.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+                y += 5;
+                
+                // Change Orders
+                doc.setFont(undefined, 'bold');
+                doc.text('Change Orders:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                const changeOrders = [
+                    'Any changes to the scope of work must be documented in a written change order, signed by both',
+                    'the Client and the Contractor.',
+                    'Changes may affect the project cost and completion date.'
+                ];
+                changeOrders.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+                y += 5;
+                
+                // Dispute Resolution
+                doc.setFont(undefined, 'bold');
+                doc.text('Dispute Resolution:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                const dispute = [
+                    'Any disputes arising from this Contract will be resolved through mediation/arbitration in',
+                    'accordance with the rules of the applicable authority.'
+                ];
+                dispute.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+                y += 5;
+                
+                // Governing Law
+                doc.setFont(undefined, 'bold');
+                doc.text('Governing Law:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                doc.text('This Contract will be governed by and construed in accordance with the laws of the state of MD.', 15, y);
+                y += 10;
+                
+                // Entire Agreement
+                doc.setFont(undefined, 'bold');
+                doc.text('Entire Agreement:', 15, y);
+                y += 7;
+                doc.setFont(undefined, 'normal');
+                const agreement = [
+                    'This contract constitutes full accord and agreement of the parties, and no other understanding,',
+                    'verbal or otherwise, shall be binding unless in writing, signed by both parties.',
+                    'You, the buyer, may cancel this transaction anytime prior to midnight of the fifth business day',
+                    'after the date of this transaction.'
+                ];
+                agreement.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+                y += 10;
+                
+                // Project dates if provided
+                const startDate = formData.get('startDate');
+                const completionDate = formData.get('completionDate');
+                
+                if (startDate || completionDate) {
+                    y += 5;
+                    if (startDate) {
+                        doc.text('Approximate Start Date: _______________', 15, y);
+                    }
+                    if (completionDate) {
+                        doc.text('Approximate Completion Date: _______________', 110, y);
+                    }
+                    y += 10;
+                }
+                
+                // Bottom signatures
+                y = 250;
+                doc.text('Contractor Name: Phoenix R&C Solutions', 15, y);
+                doc.text('Client Name: ' + formData.get('clientName'), 110, y);
+                
+                y += 10;
+                doc.text('Contractor Signature: _____________________', 15, y);
+                doc.text('Client Signature: _____________________', 110, y);
+                
+                y += 10;
+                doc.text('Date: _____________________', 15, y);
+                doc.text('Date: _____________________', 110, y);
+                
+                // Save the PDF
+                const clientName = formData.get('clientName').replace(/[^a-z0-9]/gi, '_');
+                const fileName = `Phoenix_Contract_${clientName}_${formattedDate.replace(/\//g, '-')}.pdf`;
+                doc.save(fileName);
+                
+                document.getElementById('loadingSpinner').classList.remove('active');
+            }, 500);
+        }
+
+        // Helper function to convert image URL to base64
+        function getBase64FromUrl(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(this, 0, 0);
+                    const dataURL = canvas.toDataURL('image/png');
+                    resolve(dataURL);
+                };
+                img.onerror = function() {
+                    console.log('Could not load logo');
+                    resolve(null);
+                };
+                img.src = url;
+            });
+        }
+    </script>
+</body>
+</html>
