@@ -538,6 +538,11 @@
                 // Client Information Boxes
                 let y = startY + 55;
                 
+                // Get first and last name and combine them
+                const firstName = formData.get('firstName') || '';
+                const lastName = formData.get('lastName') || '';
+                const clientName = firstName + ' ' + lastName;
+                
                 // Row 1: For and Phone
                 doc.rect(15, y, 90, 8);
                 doc.rect(105, y, 90, 8);
