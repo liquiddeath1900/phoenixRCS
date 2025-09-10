@@ -348,7 +348,7 @@
                         <input type="text" name="firstPayment" placeholder="$0.00">
                     </div>
                     <div class="form-group">
-                        <label>Final Due Upon Completion</label>
+                        <label>Balance Due Upon Completion</label>
                         <input type="text" name="finalPayment" placeholder="$0.00">
                     </div>
                 </div>
@@ -674,7 +674,7 @@
                 
                 const finalPayment = formData.get('finalPayment');
                 if (finalPayment) {
-                    doc.text('Final due upon completion', 15, y);
+                    doc.text('Balance due upon completion', 15, y);
                     doc.text(finalPayment, 195, y, { align: 'right' });
                     y += 10;
                 }
