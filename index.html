@@ -410,7 +410,7 @@
                 padding: 1rem;
                 border-bottom: 1px solid #e5e7eb;
             }
-            .hero { padding: 120px 0 80px; min-height: 80vh; }
+            .hero { padding: 120px 0 80px; min-height: 80vh !important; }
             .hero h1 { font-size: 2.2rem; }
             .hero-subtitle { font-size: 1.1rem; }
             .btn-call { width: 90%; max-width: 300px; }
@@ -442,7 +442,7 @@
       "email": "Management@phxrcs.com",
       "foundingDate": "2020",
       "slogan": "60-Minute Emergency Response Guaranteed",
-      "priceRange": "$$-$$$",
+      "priceRange": "$-$$",
       "paymentAccepted": "Cash, Credit Card, Insurance Direct Billing",
       "currenciesAccepted": "USD",
       "openingHours": "Mo,Tu,We,Th,Fr,Sa,Su 00:00-23:59",
@@ -597,8 +597,8 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <video class="hero-video" autoplay muted loop playsinline preload="auto">
-            <source src="assets/images/hero/desktophero.mp4" type="video/mp4" media="(max-width: 767px)">
-            <source src="assets/images/hero/mobilehero.mp4" type="video/mp4">
+            <source src="assets/images/hero/desktophero.mp4" type="video/mp4" media="(min-width: 768px)">
+            <source src="assets/images/hero/mobilehero.mp4" type="video/mp4" media="(max-width: 767px)">
         </video>
         <div class="hero-overlay"></div>
         <div class="container">
