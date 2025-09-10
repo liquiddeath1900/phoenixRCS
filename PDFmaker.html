@@ -497,8 +497,8 @@
                 // Add Logo if available
                 if (logoBase64) {
                     try {
-                        doc.addImage(logoBase64, 'PNG', 65, 8, 80, 33);  // Better proportions
-                        startY = 45;
+                        doc.addImage(logoBase64, 'PNG', 75, 10, 60, 25);  // Smaller and centered
+                        startY = 40;
                     } catch(e) {
                         console.log('Logo could not be added to PDF');
                     }
