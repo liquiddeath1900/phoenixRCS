@@ -497,9 +497,9 @@
                 // Add Logo if available
                 if (logoBase64) {
                     try {
-                        // Logo dimensions: 2326×2173, ratio 1.07 (almost square)
-                        doc.addImage(logoBase64, 'PNG', 75, 10, 60, 56);  // Maintains proper ratio
-                        startY = 70;
+                        // Logo at 75% size (quarter smaller)
+                        doc.addImage(logoBase64, 'PNG', 82, 10, 45, 42);  // 75% of 60×56
+                        startY = 55;
                     } catch(e) {
                         console.log('Logo could not be added to PDF');
                     }
