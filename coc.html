@@ -589,6 +589,24 @@
             }, 500);
         }
         
+        function downloadPDF() {
+            if (document.getElementById('previewContainer').style.display === 'none') {
+                generatePreview();
+            }
+            
+            // Create a filename with today's date
+            const today = new Date();
+            const dateStr = `${today.getMonth()+1}-${today.getDate()}-${today.getFullYear()}`;
+            const homeowner = document.getElementById('homeownerName').value || 'Client';
+            const filename = `COC_${homeowner.replace(/\s+/g, '_')}_${dateStr}.pdf`;
+            
+            // Trigger print dialog with save as PDF option
+            setTimeout(() => {
+                window.print();
+                alert(`To save as PDF:\n\n1. Choose "Save as PDF" in the print dialog\n2. Name it: ${filename}\n3. This PDF can be edited using PDF editors on your phone`);
+            }, 500);
+        }
+        
         // Set today's date as default for COC date
         document.getElementById('cocDate').valueAsDate = new Date();
     </script>
