@@ -537,19 +537,18 @@
             const claimNumber = document.getElementById('claimNumber').value || '[Claim Number]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // Logo HTML - use uploaded logo or default Phoenix logo
+            // Always use the PhoenixRCS logo
             let logoHTML = '';
+            
+            // Use the GitHub-hosted logo URL directly
+            const phoenixLogoURL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
+            
             if (companyLogo) {
-                logoHTML = `<img src="${companyLogo}" alt="Company Logo" style="max-width: 150px; max-height: 100px;">`;
+                // If logo was successfully loaded as base64
+                logoHTML = `<img src="${companyLogo}" alt="PhoenixRCS Logo" style="max-width: 150px; max-height: 100px;">`;
             } else {
-                // Default Phoenix-style logo
-                logoHTML = `
-                    <div style="display: inline-block; padding: 10px;">
-                        <div style="font-size: 36px; color: #DC143C; font-weight: bold; font-family: 'Arial Black', sans-serif;">
-                            🔥 PHOENIX<span style="color: #333;">RCS</span>
-                        </div>
-                    </div>
-                `;
+                // Use direct URL as fallback
+                logoHTML = `<img src="${phoenixLogoURL}" alt="PhoenixRCS Logo" style="max-width: 150px; max-height: 100px;" crossorigin="anonymous">`;
             }
             
             // Generate photo pages
