@@ -797,10 +797,12 @@
                 if (startDate || completionDate) {
                     y += 5;
                     if (startDate) {
-                        doc.text('Approximate Start Date: _______________', 15, y);
+                        const formattedStartDate = new Date(startDate).toLocaleDateString('en-US');
+                        doc.text('Approximate Start Date: ' + formattedStartDate, 15, y);
                     }
                     if (completionDate) {
-                        doc.text('Approximate Completion Date: _______________', 110, y);
+                        const formattedCompletionDate = new Date(completionDate).toLocaleDateString('en-US');
+                        doc.text('Approximate Completion Date: ' + formattedCompletionDate, 110, y);
                     }
                     y += 10;
                 }
