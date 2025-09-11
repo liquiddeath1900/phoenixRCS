@@ -93,40 +93,7 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
-        /* Logo Upload Section */
-        .logo-section {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .logo-upload-area {
-            border: 3px dashed #667eea;
-            padding: 30px;
-            border-radius: 10px;
-            background: #f8f9ff;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-        
-        .logo-upload-area:hover {
-            background: #f0f2ff;
-            border-color: #764ba2;
-        }
-        
-        .logo-preview {
-            max-width: 200px;
-            max-height: 150px;
-            margin: 20px auto;
-            display: none;
-        }
-        
-        .logo-preview img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        
-        /* Enhanced Photo Section */
+        /* Photo Section */
         .photo-section {
             margin-top: 30px;
         }
@@ -270,25 +237,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
-        .preview-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .preview-logo {
-            max-width: 200px;
-            max-height: 150px;
-            margin: 0 auto 30px;
-            display: block;
-        }
-        
-        .preview-company-info {
-            text-align: center;
-            margin-bottom: 40px;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
         .preview-content {
             line-height: 2;
             color: #000;
@@ -351,11 +299,6 @@
                 page-break-before: always;
             }
             
-            .preview-logo {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            
             .photo-page-item img {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -381,16 +324,6 @@
         <div class="form-section">
             <h1>🔥 Certificate of Completion Generator</h1>
             <p class="subtitle">Create professional COC documents with photos</p>
-            
-            <h2 style="border-color: #f5576c;">Company Logo</h2>
-            <div class="logo-section">
-                <div class="logo-upload-area" onclick="document.getElementById('logoUpload').click()">
-                    <div class="drop-zone-text">📸 Click to Upload Company Logo</div>
-                    <div class="drop-zone-subtext">Recommended: PNG or JPG, max 2MB</div>
-                    <input type="file" id="logoUpload" class="hidden" accept="image/*" onchange="handleLogoUpload(event)">
-                </div>
-                <div id="logoPreview" class="logo-preview"></div>
-            </div>
             
             <h2>Company Information</h2>
             <div class="form-grid">
@@ -486,27 +419,14 @@
                 
                 try {
                     companyLogo = canvas.toDataURL('image/png');
-                    const preview = document.getElementById('logoPreview');
-                    preview.innerHTML = `<img src="${companyLogo}" alt="PhoenixRCS Logo">`;
-                    preview.style.display = 'block';
-                    
-                    // Update the logo upload text
-                    document.querySelector('.logo-upload-area .drop-zone-text').textContent = '📸 Click to Change Company Logo';
-                    document.querySelector('.logo-upload-area .drop-zone-subtext').textContent = 'PhoenixRCS logo loaded (click to replace)';
                 } catch(e) {
                     // If CORS prevents canvas conversion, use the URL directly
                     companyLogo = phoenixLogoURL;
-                    const preview = document.getElementById('logoPreview');
-                    preview.innerHTML = `<img src="${companyLogo}" alt="PhoenixRCS Logo">`;
-                    preview.style.display = 'block';
-                    
-                    document.querySelector('.logo-upload-area .drop-zone-text').textContent = '📸 Click to Change Company Logo';
-                    document.querySelector('.logo-upload-area .drop-zone-subtext').textContent = 'PhoenixRCS logo loaded (click to replace)';
                 }
             };
             
             img.onerror = function() {
-                console.log('Could not load PhoenixRCS logo from GitHub. You can upload your own logo.');
+                console.log('Could not load PhoenixRCS logo from GitHub.');
             };
             
             img.src = phoenixLogoURL;
@@ -535,20 +455,6 @@
             const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
             processPhotos(files);
         });
-        
-        function handleLogoUpload(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    companyLogo = e.target.result;
-                    const preview = document.getElementById('logoPreview');
-                    preview.innerHTML = `<img src="${companyLogo}" alt="Company Logo">`;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
         
         function handlePhotoSelect(event) {
             const files = Array.from(event.target.files);
@@ -634,15 +540,13 @@
             // Logo HTML - use uploaded logo or default Phoenix logo
             let logoHTML = '';
             if (companyLogo) {
-                logoHTML = `<img src="${companyLogo}" alt="Company Logo" class="preview-logo">`;
+                logoHTML = `<img src="${companyLogo}" alt="Company Logo" style="max-width: 150px; max-height: 100px;">`;
             } else {
                 // Default Phoenix-style logo
                 logoHTML = `
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <div style="display: inline-block; padding: 20px;">
-                            <div style="font-size: 48px; color: #DC143C; font-weight: bold; font-family: 'Arial Black', sans-serif;">
-                                🔥 PHOENIX<span style="color: #333;">RCS</span>
-                            </div>
+                    <div style="display: inline-block; padding: 10px;">
+                        <div style="font-size: 36px; color: #DC143C; font-weight: bold; font-family: 'Arial Black', sans-serif;">
+                            🔥 PHOENIX<span style="color: #333;">RCS</span>
                         </div>
                     </div>
                 `;
@@ -676,11 +580,11 @@
             }
             
             const previewHTML = `
-                <div class="preview-header">
+                <div style="text-align: right; margin-bottom: 30px;">
                     ${logoHTML}
                 </div>
                 
-                <div class="preview-company-info">
+                <div style="text-align: left; margin-bottom: 30px;">
                     <strong>${companyAddress}</strong><br>
                     ${companyEmail}<br>
                     ${companyPhone}
