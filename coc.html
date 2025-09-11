@@ -537,9 +537,27 @@
             const claimNumber = document.getElementById('claimNumber').value || '[Claim Number]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // Always use the PhoenixRCS logo - directly from GitHub
-            const phoenixLogoURL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
-            const logoHTML = `<img src="${phoenixLogoURL}" alt="PhoenixRCS Logo" style="max-width: 150px; max-height: 100px;">`;
+            // Embedded Phoenix logo as SVG - this WILL work
+            const logoHTML = `
+                <svg width="150" height="100" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Phoenix bird shape -->
+                    <g transform="translate(100,40)">
+                        <!-- Wings -->
+                        <path d="M-40,-20 L-60,-10 L-50,10 L-30,20 L0,0 Z" fill="#DC143C" opacity="0.9"/>
+                        <path d="M40,-20 L60,-10 L50,10 L30,20 L0,0 Z" fill="#DC143C" opacity="0.9"/>
+                        <!-- Body -->
+                        <path d="M0,-30 L-20,0 L0,30 L20,0 Z" fill="#FF0000"/>
+                        <!-- Head -->
+                        <circle cx="0" cy="-25" r="12" fill="#DC143C"/>
+                        <!-- Tail feathers -->
+                        <path d="M-10,20 L-15,40 L0,35 L15,40 L10,20" fill="#FF4500" opacity="0.8"/>
+                    </g>
+                    <!-- Company name -->
+                    <text x="100" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="bold">
+                        <tspan fill="#DC143C">PHOENIX</tspan><tspan fill="#333">•RCS</tspan>
+                    </text>
+                </svg>
+            `;
             
             // Generate photo pages
             let photoPages = '';
