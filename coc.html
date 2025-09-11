@@ -384,7 +384,7 @@
             
             <div class="button-group">
                 <button class="btn btn-primary" onclick="generatePreview()">Generate COC</button>
-                <button class="btn btn-secondary" onclick="printDocument()">📄 Print/Save PDF</button>
+                <button class="btn btn-secondary" onclick="downloadPDF()">📥 Download PDF</button>
             </div>
         </div>
         
@@ -580,15 +580,6 @@
             document.getElementById('previewContainer').scrollIntoView({ behavior: 'smooth' });
         }
         
-        function printDocument() {
-            if (document.getElementById('previewContainer').style.display === 'none') {
-                generatePreview();
-            }
-            setTimeout(() => {
-                window.print();
-            }, 500);
-        }
-        
         function downloadPDF() {
             if (document.getElementById('previewContainer').style.display === 'none') {
                 generatePreview();
@@ -598,12 +589,14 @@
             const today = new Date();
             const dateStr = `${today.getMonth()+1}-${today.getDate()}-${today.getFullYear()}`;
             const homeowner = document.getElementById('homeownerName').value || 'Client';
-            const filename = `COC_${homeowner.replace(/\s+/g, '_')}_${dateStr}.pdf`;
+            const filename = `COC_${homeowner.replace(/\s+/g, '_')}_${dateStr}`;
             
-            // Trigger print dialog with save as PDF option
+            // Use browser's print-to-PDF functionality
             setTimeout(() => {
+                const originalTitle = document.title;
+                document.title = filename;
                 window.print();
-                alert(`To save as PDF:\n\n1. Choose "Save as PDF" in the print dialog\n2. Name it: ${filename}\n3. This PDF can be edited using PDF editors on your phone`);
+                document.title = originalTitle;
             }, 500);
         }
         
