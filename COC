@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion Generator - PhoenixRCS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #444;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '📋';
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        input, textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* Logo Upload Section */
+        .logo-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .logo-upload-area {
+            border: 3px dashed #667eea;
+            padding: 30px;
+            border-radius: 10px;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .logo-upload-area:hover {
+            background: #f0f2ff;
+            border-color: #764ba2;
+        }
+        
+        .logo-preview {
+            max-width: 200px;
+            max-height: 150px;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        /* Enhanced Photo Section */
+        .photo-section {
+            margin-top: 30px;
+        }
+        
+        .drop-zone {
+            border: 3px dashed #667eea;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            min-height: 150px;
+        }
+        
+        .drop-zone:hover {
+            background: #f0f2ff;
+            border-color: #764ba2;
+        }
+        
+        .drop-zone.drag-over {
+            background: #e8ebff;
+            border-color: #4c5fd8;
+            transform: scale(1.02);
+        }
+        
+        .drop-zone-text {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .drop-zone-subtext {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: #f5f5f5;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 59, 48, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .photo-item .remove-btn:hover {
+            background: rgba(255, 59, 48, 1);
+            transform: scale(1.1);
+        }
+        
+        .photo-counter {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            margin-left: 10px;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+        
+        .button-group {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* Preview/Print Styles */
+        .preview-container {
+            display: none;
+            background: white;
+            padding: 60px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .preview-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .preview-logo {
+            max-width: 200px;
+            max-height: 150px;
+            margin: 0 auto 30px;
+            display: block;
+        }
+        
+        .preview-company-info {
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .preview-content {
+            line-height: 2;
+            color: #000;
+            font-size: 14px;
+        }
+        
+        .preview-content p {
+            margin-bottom: 15px;
+        }
+        
+        .divider-line {
+            border-bottom: 1px solid #000;
+            margin: 30px 0;
+        }
+        
+        /* Photo Pages in Preview */
+        .photo-page {
+            page-break-before: always;
+            padding-top: 40px;
+        }
+        
+        .photo-page-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .photo-page-item {
+            width: 100%;
+        }
+        
+        .photo-page-item img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .form-section,
+            .button-group {
+                display: none !important;
+            }
+            
+            .preview-container {
+                display: block !important;
+                box-shadow: none;
+                padding: 40px;
+                border-radius: 0;
+            }
+            
+            .photo-page {
+                page-break-before: always;
+            }
+            
+            .preview-logo {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .photo-page-item img {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h1>🔥 Certificate of Completion Generator</h1>
+            <p class="subtitle">Create professional COC documents with photos</p>
+            
+            <h2 style="border-color: #f5576c;">Company Logo</h2>
+            <div class="logo-section">
+                <div class="logo-upload-area" onclick="document.getElementById('logoUpload').click()">
+                    <div class="drop-zone-text">📸 Click to Upload Company Logo</div>
+                    <div class="drop-zone-subtext">Recommended: PNG or JPG, max 2MB</div>
+                    <input type="file" id="logoUpload" class="hidden" accept="image/*" onchange="handleLogoUpload(event)">
+                </div>
+                <div id="logoPreview" class="logo-preview"></div>
+            </div>
+            
+            <h2>Company Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="companyName" value="PhoenixRCS" placeholder="Enter company name">
+                </div>
+                <div class="form-group">
+                    <label>Company Address</label>
+                    <input type="text" id="companyAddress" value="10334 Vista Meadow Way, Lanham, MD 20706" placeholder="Enter company address">
+                </div>
+                <div class="form-group">
+                    <label>Company Email</label>
+                    <input type="email" id="companyEmail" value="management@phxrcs.com" placeholder="Enter company email">
+                </div>
+                <div class="form-group">
+                    <label>Company Phone</label>
+                    <input type="tel" id="companyPhone" value="301-450-9487" placeholder="Enter company phone">
+                </div>
+            </div>
+            
+            <h2>Project Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>COC Date</label>
+                    <input type="date" id="cocDate">
+                </div>
+                <div class="form-group">
+                    <label>Homeowner Name</label>
+                    <input type="text" id="homeownerName" placeholder="e.g., Meheret Habtewold">
+                </div>
+                <div class="form-group">
+                    <label>Property Address</label>
+                    <input type="text" id="propertyAddress" placeholder="e.g., 4344 Thistlewood Terrace, Burtons, MD 20866-1159">
+                </div>
+                <div class="form-group">
+                    <label>Insurance Company</label>
+                    <input type="text" id="insuranceCompany" placeholder="e.g., Allstate Insurance Company">
+                </div>
+                <div class="form-group">
+                    <label>Claim Number</label>
+                    <input type="text" id="claimNumber" placeholder="e.g., 0800288094">
+                </div>
+                <div class="form-group">
+                    <label>Contract Date</label>
+                    <input type="date" id="contractDate">
+                </div>
+            </div>
+            
+            <h2>Photo Documentation</h2>
+            <div class="photo-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-text">📁 Drag & Drop Photos Here</div>
+                    <div class="drop-zone-subtext">Or click to browse (Max 10 photos)</div>
+                    <input type="file" id="photoUpload" class="hidden" multiple accept="image/*" onchange="handlePhotoSelect(event)">
+                </div>
+                <div class="photo-counter" id="photoCounter">0 / 10 photos uploaded</div>
+                <div id="photoGrid" class="photo-grid"></div>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="generatePreview()">Generate COC</button>
+                <button class="btn btn-secondary" onclick="printDocument()">📄 Print/Save PDF</button>
+            </div>
+        </div>
+        
+        <div id="previewContainer" class="preview-container">
+            <!-- Preview content will be generated here -->
+        </div>
+    </div>
+    
+    <script>
+        let companyLogo = null;
+        let uploadedPhotos = [];
+        const MAX_PHOTOS = 10;
+        
+        // Auto-load PhoenixRCS logo from GitHub
+        window.addEventListener('DOMContentLoaded', function() {
+            const phoenixLogoURL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
+            
+            // Create an image to test if the logo loads
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            img.onload = function() {
+                // Create canvas to convert image to base64
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                
+                try {
+                    companyLogo = canvas.toDataURL('image/png');
+                    const preview = document.getElementById('logoPreview');
+                    preview.innerHTML = `<img src="${companyLogo}" alt="PhoenixRCS Logo">`;
+                    preview.style.display = 'block';
+                    
+                    // Update the logo upload text
+                    document.querySelector('.logo-upload-area .drop-zone-text').textContent = '📸 Click to Change Company Logo';
+                    document.querySelector('.logo-upload-area .drop-zone-subtext').textContent = 'PhoenixRCS logo loaded (click to replace)';
+                } catch(e) {
+                    // If CORS prevents canvas conversion, use the URL directly
+                    companyLogo = phoenixLogoURL;
+                    const preview = document.getElementById('logoPreview');
+                    preview.innerHTML = `<img src="${companyLogo}" alt="PhoenixRCS Logo">`;
+                    preview.style.display = 'block';
+                    
+                    document.querySelector('.logo-upload-area .drop-zone-text').textContent = '📸 Click to Change Company Logo';
+                    document.querySelector('.logo-upload-area .drop-zone-subtext').textContent = 'PhoenixRCS logo loaded (click to replace)';
+                }
+            };
+            
+            img.onerror = function() {
+                console.log('Could not load PhoenixRCS logo from GitHub. You can upload your own logo.');
+            };
+            
+            img.src = phoenixLogoURL;
+        });
+        
+        // Initialize drag and drop
+        const dropZone = document.getElementById('dropZone');
+        
+        dropZone.addEventListener('click', () => {
+            document.getElementById('photoUpload').click();
+        });
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            processPhotos(files);
+        });
+        
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    companyLogo = e.target.result;
+                    const preview = document.getElementById('logoPreview');
+                    preview.innerHTML = `<img src="${companyLogo}" alt="Company Logo">`;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function handlePhotoSelect(event) {
+            const files = Array.from(event.target.files);
+            processPhotos(files);
+        }
+        
+        function processPhotos(files) {
+            const remainingSlots = MAX_PHOTOS - uploadedPhotos.length;
+            const filesToAdd = files.slice(0, remainingSlots);
+            
+            if (files.length > remainingSlots) {
+                showError(`Only ${remainingSlots} more photo(s) can be added. Maximum is ${MAX_PHOTOS} photos.`);
+            }
+            
+            filesToAdd.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedPhotos.push({
+                            id: Date.now() + Math.random(),
+                            data: e.target.result,
+                            name: file.name
+                        });
+                        updatePhotoGrid();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        function removePhoto(photoId) {
+            uploadedPhotos = uploadedPhotos.filter(photo => photo.id !== photoId);
+            updatePhotoGrid();
+        }
+        
+        function updatePhotoGrid() {
+            const grid = document.getElementById('photoGrid');
+            grid.innerHTML = '';
+            
+            uploadedPhotos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                item.innerHTML = `
+                    <img src="${photo.data}" alt="${photo.name}">
+                    <button class="remove-btn" onclick="removePhoto(${photo.id})">×</button>
+                `;
+                grid.appendChild(item);
+            });
+            
+            document.getElementById('photoCounter').textContent = `${uploadedPhotos.length} / ${MAX_PHOTOS} photos uploaded`;
+            hideError();
+        }
+        
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(hideError, 5000);
+        }
+        
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return '___________';
+            const date = new Date(dateString);
+            return (date.getMonth() + 1) + '/' + date.getDate() + '/' + (date.getFullYear() % 100);
+        }
+        
+        function generatePreview() {
+            const companyName = document.getElementById('companyName').value || 'PhoenixRCS';
+            const companyAddress = document.getElementById('companyAddress').value || '10334 Vista Meadow Way, Lanham, MD 20706';
+            const companyEmail = document.getElementById('companyEmail').value || 'management@phxrcs.com';
+            const companyPhone = document.getElementById('companyPhone').value || '301-450-9487';
+            const cocDate = document.getElementById('cocDate').value;
+            const homeownerName = document.getElementById('homeownerName').value || '[Homeowner Name]';
+            const propertyAddress = document.getElementById('propertyAddress').value || '[Property Address]';
+            const insuranceCompany = document.getElementById('insuranceCompany').value || '[Insurance Company]';
+            const claimNumber = document.getElementById('claimNumber').value || '[Claim Number]';
+            const contractDate = document.getElementById('contractDate').value;
+            
+            // Logo HTML - use uploaded logo or default Phoenix logo
+            let logoHTML = '';
+            if (companyLogo) {
+                logoHTML = `<img src="${companyLogo}" alt="Company Logo" class="preview-logo">`;
+            } else {
+                // Default Phoenix-style logo
+                logoHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="display: inline-block; padding: 20px;">
+                            <div style="font-size: 48px; color: #DC143C; font-weight: bold; font-family: 'Arial Black', sans-serif;">
+                                🔥 PHOENIX<span style="color: #333;">RCS</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Generate photo pages
+            let photoPages = '';
+            if (uploadedPhotos.length > 0) {
+                // Arrange photos in pages of 4 (2x2 grid)
+                for (let i = 0; i < uploadedPhotos.length; i += 4) {
+                    photoPages += '<div class="photo-page">';
+                    photoPages += '<div class="photo-page-grid">';
+                    
+                    for (let j = i; j < Math.min(i + 4, uploadedPhotos.length); j++) {
+                        photoPages += `
+                            <div class="photo-page-item">
+                                <img src="${uploadedPhotos[j].data}" alt="Project Photo ${j + 1}">
+                            </div>
+                        `;
+                    }
+                    
+                    // Fill empty spots if less than 4 photos on this page
+                    const photosOnThisPage = Math.min(4, uploadedPhotos.length - i);
+                    for (let k = photosOnThisPage; k < 4; k++) {
+                        photoPages += '<div class="photo-page-item"></div>';
+                    }
+                    
+                    photoPages += '</div>';
+                    photoPages += '</div>';
+                }
+            }
+            
+            const previewHTML = `
+                <div class="preview-header">
+                    ${logoHTML}
+                </div>
+                
+                <div class="preview-company-info">
+                    <strong>${companyAddress}</strong><br>
+                    ${companyEmail}<br>
+                    ${companyPhone}
+                </div>
+                
+                <div class="preview-content">
+                    <p>${formatDate(cocDate)}</p>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <p>
+                        <strong>Re:</strong> ${homeownerName}<br>
+                        ${propertyAddress}
+                    </p>
+                    
+                    <p>
+                        <strong>Attn:</strong> ${insuranceCompany}<br>
+                        <strong>Per:</strong> Claim # ${claimNumber}
+                    </p>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <p style="margin-top: 30px;">
+                        All work on this Contract has been satisfactorily completed and is accepted as complete, 
+                        subject to the terms and conditions of Contract and Specifications dated on <strong>${formatDate(contractDate)}</strong> 
+                        between homeowner and <strong>${companyName}</strong>. Proof of work completed for insured. Please remit 
+                        recoverable depreciation to insured;
+                    </p>
+                </div>
+                
+                ${photoPages}
+            `;
+            
+            document.getElementById('previewContainer').innerHTML = previewHTML;
+            document.getElementById('previewContainer').style.display = 'block';
+            
+            // Scroll to preview
+            document.getElementById('previewContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function printDocument() {
+            if (document.getElementById('previewContainer').style.display === 'none') {
+                generatePreview();
+            }
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+        
+        // Set today's date as default for COC date
+        document.getElementById('cocDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
