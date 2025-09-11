@@ -688,14 +688,8 @@
                     y += 10;
                 }
                 
-                // Signature Section
-                if (y < 240) {
-                    y = 240;
-                }
-                
-                // Draw only Customer signature box (removed Rep signature)
-                doc.rect(105, y, 80, 20);
-                doc.text('Customer Signature', 145, y + 25, { align: 'center' });
+                // Signature Section - removed all signature boxes from page 1
+                // (Signatures will only appear on page 2)
                 
                 // Page 2 - Terms and Conditions
                 doc.addPage();
@@ -811,8 +805,8 @@
                     y += 10;
                 }
                 
-                // Bottom signatures
-                y = 250;
+                // Bottom signatures - continue from current position
+                y = y + 20;  // Just add some space after the last paragraph
                 doc.text('Contractor: ' + (formData.get('contractorName') || 'Phoenix R&C Solutions'), 15, y);
                 doc.text('Client Name: ' + clientName, 110, y);
                 
