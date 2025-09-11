@@ -93,7 +93,6 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
-        /* Photo Section */
         .photo-section {
             margin-top: 30px;
         }
@@ -227,7 +226,6 @@
             margin-top: 40px;
         }
         
-        /* Preview/Print Styles */
         .preview-container {
             display: none;
             background: white;
@@ -252,7 +250,6 @@
             margin: 30px 0;
         }
         
-        /* Photo Pages in Preview */
         .photo-page {
             page-break-before: always;
             padding-top: 40px;
@@ -329,19 +326,19 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>Company Name</label>
-                    <input type="text" id="companyName" value="PhoenixRCS" placeholder="Enter company name">
+                    <input type="text" id="companyName" placeholder="e.g., PhoenixRCS">
                 </div>
                 <div class="form-group">
                     <label>Company Address</label>
-                    <input type="text" id="companyAddress" value="10334 Vista Meadow Way, Lanham, MD 20706" placeholder="Enter company address">
+                    <input type="text" id="companyAddress" placeholder="e.g., 10334 Vista Meadow Way, Lanham, MD 20706">
                 </div>
                 <div class="form-group">
                     <label>Company Email</label>
-                    <input type="email" id="companyEmail" value="management@phxrcs.com" placeholder="Enter company email">
+                    <input type="email" id="companyEmail" placeholder="e.g., management@phxrcs.com">
                 </div>
                 <div class="form-group">
                     <label>Company Phone</label>
-                    <input type="tel" id="companyPhone" value="301-450-9487" placeholder="Enter company phone">
+                    <input type="tel" id="companyPhone" placeholder="e.g., 301-450-9487">
                 </div>
             </div>
             
@@ -397,40 +394,8 @@
     </div>
     
     <script>
-        let companyLogo = null;
         let uploadedPhotos = [];
         const MAX_PHOTOS = 10;
-        
-        // Auto-load PhoenixRCS logo from GitHub
-        window.addEventListener('DOMContentLoaded', function() {
-            const phoenixLogoURL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
-            
-            // Create an image to test if the logo loads
-            const img = new Image();
-            img.crossOrigin = 'anonymous';
-            
-            img.onload = function() {
-                // Create canvas to convert image to base64
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                
-                try {
-                    companyLogo = canvas.toDataURL('image/png');
-                } catch(e) {
-                    // If CORS prevents canvas conversion, use the URL directly
-                    companyLogo = phoenixLogoURL;
-                }
-            };
-            
-            img.onerror = function() {
-                console.log('Could not load PhoenixRCS logo from GitHub.');
-            };
-            
-            img.src = phoenixLogoURL;
-        });
         
         // Initialize drag and drop
         const dropZone = document.getElementById('dropZone');
@@ -526,10 +491,10 @@
         }
         
         function generatePreview() {
-            const companyName = document.getElementById('companyName').value || 'PhoenixRCS';
-            const companyAddress = document.getElementById('companyAddress').value || '10334 Vista Meadow Way, Lanham, MD 20706';
-            const companyEmail = document.getElementById('companyEmail').value || 'management@phxrcs.com';
-            const companyPhone = document.getElementById('companyPhone').value || '301-450-9487';
+            const companyName = document.getElementById('companyName').value || '[Company Name]';
+            const companyAddress = document.getElementById('companyAddress').value || '[Company Address]';
+            const companyEmail = document.getElementById('companyEmail').value || '[Company Email]';
+            const companyPhone = document.getElementById('companyPhone').value || '[Company Phone]';
             const cocDate = document.getElementById('cocDate').value;
             const homeownerName = document.getElementById('homeownerName').value || '[Homeowner Name]';
             const propertyAddress = document.getElementById('propertyAddress').value || '[Property Address]';
@@ -537,32 +502,20 @@
             const claimNumber = document.getElementById('claimNumber').value || '[Claim Number]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // Embedded Phoenix logo as SVG - this WILL work
+            // Phoenix logo - simple text-based logo that WILL show
             const logoHTML = `
-                <svg width="150" height="100" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Phoenix bird shape -->
-                    <g transform="translate(100,40)">
-                        <!-- Wings -->
-                        <path d="M-40,-20 L-60,-10 L-50,10 L-30,20 L0,0 Z" fill="#DC143C" opacity="0.9"/>
-                        <path d="M40,-20 L60,-10 L50,10 L30,20 L0,0 Z" fill="#DC143C" opacity="0.9"/>
-                        <!-- Body -->
-                        <path d="M0,-30 L-20,0 L0,30 L20,0 Z" fill="#FF0000"/>
-                        <!-- Head -->
-                        <circle cx="0" cy="-25" r="12" fill="#DC143C"/>
-                        <!-- Tail feathers -->
-                        <path d="M-10,20 L-15,40 L0,35 L15,40 L10,20" fill="#FF4500" opacity="0.8"/>
-                    </g>
-                    <!-- Company name -->
-                    <text x="100" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="bold">
-                        <tspan fill="#DC143C">PHOENIX</tspan><tspan fill="#333">•RCS</tspan>
-                    </text>
-                </svg>
+                <div style="text-align: right;">
+                    <div style="display: inline-block; border: 3px solid #DC143C; padding: 10px 20px; background: white;">
+                        <div style="font-family: Arial Black, sans-serif; font-size: 24px; font-weight: bold;">
+                            <span style="color: #DC143C;">PHOENIX</span><span style="color: #333;">•RCS</span>
+                        </div>
+                    </div>
+                </div>
             `;
             
             // Generate photo pages
             let photoPages = '';
             if (uploadedPhotos.length > 0) {
-                // Arrange photos in pages of 4 (2x2 grid)
                 for (let i = 0; i < uploadedPhotos.length; i += 4) {
                     photoPages += '<div class="photo-page">';
                     photoPages += '<div class="photo-page-grid">';
@@ -575,7 +528,6 @@
                         `;
                     }
                     
-                    // Fill empty spots if less than 4 photos on this page
                     const photosOnThisPage = Math.min(4, uploadedPhotos.length - i);
                     for (let k = photosOnThisPage; k < 4; k++) {
                         photoPages += '<div class="photo-page-item"></div>';
@@ -587,11 +539,9 @@
             }
             
             const previewHTML = `
-                <div style="text-align: right; margin-bottom: 30px;">
-                    ${logoHTML}
-                </div>
+                ${logoHTML}
                 
-                <div style="text-align: left; margin-bottom: 30px;">
+                <div style="margin-top: 30px; margin-bottom: 30px;">
                     <strong>${companyAddress}</strong><br>
                     ${companyEmail}<br>
                     ${companyPhone}
@@ -627,8 +577,6 @@
             
             document.getElementById('previewContainer').innerHTML = previewHTML;
             document.getElementById('previewContainer').style.display = 'block';
-            
-            // Scroll to preview
             document.getElementById('previewContainer').scrollIntoView({ behavior: 'smooth' });
         }
         
