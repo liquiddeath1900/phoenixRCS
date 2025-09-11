@@ -368,6 +368,15 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Contractor Information -->
+            <div class="section">
+                <h3>Contractor Information</h3>
+                <div class="form-group">
+                    <label>Contractor/Worker Name</label>
+                    <input type="text" name="contractorName" placeholder="Name of contractor who performed the work">
+                </div>
+            </div>
         </form>
 
         <div class="action-buttons">
@@ -684,11 +693,9 @@
                     y = 240;
                 }
                 
-                // Draw signature boxes
-                doc.rect(15, y, 80, 20);
-                doc.rect(115, y, 80, 20);
-                doc.text('Customer Rep Signature', 55, y + 25, { align: 'center' });
-                doc.text('Customer Signature', 155, y + 25, { align: 'center' });
+                // Draw only Customer signature box (removed Rep signature)
+                doc.rect(105, y, 80, 20);
+                doc.text('Customer Signature', 145, y + 25, { align: 'center' });
                 
                 // Page 2 - Terms and Conditions
                 doc.addPage();
@@ -806,7 +813,7 @@
                 
                 // Bottom signatures
                 y = 250;
-                doc.text('Contractor Name: Phoenix R&C Solutions', 15, y);
+                doc.text('Contractor: ' + (formData.get('contractorName') || 'Phoenix R&C Solutions'), 15, y);
                 doc.text('Client Name: ' + clientName, 110, y);
                 
                 y += 10;
