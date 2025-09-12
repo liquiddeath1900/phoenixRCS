@@ -510,41 +510,12 @@
             const claimNumber = document.getElementById('claimNumber').value || '[Claim Number Required]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // PhoenixRCS logo embedded as SVG
+            // Simple text-based header for better PDF compatibility
             const logoHTML = `
-                <div style="text-align: right; margin-bottom: 20px;">
-                    <svg width="180" height="120" viewBox="0 0 1080 900" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Phoenix Bird Shape -->
-                        <g transform="translate(540,350)">
-                            <!-- Left wing upper -->
-                            <path d="M -200,-50 L -50,0 L -50,30 L -220,-20 Z" fill="#cc2233"/>
-                            <!-- Left wing lower -->
-                            <path d="M -180,20 L -50,60 L -50,90 L -200,40 Z" fill="#cc2233"/>
-                            
-                            <!-- Right wing upper -->
-                            <path d="M 200,-50 L 50,0 L 50,30 L 220,-20 Z" fill="#cc2233"/>
-                            <!-- Right wing lower -->
-                            <path d="M 180,20 L 50,60 L 50,90 L 200,40 Z" fill="#cc2233"/>
-                            
-                            <!-- Center V shape -->
-                            <path d="M -80,100 L 0,180 L 80,100 L 40,100 L 0,140 L -40,100 Z" fill="#cc2233"/>
-                            
-                            <!-- Wing details -->
-                            <path d="M -150,-30 L -100,-10 L -100,10 L -160,-10 Z" fill="#cc2233"/>
-                            <path d="M 150,-30 L 100,-10 L 100,10 L 160,-10 Z" fill="#cc2233"/>
-                            
-                            <path d="M -130,30 L -80,50 L -80,70 L -140,50 Z" fill="#cc2233"/>
-                            <path d="M 130,30 L 80,50 L 80,70 L 140,50 Z" fill="#cc2233"/>
-                            
-                            <!-- Center diamond -->
-                            <path d="M 0,120 L -30,150 L 0,180 L 30,150 Z" fill="#cc2233"/>
-                        </g>
-                        
-                        <!-- PHOENIX RCS Text -->
-                        <text x="540" y="650" font-family="Arial, sans-serif" font-size="120" font-weight="bold" text-anchor="middle" fill="#000">
-                            PHOENIX<tspan font-size="90">•</tspan>RCS
-                        </text>
-                    </svg>
+                <div style="text-align: right; margin-bottom: 30px; padding: 20px; border: 2px solid #DC143C;">
+                    <div style="font-size: 28px; font-weight: bold; color: #DC143C; font-family: Arial, sans-serif;">
+                        PHOENIX•RCS
+                    </div>
                 </div>
             `;
             
@@ -553,6 +524,7 @@
             if (uploadedPhotos.length > 0) {
                 for (let i = 0; i < uploadedPhotos.length; i += 4) {
                     photoPages += '<div class="photo-page">';
+                    photoPages += '<h3 style="text-align: center; margin-bottom: 20px;">Project Documentation</h3>';
                     photoPages += '<div class="photo-page-grid">';
                     
                     for (let j = i; j < Math.min(i + 4, uploadedPhotos.length); j++) {
@@ -576,30 +548,30 @@
             const previewHTML = `
                 ${logoHTML}
                 
-                <div style="margin-top: 30px; margin-bottom: 30px;">
+                <div style="margin-bottom: 30px; font-size: 14px; line-height: 1.6;">
                     <strong>${companyAddress}</strong><br>
                     ${companyEmail}<br>
                     ${companyPhone}
                 </div>
                 
-                <div class="preview-content">
-                    <p>${formatDate(cocDate)}</p>
+                <div class="preview-content" style="font-size: 14px; line-height: 2;">
+                    <p style="margin-bottom: 20px;">${formatDate(cocDate)}</p>
                     
-                    <div class="divider-line"></div>
+                    <hr style="border: none; border-bottom: 1px solid #000; margin: 30px 0;">
                     
-                    <p>
+                    <p style="margin-bottom: 15px;">
                         <strong>Re:</strong> ${homeownerName}<br>
                         ${propertyAddress}
                     </p>
                     
-                    <p>
+                    <p style="margin-bottom: 15px;">
                         <strong>Attn:</strong> ${insuranceCompany}<br>
                         <strong>Per:</strong> Claim # ${claimNumber}
                     </p>
                     
-                    <div class="divider-line"></div>
+                    <hr style="border: none; border-bottom: 1px solid #000; margin: 30px 0;">
                     
-                    <p style="margin-top: 30px;">
+                    <p style="margin-top: 30px; line-height: 2;">
                         All work on this Contract has been satisfactorily completed and is accepted as complete, 
                         subject to the terms and conditions of Contract and Specifications dated on <strong>${formatDate(contractDate)}</strong> 
                         between homeowner and <strong>${companyName}</strong>. Proof of work completed for insured. Please remit 
