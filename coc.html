@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of Completion Generator - PhoenixRCS</title>
+    <title>PhoenixRCS - Certificate of Completion Generator</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,13 @@
         
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
@@ -28,34 +28,34 @@
             padding: 40px;
             border-radius: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
         }
         
         h1 {
-            color: #333;
+            color: #DC143C;
             margin-bottom: 10px;
-            text-align: center;
             font-size: 2.5em;
         }
         
-        .subtitle {
+        .company-info {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
         }
         
         h2 {
-            color: #444;
+            color: #333;
             margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #DC143C;
             padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        h2::before {
-            content: '📋';
         }
         
         .form-grid {
@@ -79,7 +79,7 @@
             letter-spacing: 0.5px;
         }
         
-        input, textarea {
+        input {
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
@@ -87,10 +87,15 @@
             transition: all 0.3s;
         }
         
-        input:focus, textarea:focus {
+        input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #DC143C;
+            box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+        }
+        
+        input[readonly] {
+            background: #f5f5f5;
+            cursor: not-allowed;
         }
         
         .photo-section {
@@ -98,11 +103,11 @@
         }
         
         .drop-zone {
-            border: 3px dashed #667eea;
+            border: 3px dashed #DC143C;
             padding: 40px;
             text-align: center;
             border-radius: 10px;
-            background: #f8f9ff;
+            background: #fff5f5;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
@@ -110,13 +115,13 @@
         }
         
         .drop-zone:hover {
-            background: #f0f2ff;
-            border-color: #764ba2;
+            background: #ffe5e5;
+            border-color: #8B0000;
         }
         
         .drop-zone.drag-over {
-            background: #e8ebff;
-            border-color: #4c5fd8;
+            background: #ffcccc;
+            border-color: #8B0000;
             transform: scale(1.02);
         }
         
@@ -177,7 +182,7 @@
         }
         
         .photo-counter {
-            background: #667eea;
+            background: #DC143C;
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
@@ -199,26 +204,28 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #DC143C;
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
         }
         
         .btn-primary:hover {
+            background: #8B0000;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
         }
         
         .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #28a745;
             color: white;
             margin-left: 10px;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
         
         .btn-secondary:hover {
+            background: #218838;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
         
         .button-group {
@@ -319,61 +326,56 @@
 <body>
     <div class="container">
         <div class="form-section">
-            <h1>🔥 Certificate of Completion Generator</h1>
-            <p class="subtitle">Create professional COC documents with photos</p>
-            
-            <h2>Company Information</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Company Name</label>
-                    <input type="text" id="companyName" placeholder="e.g., PhoenixRCS">
-                </div>
-                <div class="form-group">
-                    <label>Company Address</label>
-                    <input type="text" id="companyAddress" placeholder="e.g., 10334 Vista Meadow Way, Lanham, MD 20706">
-                </div>
-                <div class="form-group">
-                    <label>Company Email</label>
-                    <input type="email" id="companyEmail" placeholder="e.g., management@phxrcs.com">
-                </div>
-                <div class="form-group">
-                    <label>Company Phone</label>
-                    <input type="tel" id="companyPhone" placeholder="e.g., 301-450-9487">
-                </div>
+            <div class="header">
+                <h1>Certificate of Completion Generator</h1>
             </div>
             
-            <h2>Project Information</h2>
+            <div class="company-info">
+                <strong>PhoenixRCS</strong><br>
+                10334 Vista Meadow Way, Lanham, MD 20706<br>
+                management@phxrcs.com | 301-450-9487
+            </div>
+            
+            <h2>📋 Project Information</h2>
             <div class="form-grid">
                 <div class="form-group">
                     <label>COC Date</label>
-                    <input type="date" id="cocDate">
+                    <input type="date" id="cocDate" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Homeowner Name</label>
-                    <input type="text" id="homeownerName" placeholder="e.g., Meheret Habtewold">
-                </div>
-                <div class="form-group">
-                    <label>Property Address</label>
-                    <input type="text" id="propertyAddress" placeholder="e.g., 4344 Thistlewood Terrace, Burtons, MD 20866-1159">
-                </div>
-                <div class="form-group">
-                    <label>Insurance Company</label>
-                    <input type="text" id="insuranceCompany" placeholder="e.g., Allstate Insurance Company">
-                </div>
-                <div class="form-group">
-                    <label>Claim Number</label>
-                    <input type="text" id="claimNumber" placeholder="e.g., 0800288094">
-                </div>
-                <div class="form-group">
-                    <label>Contract Date</label>
-                    <input type="date" id="contractDate">
+                    <label>Contract Completion Date</label>
+                    <input type="date" id="contractDate" required>
                 </div>
             </div>
             
-            <h2>Photo Documentation</h2>
+            <h2>🏠 Client Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Homeowner Name</label>
+                    <input type="text" id="homeownerName" placeholder="Enter client's full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Property Address</label>
+                    <input type="text" id="propertyAddress" placeholder="Enter property address" required>
+                </div>
+            </div>
+            
+            <h2>🛡️ Insurance Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Insurance Company</label>
+                    <input type="text" id="insuranceCompany" placeholder="e.g., Allstate Insurance Company" required>
+                </div>
+                <div class="form-group">
+                    <label>Claim Number</label>
+                    <input type="text" id="claimNumber" placeholder="Enter claim number" required>
+                </div>
+            </div>
+            
+            <h2>📸 Photo Documentation</h2>
             <div class="photo-section">
                 <div class="drop-zone" id="dropZone">
-                    <div class="drop-zone-text">📁 Drag & Drop Photos Here</div>
+                    <div class="drop-zone-text">📁 Drag & Drop Before/After Photos Here</div>
                     <div class="drop-zone-subtext">Or click to browse (Max 10 photos)</div>
                     <input type="file" id="photoUpload" class="hidden" multiple accept="image/*" onchange="handlePhotoSelect(event)">
                 </div>
@@ -396,6 +398,9 @@
     <script>
         let uploadedPhotos = [];
         const MAX_PHOTOS = 10;
+        
+        // Set today's date automatically
+        document.getElementById('cocDate').valueAsDate = new Date();
         
         // Initialize drag and drop
         const dropZone = document.getElementById('dropZone');
@@ -491,25 +496,55 @@
         }
         
         function generatePreview() {
-            const companyName = document.getElementById('companyName').value || '[Company Name]';
-            const companyAddress = document.getElementById('companyAddress').value || '[Company Address]';
-            const companyEmail = document.getElementById('companyEmail').value || '[Company Email]';
-            const companyPhone = document.getElementById('companyPhone').value || '[Company Phone]';
+            // PhoenixRCS company info is hardcoded
+            const companyName = 'PhoenixRCS';
+            const companyAddress = '10334 Vista Meadow Way, Lanham, MD 20706';
+            const companyEmail = 'management@phxrcs.com';
+            const companyPhone = '301-450-9487';
+            
+            // Get form values
             const cocDate = document.getElementById('cocDate').value;
-            const homeownerName = document.getElementById('homeownerName').value || '[Homeowner Name]';
-            const propertyAddress = document.getElementById('propertyAddress').value || '[Property Address]';
-            const insuranceCompany = document.getElementById('insuranceCompany').value || '[Insurance Company]';
-            const claimNumber = document.getElementById('claimNumber').value || '[Claim Number]';
+            const homeownerName = document.getElementById('homeownerName').value || '[Homeowner Name Required]';
+            const propertyAddress = document.getElementById('propertyAddress').value || '[Property Address Required]';
+            const insuranceCompany = document.getElementById('insuranceCompany').value || '[Insurance Company Required]';
+            const claimNumber = document.getElementById('claimNumber').value || '[Claim Number Required]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // Phoenix logo - simple text-based logo that WILL show
+            // PhoenixRCS logo embedded as SVG
             const logoHTML = `
-                <div style="text-align: right;">
-                    <div style="display: inline-block; border: 3px solid #DC143C; padding: 10px 20px; background: white;">
-                        <div style="font-family: Arial Black, sans-serif; font-size: 24px; font-weight: bold;">
-                            <span style="color: #DC143C;">PHOENIX</span><span style="color: #333;">•RCS</span>
-                        </div>
-                    </div>
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <svg width="180" height="120" viewBox="0 0 1080 900" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Phoenix Bird Shape -->
+                        <g transform="translate(540,350)">
+                            <!-- Left wing upper -->
+                            <path d="M -200,-50 L -50,0 L -50,30 L -220,-20 Z" fill="#cc2233"/>
+                            <!-- Left wing lower -->
+                            <path d="M -180,20 L -50,60 L -50,90 L -200,40 Z" fill="#cc2233"/>
+                            
+                            <!-- Right wing upper -->
+                            <path d="M 200,-50 L 50,0 L 50,30 L 220,-20 Z" fill="#cc2233"/>
+                            <!-- Right wing lower -->
+                            <path d="M 180,20 L 50,60 L 50,90 L 200,40 Z" fill="#cc2233"/>
+                            
+                            <!-- Center V shape -->
+                            <path d="M -80,100 L 0,180 L 80,100 L 40,100 L 0,140 L -40,100 Z" fill="#cc2233"/>
+                            
+                            <!-- Wing details -->
+                            <path d="M -150,-30 L -100,-10 L -100,10 L -160,-10 Z" fill="#cc2233"/>
+                            <path d="M 150,-30 L 100,-10 L 100,10 L 160,-10 Z" fill="#cc2233"/>
+                            
+                            <path d="M -130,30 L -80,50 L -80,70 L -140,50 Z" fill="#cc2233"/>
+                            <path d="M 130,30 L 80,50 L 80,70 L 140,50 Z" fill="#cc2233"/>
+                            
+                            <!-- Center diamond -->
+                            <path d="M 0,120 L -30,150 L 0,180 L 30,150 Z" fill="#cc2233"/>
+                        </g>
+                        
+                        <!-- PHOENIX RCS Text -->
+                        <text x="540" y="650" font-family="Arial, sans-serif" font-size="120" font-weight="bold" text-anchor="middle" fill="#000">
+                            PHOENIX<tspan font-size="90">•</tspan>RCS
+                        </text>
+                    </svg>
                 </div>
             `;
             
@@ -599,9 +634,6 @@
                 document.title = originalTitle;
             }, 500);
         }
-        
-        // Set today's date as default for COC date
-        document.getElementById('cocDate').valueAsDate = new Date();
     </script>
 </body>
 </html>
