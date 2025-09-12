@@ -498,7 +498,8 @@
         function generatePreview() {
             // PhoenixRCS company info is hardcoded
             const companyName = 'PhoenixRCS';
-            const companyAddress = '10334 Vista Meadow Way, Lanham, MD 20706';
+            const companyAddress = '10334 Vista Meadow Way';
+            const cityStateZip = 'Lanham, MD 20706';
             const companyEmail = 'management@phxrcs.com';
             const companyPhone = '301-450-9487';
             
@@ -510,34 +511,20 @@
             const claimNumber = document.getElementById('claimNumber').value || '[Claim Number Required]';
             const contractDate = document.getElementById('contractDate').value;
             
-            // Simple text-based header for better PDF compatibility
-            const logoHTML = `
-                <div style="text-align: right; margin-bottom: 30px; padding: 20px; border: 2px solid #DC143C;">
-                    <div style="font-size: 28px; font-weight: bold; color: #DC143C; font-family: Arial, sans-serif;">
-                        PHOENIX•RCS
-                    </div>
-                </div>
-            `;
-            
             // Generate photo pages
             let photoPages = '';
             if (uploadedPhotos.length > 0) {
+                // Create photo pages with 4 photos per page (2x2 grid)
                 for (let i = 0; i < uploadedPhotos.length; i += 4) {
-                    photoPages += '<div class="photo-page">';
-                    photoPages += '<h3 style="text-align: center; margin-bottom: 20px;">Project Documentation</h3>';
-                    photoPages += '<div class="photo-page-grid">';
+                    photoPages += '<div style="page-break-before: always; padding: 40px;">';
+                    photoPages += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 100%;">';
                     
                     for (let j = i; j < Math.min(i + 4, uploadedPhotos.length); j++) {
                         photoPages += `
-                            <div class="photo-page-item">
-                                <img src="${uploadedPhotos[j].data}" alt="Project Photo ${j + 1}">
+                            <div style="width: 100%; height: 350px; overflow: hidden; border: 1px solid #ddd;">
+                                <img src="${uploadedPhotos[j].data}" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                         `;
-                    }
-                    
-                    const photosOnThisPage = Math.min(4, uploadedPhotos.length - i);
-                    for (let k = photosOnThisPage; k < 4; k++) {
-                        photoPages += '<div class="photo-page-item"></div>';
                     }
                     
                     photoPages += '</div>';
@@ -545,38 +532,51 @@
                 }
             }
             
+            // Format similar to original PDF
             const previewHTML = `
-                ${logoHTML}
-                
-                <div style="margin-bottom: 30px; font-size: 14px; line-height: 1.6;">
-                    <strong>${companyAddress}</strong><br>
-                    ${companyEmail}<br>
-                    ${companyPhone}
-                </div>
-                
-                <div class="preview-content" style="font-size: 14px; line-height: 2;">
-                    <p style="margin-bottom: 20px;">${formatDate(cocDate)}</p>
+                <div style="padding: 40px; font-family: Arial, sans-serif; font-size: 13px; line-height: 1.5; color: #000;">
                     
-                    <hr style="border: none; border-bottom: 1px solid #000; margin: 30px 0;">
+                    <!-- Company Header - Left Aligned like original -->
+                    <div style="margin-bottom: 40px;">
+                        <div style="font-weight: bold;">${companyAddress}</div>
+                        <div style="font-weight: bold;">${cityStateZip}</div>
+                        <div>${companyEmail}</div>
+                        <div>${companyPhone}</div>
+                    </div>
                     
-                    <p style="margin-bottom: 15px;">
+                    <!-- Date and Divider -->
+                    <div style="margin-bottom: 20px;">
+                        ${formatDate(cocDate)}
+                    </div>
+                    
+                    <div style="border-bottom: 1px solid #000; margin: 20px 0 20px 0; width: 100%;"></div>
+                    
+                    <!-- Recipient Information -->
+                    <div style="margin-bottom: 20px;">
                         <strong>Re:</strong> ${homeownerName}<br>
-                        ${propertyAddress}
-                    </p>
+                        <div style="margin-left: 25px;">
+                            ${propertyAddress}
+                        </div>
+                    </div>
                     
-                    <p style="margin-bottom: 15px;">
-                        <strong>Attn:</strong> ${insuranceCompany}<br>
+                    <!-- Insurance Information -->
+                    <div style="margin-bottom: 20px;">
+                        <strong>Attn:</strong> ${insuranceCompany}
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
                         <strong>Per:</strong> Claim # ${claimNumber}
-                    </p>
+                    </div>
                     
-                    <hr style="border: none; border-bottom: 1px solid #000; margin: 30px 0;">
+                    <div style="border-bottom: 1px solid #000; margin: 20px 0 30px 0; width: 100%;"></div>
                     
-                    <p style="margin-top: 30px; line-height: 2;">
+                    <!-- Certificate Text -->
+                    <div style="text-align: justify; line-height: 1.8;">
                         All work on this Contract has been satisfactorily completed and is accepted as complete, 
                         subject to the terms and conditions of Contract and Specifications dated on <strong>${formatDate(contractDate)}</strong> 
-                        between homeowner and <strong>${companyName}</strong>. Proof of work completed for insured. Please remit 
+                        between homeowner and ${companyName}. Proof of work completed for insured. Please remit 
                         recoverable depreciation to insured;
-                    </p>
+                    </div>
                 </div>
                 
                 ${photoPages}
