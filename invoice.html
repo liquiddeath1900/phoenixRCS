@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+/* Preview Section - Hidden until print */
+        .preview-section {
+            display: none;
+            background: white;
+            padding: 40px;
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,15 +23,12 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 900px;
             margin: 0 auto;
-            display: flex;
-            gap: 30px;
         }
         
         /* Form Section */
         .form-section {
-            flex: 1;
             background: white;
             padding: 30px;
             border-radius: 8px;
@@ -107,7 +109,8 @@
         }
         
         .line-item .description {
-            flex: 3;
+            flex: 4;
+            min-width: 300px;
         }
         
         .btn {
@@ -152,14 +155,17 @@
             background: #b91c1c;
         }
         
-        /* Preview Section */
-        .preview-section {
-            flex: 1;
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: relative;
+        .print-btn {
+            background: #3b82f6;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        
+        .print-btn:hover {
+            background: #2563eb;
         }
         
         .invoice-preview {
@@ -253,44 +259,38 @@
             border-top: 2px solid #333;
         }
         
-        .print-btn {
-            background: #3b82f6;
-            color: white;
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        .print-btn:hover {
-            background: #2563eb;
-        }
-        
         @media print {
             body {
                 background: white;
                 padding: 0;
             }
             
-            .container {
-                display: block;
-            }
-            
             .form-section {
-                display: none;
+                display: none !important;
             }
             
             .preview-section {
+                display: block !important;
                 box-shadow: none;
                 padding: 20px;
             }
             
             .print-btn {
-                display: none;
+                display: none !important;
             }
         }
         
-        @media (max-width: 968px) {
-            .container {
+        @media (max-width: 768px) {
+            .line-item {
                 flex-direction: column;
+            }
+            
+            .line-item input {
+                width: 100%;
+            }
+            
+            .line-item .description {
+                min-width: 100%;
             }
         }
     </style>
@@ -347,11 +347,12 @@
                 <button class="btn btn-add" onclick="addLineItem()">+ Add Line Item</button>
             </div>
             
-            <button class="btn btn-generate" onclick="generateInvoice()">Generate Invoice</button>
+            <button class="btn btn-generate" onclick="generateInvoice()">Generate Invoice Preview</button>
+            <button class="btn print-btn" onclick="window.print()" style="display: none;" id="printButton">Print Invoice</button>
         </div>
         
-        <!-- Preview Section -->
-        <div class="preview-section">
+        <!-- Hidden Preview Section for Printing -->
+        <div class="preview-section" style="display: none;">
             <div class="invoice-preview" id="invoicePreview">
                 <!-- Phoenix Logo -->
                 <div class="logo-container">
@@ -413,8 +414,6 @@
                     </div>
                 </div>
             </div>
-            
-            <button class="btn print-btn" onclick="window.print()">Print Invoice</button>
         </div>
     </div>
     
