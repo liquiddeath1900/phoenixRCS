@@ -98,12 +98,16 @@
             border-radius: 4px;
         }
         
-        .line-item .description {
-            flex: 3;
+        .line-item .service-name {
+            flex: 2;
         }
         
         .line-item .amount {
             flex: 1;
+        }
+        
+        .line-item .description {
+            flex: 3;
         }
         
         .btn {
@@ -334,8 +338,9 @@
                 <h3 style="margin-bottom: 15px;">Service Items</h3>
                 <div id="lineItemsContainer">
                     <div class="line-item">
-                        <input type="text" class="description" placeholder="Service description">
+                        <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
                         <input type="number" class="amount" placeholder="Amount" step="0.01">
+                        <input type="text" class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)">
                         <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
                     </div>
                 </div>
@@ -422,8 +427,9 @@
             const newItem = document.createElement('div');
             newItem.className = 'line-item';
             newItem.innerHTML = `
-                <input type="text" class="description" placeholder="Service description">
+                <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
                 <input type="number" class="amount" placeholder="Amount" step="0.01">
+                <input type="text" class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)">
                 <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
             `;
             container.appendChild(newItem);
@@ -473,16 +479,16 @@
             let hasValidItems = false;
             
             lineItems.forEach(item => {
+                const serviceName = item.querySelector('.service-name').value;
                 const description = item.querySelector('.description').value;
                 const amount = parseFloat(item.querySelector('.amount').value) || 0;
                 
-                if (description && amount > 0) {
+                if (serviceName && amount > 0) {
                     hasValidItems = true;
-                    const serviceName = description.split(' ').slice(0, 3).join(' ');
                     itemsHTML += `
                         <tr>
                             <td>${serviceName}</td>
-                            <td>$${amount.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})}</td>
+                            <td>${amount.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})}</td>
                             <td>${description}</td>
                         </tr>
                     `;
