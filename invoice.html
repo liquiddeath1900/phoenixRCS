@@ -1,17 +1,11 @@
-/* Preview Section - Hidden until generated */
-        .preview-section {
-            display: none;
-            background: white;
-            padding: 40px;
-            margin-top: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phoenix RCS Invoice Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -36,14 +30,6 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .form-section h2 {
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #dc2626;
-            text-align: center;
         }
         
         .form-group {
@@ -81,10 +67,15 @@
         }
         
         .line-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: 2fr 1fr 3fr auto;
             gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
+            margin-bottom: 15px;
+            align-items: start;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
         }
         
         .line-item input {
@@ -93,17 +84,14 @@
             border-radius: 4px;
         }
         
-        .line-item .service-name {
-            flex: 2;
-        }
-        
-        .line-item .amount {
-            flex: 1;
-        }
-        
-        .line-item .description {
-            flex: 4;
-            min-width: 300px;
+        .line-item textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
         }
         
         .btn {
@@ -129,6 +117,7 @@
             background: #ef4444;
             color: white;
             padding: 6px 12px;
+            align-self: center;
         }
         
         .btn-remove:hover {
@@ -148,152 +137,16 @@
             background: #b91c1c;
         }
         
-        .print-btn {
-            background: #3b82f6;
-            color: white;
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 16px;
-        }
-        
-        .print-btn:hover {
-            background: #2563eb;
-        }
-        
-        .invoice-preview {
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-        
-        /* Phoenix Logo */
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .phoenix-logo {
-            width: 100px;
-            height: auto;
-            margin: 0 auto;
-        }
-        
-        .company-name {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-top: 10px;
-        }
-        
-        .company-info {
-            text-align: center;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .invoice-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            margin: 30px 0;
-        }
-        
-        .invoice-details {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        
-        .invoice-details table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .invoice-details td {
-            padding: 10px;
-            border: 1px solid #333;
-        }
-        
-        .invoice-details td:first-child {
-            font-weight: bold;
-            width: 150px;
-            background: #f5f5f5;
-        }
-        
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        .invoice-table th {
-            background: #f5f5f5;
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #333;
-            font-weight: bold;
-        }
-        
-        .invoice-table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-        }
-        
-        .invoice-total {
-            margin-top: 20px;
-            text-align: right;
-        }
-        
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 18px;
-            font-weight: bold;
-            padding-top: 20px;
-            border-top: 2px solid #333;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .form-section {
-                display: none !important;
-            }
-            
-            .preview-section {
-                display: block !important;
-                box-shadow: none;
-                padding: 20px;
-            }
-            
-            .print-btn {
-                display: none !important;
-            }
-        }
-        
         @media (max-width: 768px) {
             .line-item {
-                flex-direction: column;
-            }
-            
-            .line-item input {
-                width: 100%;
-            }
-            
-            .line-item .description {
-                min-width: 100%;
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Form Section -->
         <div class="form-section">
-            <h2 style="text-align: center; color: #333; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #dc2626;">Invoice Generator</h2>
-            
             <div class="form-group">
                 <label>Invoice Date</label>
                 <input type="date" id="invoiceDate" value="">
@@ -327,86 +180,23 @@
                     <div class="line-item">
                         <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
                         <input type="number" class="amount" placeholder="Amount" step="0.01">
-                        <input type="text" class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)">
+                        <textarea class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)"></textarea>
                         <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
                     </div>
                 </div>
                 <button class="btn btn-add" onclick="addLineItem()">+ Add Line Item</button>
             </div>
             
-            <button class="btn btn-generate" onclick="generateInvoice()">Generate Invoice Preview</button>
-            <button class="btn print-btn" onclick="window.print()" style="display: none;" id="printButton">Print Invoice</button>
-        </div>
-        
-        <!-- Hidden Preview Section for Printing -->
-        <div class="preview-section" style="display: none;">
-            <div class="invoice-preview" id="invoicePreview">
-                <!-- Phoenix Logo -->
-                <div class="logo-container">
-                    <img src="https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png" 
-                         alt="Phoenix RCS Logo" 
-                         class="phoenix-logo"
-                         onerror="this.style.display='none'">
-                    <div class="company-name">PHOENIX•RCS</div>
-                </div>
-                
-                <div class="company-info">
-                    10334 Vista Meadow Way, Lanham, MD 20706<br>
-                    Phone: 301.450.9487<br>
-                    MHIC #164678
-                </div>
-                
-                <h1 class="invoice-title">INVOICE</h1>
-                
-                <div class="invoice-details">
-                    <table>
-                        <tr>
-                            <td>Document Date</td>
-                            <td colspan="3" id="previewDate">-</td>
-                        </tr>
-                        <tr>
-                            <td>For:</td>
-                            <td id="previewCustomer">-</td>
-                            <td style="font-weight: bold;">Phone:</td>
-                            <td id="previewPhone">-</td>
-                        </tr>
-                        <tr>
-                            <td>Job Address:</td>
-                            <td id="previewAddress">-</td>
-                            <td style="font-weight: bold;">Email:</td>
-                            <td id="previewEmail">N/A</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <table class="invoice-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 30%;">Name</th>
-                            <th style="width: 20%;">Amount</th>
-                            <th style="width: 50%;">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody id="previewItems">
-                        <tr>
-                            <td colspan="3" style="text-align: center; color: #999;">No items added yet</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="invoice-total">
-                    <div class="total-row">
-                        <span>Total</span>
-                        <span id="previewTotal">$0</span>
-                    </div>
-                </div>
-            </div>
+            <button class="btn btn-generate" onclick="generatePDF()">Generate PDF Invoice</button>
         </div>
     </div>
     
     <script>
         // Set today's date as default
         document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0];
+        
+        // Logo URL for PDF
+        const LOGO_URL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
         
         function addLineItem() {
             const container = document.getElementById('lineItemsContainer');
@@ -415,7 +205,7 @@
             newItem.innerHTML = `
                 <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
                 <input type="number" class="amount" placeholder="Amount" step="0.01">
-                <input type="text" class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)">
+                <textarea class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)"></textarea>
                 <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
             `;
             container.appendChild(newItem);
@@ -437,7 +227,29 @@
                    date.getFullYear();
         }
         
-        function generateInvoice() {
+        // Helper function to convert image URL to base64
+        function getBase64FromUrl(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(this, 0, 0);
+                    const dataURL = canvas.toDataURL('image/png');
+                    resolve(dataURL);
+                };
+                img.onerror = function() {
+                    console.log('Could not load logo');
+                    resolve(null);
+                };
+                img.src = url;
+            });
+        }
+        
+        async function generatePDF() {
             // Get form values
             const invoiceDate = document.getElementById('invoiceDate').value;
             const customerName = document.getElementById('customerName').value;
@@ -451,16 +263,9 @@
                 return;
             }
             
-            // Update preview
-            document.getElementById('previewDate').textContent = formatDate(invoiceDate);
-            document.getElementById('previewCustomer').textContent = customerName;
-            document.getElementById('previewPhone').textContent = customerPhone;
-            document.getElementById('previewAddress').textContent = jobAddress;
-            document.getElementById('previewEmail').textContent = customerEmail;
-            
             // Get line items
             const lineItems = document.querySelectorAll('.line-item');
-            let itemsHTML = '';
+            let tableData = [];
             let total = 0;
             let hasValidItems = false;
             
@@ -471,13 +276,11 @@
                 
                 if (serviceName && amount > 0) {
                     hasValidItems = true;
-                    itemsHTML += `
-                        <tr>
-                            <td>${serviceName}</td>
-                            <td>${amount.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2})}</td>
-                            <td>${description}</td>
-                        </tr>
-                    `;
+                    tableData.push([
+                        serviceName,
+                        '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2}),
+                        description
+                    ]);
                     total += amount;
                 }
             });
@@ -487,8 +290,122 @@
                 return;
             }
             
-            document.getElementById('previewItems').innerHTML = itemsHTML;
-            document.getElementById('previewTotal').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+            // Load logo as base64 for PDF
+            const logoBase64 = await getBase64FromUrl(LOGO_URL);
+            
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            let startY = 20;
+            
+            // Add Logo if available
+            if (logoBase64) {
+                try {
+                    doc.addImage(logoBase64, 'PNG', 85, 10, 40, 35);
+                    startY = 50;
+                } catch(e) {
+                    console.log('Logo could not be added to PDF');
+                }
+            }
+            
+            // Company info
+            doc.setFontSize(18);
+            doc.setFont(undefined, 'bold');
+            doc.text('PHOENIX•RCS', 105, startY, { align: 'center' });
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('10334 Vista Meadow Way, Lanham, MD 20706', 105, startY + 8, { align: 'center' });
+            doc.text('Phone: 301.450.9487', 105, startY + 14, { align: 'center' });
+            doc.text('MHIC #164678', 105, startY + 20, { align: 'center' });
+            
+            // Invoice title
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text('INVOICE', 105, startY + 35, { align: 'center' });
+            
+            // Client info table
+            let y = startY + 45;
+            
+            // Document Date
+            doc.setDrawColor(0);
+            doc.rect(15, y, 180, 8);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Document Date', 18, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(formatDate(invoiceDate), 60, y + 5);
+            
+            y += 8;
+            
+            // For and Phone
+            doc.rect(15, y, 90, 8);
+            doc.rect(105, y, 90, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('For:', 18, y + 5);
+            doc.text('Phone:', 108, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(customerName, 30, y + 5);
+            doc.text(customerPhone, 125, y + 5);
+            
+            y += 8;
+            
+            // Job Address and Email
+            doc.rect(15, y, 100, 8);
+            doc.rect(115, y, 80, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('Job Address:', 18, y + 5);
+            doc.text('Email:', 118, y + 5);
+            doc.setFont(undefined, 'normal');
+            
+            const maxAddressWidth = 60;
+            let displayAddress = jobAddress;
+            if (doc.getTextWidth(jobAddress) > maxAddressWidth) {
+                displayAddress = jobAddress.substring(0, 30) + '...';
+            }
+            doc.text(displayAddress, 45, y + 5);
+            
+            doc.setFontSize(8);
+            doc.text(customerEmail, 135, y + 5);
+            doc.setFontSize(10);
+            
+            y += 15;
+            
+            // Services table
+            doc.autoTable({
+                startY: y,
+                head: [['Name', 'Amount', 'Description']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [240, 240, 240],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold',
+                    fontSize: 10
+                },
+                bodyStyles: {
+                    fontSize: 9,
+                    cellPadding: 3
+                },
+                columnStyles: {
+                    0: { cellWidth: 45 },
+                    1: { cellWidth: 30, halign: 'center' },
+                    2: { cellWidth: 105 }
+                },
+                margin: { left: 15, right: 15 }
+            });
+            
+            // Total
+            y = doc.lastAutoTable.finalY + 10;
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(12);
+            doc.text('Total', 15, y);
+            doc.text('$' + total.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2}), 195, y, { align: 'right' });
+            
+            // Save PDF
+            const fileName = `Phoenix_Invoice_${customerName.replace(/\s+/g, '_')}_${formatDate(invoiceDate).replace(/\//g, '-')}.pdf`;
+            doc.save(fileName);
         }
     </script>
 </body>
