@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix RCS Estimate Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dc2626;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            min-height: 60px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Line Items */
+        .line-items {
+            margin-top: 20px;
+        }
+        
+        .line-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 3fr auto;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: start;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .line-item input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .line-item textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-add {
+            background: #10b981;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        .btn-add:hover {
+            background: #059669;
+        }
+        
+        .btn-remove {
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            align-self: center;
+        }
+        
+        .btn-remove:hover {
+            background: #dc2626;
+        }
+        
+        .btn-generate {
+            background: #dc2626;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        
+        .btn-generate:hover {
+            background: #b91c1c;
+        }
+        
+        .section-title {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            padding: 10px;
+            background: #f5f5f5;
+            border-left: 4px solid #dc2626;
+        }
+        
+        @media (max-width: 768px) {
+            .line-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Estimate Generator</h2>
+            
+            <div class="form-group">
+                <label>Estimate Date</label>
+                <input type="date" id="estimateDate" value="">
+            </div>
+            
+            <div class="form-group">
+                <label>Estimate Number (Optional)</label>
+                <input type="text" id="estimateNumber" placeholder="EST-001">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" placeholder="Enter customer name">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Job Address</label>
+                    <input type="text" id="jobAddress" placeholder="Enter job address">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="customerEmail" placeholder="Enter email (optional)">
+                </div>
+            </div>
+            
+            <div class="section-title">Service Items</div>
+            <div class="line-items">
+                <div id="lineItemsContainer">
+                    <div class="line-item">
+                        <input type="text" class="service-name" placeholder="Service name (e.g., Roof Replacement)">
+                        <input type="number" class="amount" placeholder="Amount" step="0.01">
+                        <textarea class="description" placeholder="Full description (e.g., Complete removal and replacement of asphalt shingles)"></textarea>
+                        <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addLineItem()">+ Add Line Item</button>
+            </div>
+            
+            <div class="section-title">Additional Notes</div>
+            <div class="form-group">
+                <label>Validity Period</label>
+                <select id="validityPeriod">
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Terms & Conditions (Optional)</label>
+                <textarea id="termsConditions" placeholder="e.g., This estimate is valid for 30 days. Prices subject to change based on actual conditions found during work. 50% deposit required to begin work.">This estimate is valid for the period specified above. Actual costs may vary based on conditions discovered during work. A deposit may be required to schedule work.</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Special Notes (Optional)</label>
+                <textarea id="specialNotes" placeholder="e.g., Price includes all materials and labor. Does not include permit fees."></textarea>
+            </div>
+            
+            <button class="btn btn-generate" onclick="generatePDF()">Generate PDF Estimate</button>
+        </div>
+    </div>
+    
+    <script>
+        // Set today's date as default
+        document.getElementById('estimateDate').value = new Date().toISOString().split('T')[0];
+        
+        // Generate estimate number based on date
+        const today = new Date();
+        const estNum = 'EST-' + today.getFullYear() + (today.getMonth() + 1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0') + '-001';
+        document.getElementById('estimateNumber').value = estNum;
+        
+        // Logo URL for PDF
+        const LOGO_URL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
+        
+        function addLineItem() {
+            const container = document.getElementById('lineItemsContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'line-item';
+            newItem.innerHTML = `
+                <input type="text" class="service-name" placeholder="Service name (e.g., Roof Replacement)">
+                <input type="number" class="amount" placeholder="Amount" step="0.01">
+                <textarea class="description" placeholder="Full description (e.g., Complete removal and replacement of asphalt shingles)"></textarea>
+                <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+        }
+        
+        function removeLineItem(button) {
+            const lineItems = document.querySelectorAll('.line-item');
+            if (lineItems.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert('You must have at least one line item');
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                   date.getDate().toString().padStart(2, '0') + '/' +
+                   date.getFullYear();
+        }
+        
+        // Helper function to convert image URL to base64
+        function getBase64FromUrl(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(this, 0, 0);
+                    const dataURL = canvas.toDataURL('image/png');
+                    resolve(dataURL);
+                };
+                img.onerror = function() {
+                    console.log('Could not load logo');
+                    resolve(null);
+                };
+                img.src = url;
+            });
+        }
+        
+        async function generatePDF() {
+            // Get form values
+            const estimateDate = document.getElementById('estimateDate').value;
+            const estimateNumber = document.getElementById('estimateNumber').value;
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const jobAddress = document.getElementById('jobAddress').value;
+            const customerEmail = document.getElementById('customerEmail').value || 'N/A';
+            const validityPeriod = document.getElementById('validityPeriod').value;
+            const termsConditions = document.getElementById('termsConditions').value;
+            const specialNotes = document.getElementById('specialNotes').value;
+            
+            // Validate required fields
+            if (!estimateDate || !customerName || !customerPhone || !jobAddress) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Get line items
+            const lineItems = document.querySelectorAll('.line-item');
+            let tableData = [];
+            let subtotal = 0;
+            let hasValidItems = false;
+            
+            lineItems.forEach(item => {
+                const serviceName = item.querySelector('.service-name').value;
+                const description = item.querySelector('.description').value;
+                const amount = parseFloat(item.querySelector('.amount').value) || 0;
+                
+                if (serviceName && amount > 0) {
+                    hasValidItems = true;
+                    tableData.push([
+                        serviceName,
+                        '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+                        description
+                    ]);
+                    subtotal += amount;
+                }
+            });
+            
+            if (!hasValidItems) {
+                alert('Please add at least one valid service item');
+                return;
+            }
+            
+            // Load logo as base64 for PDF
+            const logoBase64 = await getBase64FromUrl(LOGO_URL);
+            
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            let startY = 20;
+            
+            // Add Logo if available
+            if (logoBase64) {
+                try {
+                    doc.addImage(logoBase64, 'PNG', 85, 10, 40, 35);
+                    startY = 50;
+                } catch(e) {
+                    console.log('Logo could not be added to PDF');
+                }
+            }
+            
+            // Company info (no duplicate PHOENIX•RCS text)
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('10334 Vista Meadow Way, Lanham, MD 20706', 105, startY + 8, { align: 'center' });
+            doc.text('Phone: 301.450.9487', 105, startY + 14, { align: 'center' });
+            doc.text('MHIC #164678', 105, startY + 20, { align: 'center' });
+            
+            // Estimate title
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text('ESTIMATE', 105, startY + 35, { align: 'center' });
+            
+            // Estimate number if provided
+            if (estimateNumber) {
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text('Estimate #: ' + estimateNumber, 105, startY + 42, { align: 'center' });
+            }
+            
+            // Client info table
+            let y = startY + 50;
+            
+            // Document Date
+            doc.setDrawColor(0);
+            doc.rect(15, y, 180, 8);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Estimate Date', 18, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(formatDate(estimateDate), 60, y + 5);
+            
+            y += 8;
+            
+            // For and Phone
+            doc.rect(15, y, 90, 8);
+            doc.rect(105, y, 90, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('For:', 18, y + 5);
+            doc.text('Phone:', 108, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(customerName, 30, y + 5);
+            doc.text(customerPhone, 125, y + 5);
+            
+            y += 8;
+            
+            // Job Address and Email
+            doc.rect(15, y, 100, 8);
+            doc.rect(115, y, 80, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('Job Address:', 18, y + 5);
+            doc.text('Email:', 118, y + 5);
+            doc.setFont(undefined, 'normal');
+            
+            const maxAddressWidth = 60;
+            let displayAddress = jobAddress;
+            if (doc.getTextWidth(jobAddress) > maxAddressWidth) {
+                displayAddress = jobAddress.substring(0, 30) + '...';
+            }
+            doc.text(displayAddress, 45, y + 5);
+            
+            doc.setFontSize(8);
+            doc.text(customerEmail, 135, y + 5);
+            doc.setFontSize(10);
+            
+            y += 15;
+            
+            // Services table
+            doc.autoTable({
+                startY: y,
+                head: [['Service', 'Estimated Cost', 'Description']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [240, 240, 240],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold',
+                    fontSize: 10
+                },
+                bodyStyles: {
+                    fontSize: 9,
+                    cellPadding: 3
+                },
+                columnStyles: {
+                    0: { cellWidth: 45 },
+                    1: { cellWidth: 35, halign: 'right' },
+                    2: { cellWidth: 100 }
+                },
+                margin: { left: 15, right: 15 }
+            });
+            
+            // Subtotal and Total - DYNAMICALLY CALCULATED positions for perfect alignment
+            y = doc.lastAutoTable.finalY + 10;
+            
+            // Define alignment point where all labels should end
+            const alignPoint = 170;
+            const amountPosition = 195;
+            
+            // Calculate actual text widths and positions
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(11);
+            const subtotalWidth = doc.getTextWidth('Subtotal:');
+            const subtotalX = alignPoint - subtotalWidth;
+            
+            const taxWidth = doc.getTextWidth('Tax (if applicable):');
+            const taxX = alignPoint - taxWidth;
+            
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(12);
+            const estimatedWidth = doc.getTextWidth('Estimated Total:');
+            const estimatedX = alignPoint - estimatedWidth;
+            
+            // Subtotal - dynamically positioned
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(11);
+            doc.text('Subtotal:', subtotalX, y);
+            doc.text('$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), amountPosition, y, { align: 'right' });
+            
+            // Tax line - dynamically positioned
+            y += 6;
+            doc.text('Tax (if applicable):', taxX, y);
+            doc.text('TBD', amountPosition, y, { align: 'right' });
+            
+            // Total - dynamically positioned
+            y += 8;
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(12);
+            doc.text('Estimated Total:', estimatedX, y);
+            doc.text('$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), amountPosition, y, { align: 'right' });
+            
+            // Validity period
+            y += 15;
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(10);
+            doc.text('Estimate Valid For: ' + validityPeriod + ' Days', 15, y);
+            
+            // Terms & Conditions
+            if (termsConditions) {
+                y += 10;
+                doc.setFont(undefined, 'bold');
+                doc.text('Terms & Conditions:', 15, y);
+                y += 6;
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(9);
+                
+                // Word wrap terms & conditions
+                const splitTerms = doc.splitTextToSize(termsConditions, 180);
+                splitTerms.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+            }
+            
+            // Special Notes
+            if (specialNotes) {
+                y += 5;
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(10);
+                doc.text('Special Notes:', 15, y);
+                y += 6;
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(9);
+                
+                // Word wrap special notes
+                const splitNotes = doc.splitTextToSize(specialNotes, 180);
+                splitNotes.forEach(line => {
+                    doc.text(line, 15, y);
+                    y += 5;
+                });
+            }
+            
+            // Footer
+            y = 270;
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'italic');
+            doc.text('This is an estimate only. Final costs may vary based on actual conditions.', 105, y, { align: 'center' });
+            doc.text('Thank you for considering Phoenix R&C Solutions for your project.', 105, y + 5, { align: 'center' });
+            
+            // Save PDF
+            const fileName = `Phoenix_Estimate_${customerName.replace(/\s+/g, '_')}_${formatDate(estimateDate).replace(/\//g, '-')}.pdf`;
+            doc.save(fileName);
+        }
+    </script>
+</body>
+</html>
