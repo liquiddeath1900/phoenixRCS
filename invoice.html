@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix RCS Invoice Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Line Items */
+        .line-items {
+            margin-top: 20px;
+        }
+        
+        .line-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 3fr auto;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: start;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .line-item input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .line-item textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-add {
+            background: #10b981;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        .btn-add:hover {
+            background: #059669;
+        }
+        
+        .btn-remove {
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            align-self: center;
+        }
+        
+        .btn-remove:hover {
+            background: #dc2626;
+        }
+        
+        .btn-generate {
+            background: #dc2626;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        
+        .btn-generate:hover {
+            background: #b91c1c;
+        }
+        
+        @media (max-width: 768px) {
+            .line-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <div class="form-group">
+                <label>Invoice Date</label>
+                <input type="date" id="invoiceDate" value="">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" placeholder="Enter customer name">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Job Address</label>
+                    <input type="text" id="jobAddress" placeholder="Enter job address">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="customerEmail" placeholder="Enter email (optional)">
+                </div>
+            </div>
+            
+            <div class="line-items">
+                <h3 style="margin-bottom: 15px;">Service Items</h3>
+                <div id="lineItemsContainer">
+                    <div class="line-item">
+                        <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
+                        <input type="number" class="amount" placeholder="Amount" step="0.01">
+                        <textarea class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)"></textarea>
+                        <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addLineItem()">+ Add Line Item</button>
+            </div>
+
+            <!-- Calculations Section -->
+            <div class="calculations-section" style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px; border: 1px solid #e0e0e0;">
+                <h3 style="margin-bottom: 15px; color: #dc2626;">Invoice Calculations</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin-left: auto;">
+                    <div style="display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 4px;">
+                        <span style="font-weight: bold;">Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 4px;">
+                        <span style="font-weight: bold;">MD State Tax (6%):</span>
+                        <span id="tax">$0.00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px; background: white; border-radius: 4px;">
+                        <span style="font-weight: bold;">Overhead & Profit (10%):</span>
+                        <span id="overhead">$0.00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: #dc2626; color: white; border-radius: 4px; font-size: 16px;">
+                        <span style="font-weight: bold;">Grand Total:</span>
+                        <span id="grandTotal">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Building Code References Section -->
+            <div class="code-references-section" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 15px; color: #dc2626;">Building Code References & Application</h3>
+                <div id="codeReferencesContainer">
+                    <div class="code-reference" style="padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 15px;">
+                        <div class="form-row" style="margin-bottom: 10px;">
+                            <div class="form-group">
+                                <label>Code Number</label>
+                                <input type="text" class="code-number" placeholder="e.g., IRC R703.8.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Code Title</label>
+                                <input type="text" class="code-title" placeholder="e.g., Drip Edge/Head Flashing">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label>Code Description</label>
+                            <textarea class="code-description" placeholder="Enter the quoted requirement from the code" style="width: 100%; min-height: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Application Note</label>
+                            <textarea class="code-application" placeholder="Explain how this code applies to this job" style="width: 100%; min-height: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                        </div>
+                        <button class="btn btn-remove" onclick="removeCodeReference(this)" style="margin-top: 10px;">Remove Code Reference</button>
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addCodeReference()">+ Add Code Reference</button>
+            </div>
+
+            <button class="btn btn-generate" onclick="generatePDF()">Generate PDF Invoice</button>
+        </div>
+    </div>
+    
+    <script>
+        // Set today's date as default
+        document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0];
+        
+        // Logo URL for PDF
+        const LOGO_URL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
+        
+        function addLineItem() {
+            const container = document.getElementById('lineItemsContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'line-item';
+            newItem.innerHTML = `
+                <input type="text" class="service-name" placeholder="Service name (e.g., Tree Removal)">
+                <input type="number" class="amount" placeholder="Amount" step="0.01">
+                <textarea class="description" placeholder="Full description (e.g., Cut and Drop Tree from Garage/Shed)"></textarea>
+                <button class="btn btn-remove" onclick="removeLineItem(this)">Remove</button>
+            `;
+            container.appendChild(newItem);
+        }
+        
+        function removeLineItem(button) {
+            const lineItems = document.querySelectorAll('.line-item');
+            if (lineItems.length > 1) {
+                button.parentElement.remove();
+                updateCalculations();
+            } else {
+                alert('You must have at least one line item');
+            }
+        }
+
+        // Add code reference functions
+        function addCodeReference() {
+            const container = document.getElementById('codeReferencesContainer');
+            const newRef = document.createElement('div');
+            newRef.className = 'code-reference';
+            newRef.style.cssText = 'padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 15px;';
+            newRef.innerHTML = `
+                <div class="form-row" style="margin-bottom: 10px;">
+                    <div class="form-group">
+                        <label>Code Number</label>
+                        <input type="text" class="code-number" placeholder="e.g., IRC R703.8.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Code Title</label>
+                        <input type="text" class="code-title" placeholder="e.g., Drip Edge/Head Flashing">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Code Description</label>
+                    <textarea class="code-description" placeholder="Enter the quoted requirement from the code" style="width: 100%; min-height: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Application Note</label>
+                    <textarea class="code-application" placeholder="Explain how this code applies to this job" style="width: 100%; min-height: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+                <button class="btn btn-remove" onclick="removeCodeReference(this)" style="margin-top: 10px;">Remove Code Reference</button>
+            `;
+            container.appendChild(newRef);
+        }
+
+        function removeCodeReference(button) {
+            const codeRefs = document.querySelectorAll('.code-reference');
+            if (codeRefs.length > 1) {
+                button.parentElement.remove();
+            } else {
+                alert('You must have at least one code reference');
+            }
+        }
+
+        // Calculate and update totals in real-time
+        function updateCalculations() {
+            const lineItems = document.querySelectorAll('.line-item');
+            let subtotal = 0;
+
+            lineItems.forEach(item => {
+                const amount = parseFloat(item.querySelector('.amount').value) || 0;
+                subtotal += amount;
+            });
+
+            const tax = subtotal * 0.06;
+            const overhead = subtotal * 0.10;
+            const grandTotal = subtotal + tax + overhead;
+
+            document.getElementById('subtotal').textContent = '$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('tax').textContent = '$' + tax.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('overhead').textContent = '$' + overhead.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('grandTotal').textContent = '$' + grandTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        // Add event listeners to update calculations when amounts change
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('amount')) {
+                updateCalculations();
+            }
+        });
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                   date.getDate().toString().padStart(2, '0') + '/' +
+                   date.getFullYear();
+        }
+        
+        // Helper function to convert image URL to base64
+        function getBase64FromUrl(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(this, 0, 0);
+                    const dataURL = canvas.toDataURL('image/png');
+                    resolve(dataURL);
+                };
+                img.onerror = function() {
+                    console.log('Could not load logo');
+                    resolve(null);
+                };
+                img.src = url;
+            });
+        }
+        
+        async function generatePDF() {
+            // Get form values
+            const invoiceDate = document.getElementById('invoiceDate').value;
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const jobAddress = document.getElementById('jobAddress').value;
+            const customerEmail = document.getElementById('customerEmail').value || 'N/A';
+
+            // Validate required fields
+            if (!invoiceDate || !customerName || !customerPhone || !jobAddress) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Get line items and calculate totals
+            const lineItems = document.querySelectorAll('.line-item');
+            let tableData = [];
+            let subtotal = 0;
+            let hasValidItems = false;
+
+            lineItems.forEach(item => {
+                const serviceName = item.querySelector('.service-name').value;
+                const description = item.querySelector('.description').value;
+                const amount = parseFloat(item.querySelector('.amount').value) || 0;
+
+                if (serviceName && amount > 0) {
+                    hasValidItems = true;
+                    tableData.push([
+                        serviceName,
+                        '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+                        description
+                    ]);
+                    subtotal += amount;
+                }
+            });
+
+            if (!hasValidItems) {
+                alert('Please add at least one valid service item');
+                return;
+            }
+
+            // Calculate tax, overhead, and grand total
+            const tax = subtotal * 0.06;
+            const overhead = subtotal * 0.10;
+            const grandTotal = subtotal + tax + overhead;
+
+            // Get code references
+            const codeReferences = [];
+            const codeRefElements = document.querySelectorAll('.code-reference');
+            codeRefElements.forEach(ref => {
+                const codeNumber = ref.querySelector('.code-number').value;
+                const codeTitle = ref.querySelector('.code-title').value;
+                const codeDescription = ref.querySelector('.code-description').value;
+                const codeApplication = ref.querySelector('.code-application').value;
+
+                if (codeNumber || codeTitle || codeDescription || codeApplication) {
+                    codeReferences.push({
+                        number: codeNumber,
+                        title: codeTitle,
+                        description: codeDescription,
+                        application: codeApplication
+                    });
+                }
+            });
+
+            // Load logo as base64 for PDF
+            const logoBase64 = await getBase64FromUrl(LOGO_URL);
+
+            // Create PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let startY = 20;
+
+            // Add Logo if available
+            if (logoBase64) {
+                try {
+                    doc.addImage(logoBase64, 'PNG', 85, 10, 40, 35);
+                    startY = 50;
+                } catch(e) {
+                    console.log('Logo could not be added to PDF');
+                }
+            }
+
+            // Company info
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('10334 Vista Meadow Way, Lanham, MD 20706', 105, startY + 8, { align: 'center' });
+            doc.text('Phone: 301.450.9487', 105, startY + 14, { align: 'center' });
+            doc.text('MHIC #164678', 105, startY + 20, { align: 'center' });
+
+            // Invoice title
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text('INVOICE', 105, startY + 35, { align: 'center' });
+
+            // Client info table
+            let y = startY + 45;
+
+            // Document Date
+            doc.setDrawColor(0);
+            doc.rect(15, y, 180, 8);
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text('Document Date', 18, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(formatDate(invoiceDate), 60, y + 5);
+
+            y += 8;
+
+            // For and Phone
+            doc.rect(15, y, 90, 8);
+            doc.rect(105, y, 90, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('For:', 18, y + 5);
+            doc.text('Phone:', 108, y + 5);
+            doc.setFont(undefined, 'normal');
+            doc.text(customerName, 30, y + 5);
+            doc.text(customerPhone, 125, y + 5);
+
+            y += 8;
+
+            // Job Address and Email
+            doc.rect(15, y, 100, 8);
+            doc.rect(115, y, 80, 8);
+            doc.setFont(undefined, 'bold');
+            doc.text('Job Address:', 18, y + 5);
+            doc.text('Email:', 118, y + 5);
+            doc.setFont(undefined, 'normal');
+
+            const maxAddressWidth = 60;
+            let displayAddress = jobAddress;
+            if (doc.getTextWidth(jobAddress) > maxAddressWidth) {
+                displayAddress = jobAddress.substring(0, 30) + '...';
+            }
+            doc.text(displayAddress, 45, y + 5);
+
+            doc.setFontSize(8);
+            doc.text(customerEmail, 135, y + 5);
+            doc.setFontSize(10);
+
+            y += 15;
+
+            // Services table
+            doc.autoTable({
+                startY: y,
+                head: [['Name', 'Amount', 'Description']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [240, 240, 240],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold',
+                    fontSize: 10
+                },
+                bodyStyles: {
+                    fontSize: 9,
+                    cellPadding: 3
+                },
+                columnStyles: {
+                    0: { cellWidth: 45 },
+                    1: { cellWidth: 30, halign: 'center' },
+                    2: { cellWidth: 105 }
+                },
+                margin: { left: 15, right: 15 }
+            });
+
+            // Calculations section
+            y = doc.lastAutoTable.finalY + 10;
+            const rightAlign = 195;
+            const labelX = 140;
+
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            doc.text('Subtotal:', labelX, y);
+            doc.text('$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), rightAlign, y, { align: 'right' });
+
+            y += 6;
+            doc.text('MD State Tax (6%):', labelX, y);
+            doc.text('$' + tax.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), rightAlign, y, { align: 'right' });
+
+            y += 6;
+            doc.text('Overhead & Profit (10%):', labelX, y);
+            doc.text('$' + overhead.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), rightAlign, y, { align: 'right' });
+
+            y += 8;
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(12);
+            doc.text('Grand Total:', labelX, y);
+            doc.text('$' + grandTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), rightAlign, y, { align: 'right' });
+
+            // Building code references (add new page if needed)
+            y += 15;
+            if (codeReferences.length > 0) {
+                // Check if we need a new page
+                if (y > 240) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(12);
+                doc.text('Building Code References & Application', 15, y);
+                y += 8;
+
+                codeReferences.forEach((code, index) => {
+                    // Check if we need a new page before each code reference
+                    if (y > 230) {
+                        doc.addPage();
+                        y = 20;
+                    }
+
+                    // Code header (number and title)
+                    if (code.number || code.title) {
+                        doc.setFont(undefined, 'bold');
+                        doc.setFontSize(11);
+                        const codeHeader = code.number ? `${code.number}${code.title ? ' - ' + code.title : ''}` : code.title;
+                        doc.text(codeHeader, 15, y);
+                        y += 7;
+                    }
+
+                    // Description
+                    if (code.description && code.description.trim()) {
+                        doc.setFont(undefined, 'bold');
+                        doc.setFontSize(9);
+                        doc.text('Code Description:', 15, y);
+                        y += 5;
+
+                        doc.setFont(undefined, 'normal');
+                        const descLines = doc.splitTextToSize(code.description, 175);
+                        doc.text(descLines, 20, y);
+                        y += (descLines.length * 4) + 5;
+                    }
+
+                    // Application
+                    if (code.application && code.application.trim()) {
+                        doc.setFont(undefined, 'bold');
+                        doc.setFontSize(9);
+                        doc.text('Application to This Job:', 15, y);
+                        y += 5;
+
+                        doc.setFont(undefined, 'normal');
+                        const appLines = doc.splitTextToSize(code.application, 175);
+                        doc.text(appLines, 20, y);
+                        y += (appLines.length * 4) + 10;
+                    } else {
+                        y += 5;
+                    }
+
+                    // Add spacing between code references
+                    y += 5;
+                });
+            }
+
+            // Save PDF
+            const fileName = `Phoenix_Invoice_${customerName.replace(/\s+/g, '_')}_${formatDate(invoiceDate).replace(/\//g, '-')}.pdf`;
+            doc.save(fileName);
+        }
+    </script>
+</body>
+</html>
