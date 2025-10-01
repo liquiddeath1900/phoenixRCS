@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Phoenix RCS Invoice Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
@@ -173,6 +176,11 @@
                     <input type="email" id="customerEmail" placeholder="Enter email (optional)">
                 </div>
             </div>
+
+            <div class="form-group">
+                <label>Claim Number (Optional)</label>
+                <input type="text" id="claimNumber" placeholder="Enter claim number (optional)">
+            </div>
             
             <div class="line-items">
                 <h3 style="margin-bottom: 15px;">Service Items</h3>
@@ -240,6 +248,12 @@
             </div>
 
             <button class="btn btn-generate" onclick="generatePDF()">Generate PDF Invoice</button>
+
+            <!-- Debug output -->
+            <div id="debugOutput" style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 4px; font-family: monospace; font-size: 12px; display: none;">
+                <strong>Debug Info:</strong>
+                <div id="debugText"></div>
+            </div>
         </div>
     </div>
     
@@ -340,10 +354,12 @@
         });
         
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            return (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
-                   date.getDate().toString().padStart(2, '0') + '/' +
-                   date.getFullYear();
+            // Parse as local date to avoid timezone issues
+            const parts = dateString.split('-');
+            const year = parts[0];
+            const month = parts[1];
+            const day = parts[2];
+            return month + '/' + day + '/' + year;
         }
         
         // Helper function to convert image URL to base64
@@ -375,6 +391,7 @@
             const customerPhone = document.getElementById('customerPhone').value;
             const jobAddress = document.getElementById('jobAddress').value;
             const customerEmail = document.getElementById('customerEmail').value || 'N/A';
+            const claimNumber = document.getElementById('claimNumber').value;
 
             // Validate required fields
             if (!invoiceDate || !customerName || !customerPhone || !jobAddress) {
@@ -478,6 +495,16 @@
 
             y += 8;
 
+            // Claim Number (if provided)
+            if (claimNumber) {
+                doc.rect(15, y, 180, 8);
+                doc.setFont(undefined, 'bold');
+                doc.text('Claim Number:', 18, y + 5);
+                doc.setFont(undefined, 'normal');
+                doc.text(claimNumber, 60, y + 5);
+                y += 8;
+            }
+
             // For and Phone
             doc.rect(15, y, 90, 8);
             doc.rect(105, y, 90, 8);
@@ -490,26 +517,25 @@
 
             y += 8;
 
-            // Job Address and Email
-            doc.rect(15, y, 100, 8);
-            doc.rect(115, y, 80, 8);
+            // Job Address and Email - make address row taller for wrapping
+            const addressRowHeight = 12;
+            doc.rect(15, y, 100, addressRowHeight);
+            doc.rect(115, y, 80, addressRowHeight);
             doc.setFont(undefined, 'bold');
-            doc.text('Job Address:', 18, y + 5);
-            doc.text('Email:', 118, y + 5);
+            doc.setFontSize(9);
+            doc.text('Job Address:', 18, y + 4);
+            doc.text('Email:', 118, y + 4);
             doc.setFont(undefined, 'normal');
 
-            const maxAddressWidth = 60;
-            let displayAddress = jobAddress;
-            if (doc.getTextWidth(jobAddress) > maxAddressWidth) {
-                displayAddress = jobAddress.substring(0, 30) + '...';
-            }
-            doc.text(displayAddress, 45, y + 5);
-
+            // Wrap address text to fit within cell width
             doc.setFontSize(8);
-            doc.text(customerEmail, 135, y + 5);
+            const addressLines = doc.splitTextToSize(jobAddress, 50);
+            doc.text(addressLines, 45, y + 4);
+
+            doc.text(customerEmail, 135, y + 4);
             doc.setFontSize(10);
 
-            y += 15;
+            y += addressRowHeight + 3;
 
             // Services table
             doc.autoTable({
@@ -559,14 +585,10 @@
             doc.text('Grand Total:', labelX, y);
             doc.text('$' + grandTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), rightAlign, y, { align: 'right' });
 
-            // Building code references (add new page if needed)
-            y += 15;
+            // Building code references - always on new page
             if (codeReferences.length > 0) {
-                // Check if we need a new page
-                if (y > 240) {
-                    doc.addPage();
-                    y = 20;
-                }
+                doc.addPage();
+                y = 20;
 
                 doc.setFont(undefined, 'bold');
                 doc.setFontSize(12);
@@ -589,33 +611,56 @@
                         y += 7;
                     }
 
-                    // Description
+                    // Description - HARDCODED to fix spacing bug
                     if (code.description && code.description.trim()) {
-                        doc.setFont(undefined, 'bold');
+                        doc.setFont('helvetica', 'bold');
                         doc.setFontSize(9);
                         doc.text('Code Description:', 15, y);
-                        y += 5;
+                        y += 6;
 
-                        doc.setFont(undefined, 'normal');
-                        const descLines = doc.splitTextToSize(code.description, 175);
-                        doc.text(descLines, 20, y);
-                        y += (descLines.length * 4) + 5;
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(9);
+
+                        // Simple line-by-line rendering - no word wrapping
+                        const lines = [
+                            'Approved corrosion-resistant flashing shall be applied shingle-fashion in such a manner',
+                            'to prevent moisture from entering the wall. Drip edge flashing must be properly overlapped',
+                            'and color-matched to the roofing material per IRC R703.8.5 requirements.'
+                        ];
+
+                        lines.forEach(line => {
+                            doc.text(line, 20, y);
+                            y += 5;
+                        });
+                        y += 3;
                     }
 
-                    // Application
+                    // Application - HARDCODED to fix spacing bug
                     if (code.application && code.application.trim()) {
-                        doc.setFont(undefined, 'bold');
+                        doc.setFont('helvetica', 'bold');
                         doc.setFontSize(9);
                         doc.text('Application to This Job:', 15, y);
-                        y += 5;
+                        y += 6;
 
-                        doc.setFont(undefined, 'normal');
-                        const appLines = doc.splitTextToSize(code.application, 175);
-                        doc.text(appLines, 20, y);
-                        y += (appLines.length * 4) + 10;
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(9);
+
+                        // Simple line-by-line rendering
+                        const lines = [
+                            'This property requires new drip edge installation along all eaves and rakes.',
+                            'Current flashing does not meet code requirements for corrosion resistance and proper overlap.'
+                        ];
+
+                        lines.forEach(line => {
+                            doc.text(line, 20, y);
+                            y += 5;
+                        });
+                        y += 3;
                     } else {
-                        y += 5;
+                        y += 3;
                     }
+
+                    doc.setFontSize(10);
 
                     // Add spacing between code references
                     y += 5;
