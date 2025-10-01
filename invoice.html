@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Phoenix RCS Invoice Generator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <style>
         * {
@@ -611,7 +611,7 @@
                         y += 7;
                     }
 
-                    // Description - HARDCODED to fix spacing bug
+                    // Description - substring-based breaking to avoid jsPDF corruption
                     if (code.description && code.description.trim()) {
                         doc.setFont('helvetica', 'bold');
                         doc.setFontSize(9);
@@ -621,21 +621,44 @@
                         doc.setFont('helvetica', 'normal');
                         doc.setFontSize(9);
 
-                        // Simple line-by-line rendering - no word wrapping
-                        const lines = [
-                            'Approved corrosion-resistant flashing shall be applied shingle-fashion in such a manner',
-                            'to prevent moisture from entering the wall. Drip edge flashing must be properly overlapped',
-                            'and color-matched to the roofing material per IRC R703.8.5 requirements.'
-                        ];
+                        // Manually break into ~70 character lines at spaces only
+                        const text = code.description.trim();
+                        const lines = [];
+                        let currentPos = 0;
 
+                        while (currentPos < text.length) {
+                            let endPos = Math.min(currentPos + 70, text.length);
+
+                            // If we're not at the end, find the last space before 85 chars
+                            if (endPos < text.length) {
+                                let spacePos = text.lastIndexOf(' ', endPos);
+                                if (spacePos > currentPos) {
+                                    endPos = spacePos;
+                                }
+                            }
+
+                            lines.push(text.substring(currentPos, endPos).trim());
+                            currentPos = endPos + 1;
+                        }
+
+                        // Render with heavily sanitized text to avoid jsPDF bugs
                         lines.forEach(line => {
-                            doc.text(line, 20, y);
+                            // Remove ALL problematic characters that trigger jsPDF bugs
+                            let cleanLine = line
+                                .replace(/\.\.\./g, '')      // Remove ellipsis
+                                .replace(/['"'"]/g, '')      // Remove all quote types
+                                .replace(/[–—]/g, '-')       // Replace em/en dashes with hyphen
+                                .replace(/[^\x20-\x7E]/g, '') // Remove non-ASCII characters
+                                .trim();
+
+                            // Simple render with NO parameters except x,y
+                            doc.text(cleanLine, 20, y);
                             y += 5;
                         });
                         y += 3;
                     }
 
-                    // Application - HARDCODED to fix spacing bug
+                    // Application - substring-based breaking to avoid jsPDF corruption
                     if (code.application && code.application.trim()) {
                         doc.setFont('helvetica', 'bold');
                         doc.setFontSize(9);
@@ -645,14 +668,38 @@
                         doc.setFont('helvetica', 'normal');
                         doc.setFontSize(9);
 
-                        // Simple line-by-line rendering
-                        const lines = [
-                            'This property requires new drip edge installation along all eaves and rakes.',
-                            'Current flashing does not meet code requirements for corrosion resistance and proper overlap.'
-                        ];
+                        // Manually break into ~70 character lines at spaces only
+                        const text = code.application.trim();
+                        const lines = [];
+                        let currentPos = 0;
 
+                        while (currentPos < text.length) {
+                            let endPos = Math.min(currentPos + 70, text.length);
+
+                            // If we're not at the end, find the last space before 85 chars
+                            if (endPos < text.length) {
+                                let spacePos = text.lastIndexOf(' ', endPos);
+                                if (spacePos > currentPos) {
+                                    endPos = spacePos;
+                                }
+                            }
+
+                            lines.push(text.substring(currentPos, endPos).trim());
+                            currentPos = endPos + 1;
+                        }
+
+                        // Render with heavily sanitized text to avoid jsPDF bugs
                         lines.forEach(line => {
-                            doc.text(line, 20, y);
+                            // Remove ALL problematic characters that trigger jsPDF bugs
+                            let cleanLine = line
+                                .replace(/\.\.\./g, '')      // Remove ellipsis
+                                .replace(/['"'"]/g, '')      // Remove all quote types
+                                .replace(/[–—]/g, '-')       // Replace em/en dashes with hyphen
+                                .replace(/[^\x20-\x7E]/g, '') // Remove non-ASCII characters
+                                .trim();
+
+                            // Simple render with NO parameters except x,y
+                            doc.text(cleanLine, 20, y);
                             y += 5;
                         });
                         y += 3;
