@@ -245,12 +245,15 @@
     </div>
     
     <script>
-        // Set today's date as default
-        document.getElementById('estimateDate').value = new Date().toISOString().split('T')[0];
-        
-        // Generate estimate number based on date
+        // Set today's date as default (local timezone)
         const today = new Date();
-        const estNum = 'EST-' + today.getFullYear() + (today.getMonth() + 1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0') + '-001';
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        document.getElementById('estimateDate').value = `${year}-${month}-${day}`;
+
+        // Generate estimate number based on date
+        const estNum = 'EST-' + year + month + day + '-001';
         document.getElementById('estimateNumber').value = estNum;
         
         // Logo URL for PDF
@@ -335,13 +338,16 @@
             lineItems.forEach(item => {
                 const serviceName = item.querySelector('.service-name').value;
                 const description = item.querySelector('.description').value;
-                const amount = parseFloat(item.querySelector('.amount').value) || 0;
-                
-                if (serviceName && amount > 0) {
+                const amountInput = item.querySelector('.amount').value;
+                const amount = parseFloat(amountInput) || 0;
+
+                // Include items with service name, even if no price
+                if (serviceName.trim()) {
                     hasValidItems = true;
+                    const displayAmount = amountInput ? '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '';
                     tableData.push([
                         serviceName,
-                        '$' + amount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+                        displayAmount,
                         description
                     ]);
                     subtotal += amount;
@@ -424,15 +430,13 @@
             doc.text('Job Address:', 18, y + 5);
             doc.text('Email:', 118, y + 5);
             doc.setFont(undefined, 'normal');
-            
-            const maxAddressWidth = 60;
-            let displayAddress = jobAddress;
-            if (doc.getTextWidth(jobAddress) > maxAddressWidth) {
-                displayAddress = jobAddress.substring(0, 30) + '...';
-            }
-            doc.text(displayAddress, 45, y + 5);
-            
-            doc.setFontSize(8);
+
+            // Display full address with smaller font
+            doc.setFontSize(7);
+            const maxAddressWidth = 65;
+            const splitAddress = doc.splitTextToSize(jobAddress, maxAddressWidth);
+            doc.text(splitAddress[0], 45, y + 5);
+
             doc.text(customerEmail, 135, y + 5);
             doc.setFontSize(10);
             
@@ -475,7 +479,7 @@
             const subtotalWidth = doc.getTextWidth('Subtotal:');
             const subtotalX = alignPoint - subtotalWidth;
             
-            const taxWidth = doc.getTextWidth('Tax (if applicable):');
+            const taxWidth = doc.getTextWidth('Tax:');
             const taxX = alignPoint - taxWidth;
             
             doc.setFont(undefined, 'bold');
@@ -491,7 +495,7 @@
             
             // Tax line - dynamically positioned
             y += 6;
-            doc.text('Tax (if applicable):', taxX, y);
+            doc.text('Tax:', taxX, y);
             doc.text('TBD', amountPosition, y, { align: 'right' });
             
             // Total - dynamically positioned
@@ -542,8 +546,12 @@
                 });
             }
             
-            // Footer
-            y = 270;
+            // Footer - dynamic positioning to avoid overlap
+            y += 15; // Add spacing after last section
+            if (y > 250) {
+                doc.addPage();
+                y = 20;
+            }
             doc.setFontSize(8);
             doc.setFont(undefined, 'italic');
             doc.text('This is an estimate only. Final costs may vary based on actual conditions.', 105, y, { align: 'center' });
