@@ -229,7 +229,14 @@
                     <option value="90">90 Days</option>
                 </select>
             </div>
-            
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="includeTax"> Include Tax Line
+                </label>
+                <input type="text" id="taxAmount" placeholder="Tax Amount (e.g., $150.00 or TBD)" style="display:none; margin-top: 10px;">
+            </div>
+
             <div class="form-group">
                 <label>Terms & Conditions (Optional)</label>
                 <textarea id="termsConditions" placeholder="e.g., This estimate is valid for 30 days. Prices subject to change based on actual conditions found during work. 50% deposit required to begin work.">This estimate is valid for the period specified above. Actual costs may vary based on conditions discovered during work. A deposit may be required to schedule work.</textarea>
@@ -258,7 +265,12 @@
         
         // Logo URL for PDF
         const LOGO_URL = 'https://raw.githubusercontent.com/liquiddeath1900/phoenixRCS/main/assets/images/logo/newlogo.png';
-        
+
+        // Tax checkbox toggle
+        document.getElementById('includeTax').addEventListener('change', function() {
+            document.getElementById('taxAmount').style.display = this.checked ? 'block' : 'none';
+        });
+
         function addLineItem() {
             const container = document.getElementById('lineItemsContainer');
             const newItem = document.createElement('div');
@@ -322,6 +334,8 @@
             const validityPeriod = document.getElementById('validityPeriod').value;
             const termsConditions = document.getElementById('termsConditions').value;
             const specialNotes = document.getElementById('specialNotes').value;
+            const includeTax = document.getElementById('includeTax').checked;
+            const taxAmount = document.getElementById('taxAmount').value || 'TBD';
             
             // Validate required fields
             if (!estimateDate || !customerName || !customerPhone || !jobAddress) {
@@ -431,8 +445,8 @@
             doc.text('Email:', 118, y + 5);
             doc.setFont(undefined, 'normal');
 
-            // Display full address with smaller font
-            doc.setFontSize(7);
+            // Display full address with readable font
+            doc.setFontSize(9);
             const maxAddressWidth = 65;
             const splitAddress = doc.splitTextToSize(jobAddress, maxAddressWidth);
             doc.text(splitAddress[0], 45, y + 5);
@@ -466,43 +480,30 @@
                 margin: { left: 15, right: 15 }
             });
             
-            // Subtotal and Total - DYNAMICALLY CALCULATED positions for perfect alignment
+            // Total section - DYNAMICALLY CALCULATED positions for perfect alignment
             y = doc.lastAutoTable.finalY + 10;
-            
+
             // Define alignment point where all labels should end
             const alignPoint = 170;
             const amountPosition = 195;
-            
-            // Calculate actual text widths and positions
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(11);
-            const subtotalWidth = doc.getTextWidth('Subtotal:');
-            const subtotalX = alignPoint - subtotalWidth;
-            
-            const taxWidth = doc.getTextWidth('Tax:');
-            const taxX = alignPoint - taxWidth;
-            
-            doc.setFont(undefined, 'bold');
-            doc.setFontSize(12);
-            const estimatedWidth = doc.getTextWidth('Estimated Total:');
-            const estimatedX = alignPoint - estimatedWidth;
-            
-            // Subtotal - dynamically positioned
-            doc.setFont(undefined, 'normal');
-            doc.setFontSize(11);
-            doc.text('Subtotal:', subtotalX, y);
-            doc.text('$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), amountPosition, y, { align: 'right' });
-            
-            // Tax line - dynamically positioned
-            y += 6;
-            doc.text('Tax:', taxX, y);
-            doc.text('TBD', amountPosition, y, { align: 'right' });
-            
+
+            // Tax line - optional, only if checkbox is checked
+            if (includeTax) {
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(11);
+                const taxWidth = doc.getTextWidth('Tax:');
+                const taxX = alignPoint - taxWidth;
+                doc.text('Tax:', taxX, y);
+                doc.text(taxAmount, amountPosition, y, { align: 'right' });
+                y += 8;
+            }
+
             // Total - dynamically positioned
-            y += 8;
             doc.setFont(undefined, 'bold');
             doc.setFontSize(12);
-            doc.text('Estimated Total:', estimatedX, y);
+            const totalWidth = doc.getTextWidth('Total:');
+            const totalX = alignPoint - totalWidth;
+            doc.text('Total:', totalX, y);
             doc.text('$' + subtotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}), amountPosition, y, { align: 'right' });
             
             // Validity period
