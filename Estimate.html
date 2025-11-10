@@ -484,6 +484,19 @@
                 : jobAddress;
             doc.text(addressText, 45, y + 5, { maxWidth: maxAddressWidth });
 
+            // Display email - auto-shrink if too long
+            doc.setFontSize(8);
+            const maxEmailWidth = 38; // Available space in email column
+            let emailFontSize = 8;
+            let emailTextWidth = doc.getTextWidth(customerEmail);
+
+            // If email is too wide, calculate smaller font size
+            if (emailTextWidth > maxEmailWidth) {
+                const scaleFactor = maxEmailWidth / emailTextWidth;
+                emailFontSize = Math.max(Math.floor(8 * scaleFactor), 6); // Min 6pt
+                doc.setFontSize(emailFontSize);
+            }
+
             doc.text(customerEmail, 157, y + 5);
             doc.setFontSize(10);
             
