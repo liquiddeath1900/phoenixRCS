@@ -112,29 +112,98 @@
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
             cursor: pointer;
+            z-index: 1001;
         }
         .mobile-menu-btn span {
+            display: block;
             width: 25px;
             height: 3px;
             background: #1a1a1a;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
+
+        /* Services Dropdown */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-services {
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: #1a1a1a !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem !important;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #dc2626 !important;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
             .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
                 background: white;
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: left 0.3s ease;
+                z-index: 999;
             }
-            .nav-menu.active { display: flex; }
-            .mobile-menu-btn { display: flex; }
-            .logo-img { max-height: 35px; }
+            .nav-menu.active { left: 0; }
+            .nav-menu a {
+                font-size: 1.5rem;
+                color: #1a1a1a;
+            }
+            .dropdown-content {
+                position: static;
+                display: none;
+                background-color: #f8f9fa;
+                box-shadow: none;
+                width: 100%;
+                margin-top: 1rem;
+                border-radius: 5px;
+            }
+            .nav-dropdown.active .dropdown-content {
+                display: block;
+            }
+            .dropdown-content a {
+                font-size: 1.2rem !important;
+                padding: 1rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            .logo-img { max-height: 30px; }
         }
 
         /* Hero - Unique Split Design for Virginia */
@@ -507,31 +576,37 @@
             display: inline-block;
         }
 
-        /* Footer */
+        /* Footer - Matches main site */
         .footer {
-            background: #0f172a;
-            color: #94a3b8;
+            background: #1a1a1a;
+            color: #f5f5f5;
             padding: 60px 0 30px;
         }
-        .footer-grid {
+        .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
         }
-        .footer h4 {
+        .footer-column h3 {
             color: white;
             margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
         .footer ul { list-style: none; }
-        .footer li { padding: 0.3rem 0; }
+        .footer li { padding: 0.3rem 0; font-size: 0.9rem; }
         .footer a { color: #94a3b8; text-decoration: none; }
-        .footer a:hover { color: #60a5fa; }
+        .footer a:hover { color: #dc2626; }
+        .nap-info p { margin-bottom: 0.5rem; font-size: 0.9rem; }
         .footer-bottom {
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid #333;
             padding-top: 2rem;
             text-align: center;
+            font-size: 0.9rem;
         }
+        .footer-bottom p { margin-bottom: 0.5rem; }
+        .footer-emergency { margin-top: 1rem; }
+        .footer-emergency a { color: #dc2626; font-weight: 700; }
 
         /* Floating Button */
         .floating-call {
@@ -564,23 +639,32 @@
     <a href="#main" class="skip-link" style="position:absolute;top:-40px;left:6px;background:#dc2626;color:white;padding:8px;text-decoration:none;border-radius:4px;z-index:1000;">Skip to main content</a>
 
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="container">
             <div class="header-content">
-                <a href="/">
-                    <img src="/assets/images/PHXRCS.png" alt="Phoenix RCS" class="logo-img">
+                <a href="/" class="logo">
+                    <img src="/assets/images/logo/navlogo.png" alt="Phoenix RCS - Emergency Restoration Maryland" class="logo-img">
                 </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <nav class="nav-menu" id="navMenu">
-                    <a href="/">Home</a>
-                    <a href="/water-damage-restoration-maryland/">Water Damage</a>
-                    <a href="/fire-damage-restoration-maryland/">Fire Damage</a>
-                    <a href="/mold-remediation-maryland/">Mold</a>
-                    <a href="/about/">About</a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Services ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/water-damage-restoration-maryland/">Water Damage</a>
+                            <a href="/fire-damage-restoration-maryland/">Fire Damage</a>
+                            <a href="/mold-remediation-maryland/">Mold Remediation</a>
+                            <a href="/storm-damage-restoration-maryland/">Storm Damage</a>
+                        </div>
+                    </div>
+                    <a href="/#process">Our Process</a>
+                    <a href="/#insurance">Insurance</a>
+                    <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">PreCheck</a>
+                    <a href="/#contact">Contact</a>
                 </nav>
-                <div class="mobile-menu-btn" id="mobileMenuBtn">
-                    <span></span><span></span><span></span>
-                </div>
-                <a href="tel:3014509487" class="header-cta">📞 (301) 450-9487</a>
             </div>
         </div>
     </header>
@@ -797,45 +881,62 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h4>Phoenix RCS</h4>
-                    <p>24/7 Emergency Restoration</p>
-                    <p>📞 <a href="tel:3014509487">(301) 450-9487</a></p>
-                    <p>📧 <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
-                    <p>MHIC #164678</p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Phoenix RCS - Emergency Restoration</h3>
+                    <div class="nap-info">
+                        <p><strong>📧 Email:</strong> <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
+                        <p><strong>📍 Address:</strong> 10334 Vista Meadow Way, Lanham, MD 20706</p>
+                        <p><strong>🌐 Website:</strong> <a href="https://phxrcs.com">phxrcs.com</a></p>
+                        <p><strong>📱 Instagram:</strong> <a href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">@phoenix.rcs</a></p>
+                    </div>
                 </div>
-                <div>
-                    <h4>Services</h4>
+                <div class="footer-column">
+                    <h3>Emergency Restoration Services</h3>
                     <ul>
-                        <li><a href="/water-damage-restoration-maryland/">Water Damage</a></li>
-                        <li><a href="/fire-damage-restoration-maryland/">Fire Damage</a></li>
-                        <li><a href="/mold-remediation-maryland/">Mold Remediation</a></li>
-                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage</a></li>
+                        <li><a href="/water-damage-restoration-maryland/">Water Damage Restoration Maryland</a></li>
+                        <li><a href="/fire-damage-restoration-maryland/">Fire &amp; Smoke Restoration Maryland</a></li>
+                        <li><a href="/mold-remediation-maryland/">Mold Remediation Maryland</a></li>
+                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Repair Maryland</a></li>
+                        <li>Flood Cleanup &amp; Water Extraction</li>
+                        <li>Sewage Backup Cleanup</li>
+                        <li>Contents Cleaning &amp; Pack-Out</li>
+                        <li>Reconstruction Services</li>
                     </ul>
                 </div>
-                <div>
-                    <h4>NoVA Areas</h4>
-                    <ul>
-                        <li>Arlington County</li>
-                        <li>Alexandria</li>
-                        <li>Fairfax County</li>
-                        <li>Falls Church</li>
-                        <li>Loudoun County</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Other Locations</h4>
+                <div class="footer-column">
+                    <h3>Service Areas</h3>
                     <ul>
                         <li><a href="/locations/lanham-restoration-services/">Lanham, MD (HQ)</a></li>
                         <li><a href="/locations/bowie-water-damage-restoration/">Bowie, MD</a></li>
                         <li><a href="/locations/college-park-restoration-services/">College Park, MD</a></li>
-                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/locations/northern-virginia-restoration-services/">Northern Virginia</a></li>
+                        <li><a href="/locations/washington-dc-restoration-services/">Washington DC</a></li>
+                        <li>Montgomery County Restoration</li>
+                        <li>Howard County Emergency Services</li>
+                        <li>Prince George's County</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Why Choose Phoenix RCS?</h3>
+                    <ul>
+                        <li>✅ 60-Minute Response Guaranteed</li>
+                        <li>✅ 24/7/365 Emergency Availability</li>
+                        <li>✅ Direct Insurance Billing</li>
+                        <li>✅ Free Damage Assessments</li>
+                        <li>✅ IICRC Certified Technicians</li>
+                        <li>✅ Advanced Restoration Equipment</li>
+                        <li>✅ Licensed, Bonded & Insured</li>
+                        <li>✅ 100% Satisfaction Guarantee</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Phoenix RCS. Licensed, Bonded & Insured. MHIC #164678</p>
+                <p>&copy; 2024 Phoenix RCS - Restoration &amp; Construction Services. All rights reserved.</p>
+                <p>Licensed Maryland contractor specializing in emergency water damage restoration, fire damage restoration, mold remediation, and storm damage repair throughout Maryland, Virginia, and Washington DC.</p>
+                <div class="footer-emergency">
+                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call Now</a></strong></p>
+                </div>
             </div>
         </div>
     </footer>
@@ -846,10 +947,25 @@
     </div>
 
     <script>
+        // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
+
         if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Services dropdown mobile functionality
+        const navDropdown = document.querySelector('.nav-dropdown');
+        const navServices = document.querySelector('.nav-services');
+
+        if (navServices) {
+            navServices.addEventListener('click', function(e) {
+                e.preventDefault();
+                navDropdown.classList.toggle('active');
+            });
         }
     </script>
 </body>
