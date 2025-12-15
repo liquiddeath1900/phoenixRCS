@@ -12,14 +12,10 @@ Allow: /assets/images/
 # Block sensitive files
 Disallow: /assets/fonts/
 Disallow: /*.log
-Disallow: /*.txt
 Disallow: /.*
 
 # Sitemap location
 Sitemap: https://phxrcs.com/sitemap.xml
-
-# Crawl-delay (optional)
-# Crawl-delay: 1
 
 # Specific bot instructions
 User-agent: Googlebot
@@ -31,12 +27,12 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-# Block bad bots (optional)
+# SEO tools - Allow for ranking monitoring and backlink analysis
 User-agent: AhrefsBot
-Disallow: /
+Allow: /
 
 User-agent: SemrushBot
-Disallow: /
+Allow: /
 
 User-agent: MJ12bot
-Disallow: /
+Allow: /
