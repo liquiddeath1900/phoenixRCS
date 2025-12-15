@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCJJLK76J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DRCJJLK76J');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restoration Tips & Guides | Phoenix RCS Blog</title>
+    <meta name="description" content="Expert tips on water damage prevention, mold prevention, fire safety, and home maintenance from Maryland's trusted restoration company. Protect your home with our guides.">
+    <meta name="keywords" content="water damage prevention, mold prevention tips, fire safety home, restoration guides, home maintenance Maryland">
+    <meta name="author" content="Phoenix RCS">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Restoration Tips & Guides | Phoenix RCS Blog">
+    <meta property="og:description" content="Expert tips on water damage prevention, mold prevention, fire safety, and home maintenance from Maryland's trusted restoration company.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://phxrcs.com/blog/">
+    <meta property="og:site_name" content="Phoenix RCS">
+
+    <!-- Canonical tag -->
+    <link rel="canonical" href="https://phxrcs.com/blog/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; color: #1a1a1a; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-img { max-height: 50px; }
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-menu a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .nav-menu a:hover { color: #dc2626; }
+
+        /* Dropdown */
+        .nav-dropdown { position: relative; }
+        .nav-services { cursor: pointer; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            color: #1a1a1a !important;
+        }
+        .dropdown-content a:hover { background: #f1f1f1; }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: #1a1a1a;
+            margin: 3px 0;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: left 0.3s;
+            }
+            .nav-menu.active { left: 0; }
+            .nav-menu a { font-size: 1.3rem; }
+            .dropdown-content { position: static; display: none; }
+            .nav-dropdown.active .dropdown-content { display: block; }
+            .logo-img { max-height: 35px; }
+        }
+
+        /* Hero */
+        .blog-hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 120px 0 60px;
+            margin-top: 80px;
+            text-align: center;
+        }
+        .blog-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .blog-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Grid */
+        .blog-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .blog-card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+        .blog-card-category {
+            display: inline-block;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .blog-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .blog-card h2 a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        .blog-card h2 a:hover { color: #dc2626; }
+        .blog-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .blog-card-meta {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: #dc2626;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .btn-white {
+            display: inline-block;
+            background: white;
+            color: #dc2626;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #f5f5f5;
+            padding: 60px 0 30px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .footer ul { list-style: none; }
+        .footer li { padding: 0.3rem 0; font-size: 0.9rem; }
+        .footer a { color: #94a3b8; text-decoration: none; }
+        .footer a:hover { color: #dc2626; }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .footer-emergency a { color: #dc2626; font-weight: 700; }
+
+        /* Floating CTA */
+        .floating-call {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+        }
+        .floating-call a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #dc2626;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(220,38,38,0.4);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link" style="position:absolute;top:-40px;left:6px;background:#dc2626;color:white;padding:8px;text-decoration:none;z-index:1000;">Skip to content</a>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="/assets/images/logo/navlogo.png" alt="Phoenix RCS" class="logo-img">
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Services ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/water-damage-restoration-maryland/">Water Damage</a>
+                            <a href="/fire-damage-restoration-maryland/">Fire Damage</a>
+                            <a href="/mold-remediation-maryland/">Mold Remediation</a>
+                            <a href="/storm-damage-restoration-maryland/">Storm Damage</a>
+                        </div>
+                    </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Locations ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/locations/lanham-restoration-services/">Lanham, MD</a>
+                            <a href="/locations/bowie-water-damage-restoration/">Bowie, MD</a>
+                            <a href="/locations/college-park-restoration-services/">College Park, MD</a>
+                            <a href="/locations/northern-virginia-restoration-services/">Northern Virginia</a>
+                            <a href="/locations/washington-dc-restoration-services/">Washington DC</a>
+                        </div>
+                    </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Resources ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/blog/">Blog & Tips</a>
+                            <a href="/about/">About Us</a>
+                            <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">PreCheck Form</a>
+                        </div>
+                    </div>
+                    <a href="/#process">Our Process</a>
+                    <a href="/#insurance">Insurance</a>
+                    <a href="/#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Restoration Tips & Guides</h1>
+            <p>Expert advice to help you prevent damage, protect your home, and know what to do when disaster strikes.</p>
+        </div>
+    </section>
+
+    <main id="main">
+        <!-- Blog Grid -->
+        <section class="blog-section">
+            <div class="container">
+                <div class="blog-grid">
+                    <!-- Article 1 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">💧</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Water Damage</span>
+                            <h2><a href="/blog/what-to-do-water-damage/">What To Do In The First 24 Hours After Water Damage</a></h2>
+                            <p>Quick action can save thousands. Learn the critical steps to take immediately after discovering water damage in your home.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 5 min read</div>
+                        </div>
+                    </article>
+
+                    <!-- Article 2 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">🦠</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Mold Prevention</span>
+                            <h2><a href="/blog/prevent-mold-after-flooding/">How To Prevent Mold Growth After Flooding</a></h2>
+                            <p>Mold can start growing within 24-48 hours. Here's how to prevent it and protect your family's health.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 4 min read</div>
+                        </div>
+                    </article>
+
+                    <!-- Article 3 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">❄️</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Prevention</span>
+                            <h2><a href="/blog/prevent-frozen-pipes/">How To Prevent Frozen Pipes This Winter</a></h2>
+                            <p>Frozen pipes cause millions in damage each year. Learn how to protect your home before temperatures drop.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 4 min read</div>
+                        </div>
+                    </article>
+
+                    <!-- Article 4 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">📋</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Insurance</span>
+                            <h2><a href="/blog/filing-insurance-claim-water-damage/">Filing An Insurance Claim For Water Damage: A Complete Guide</a></h2>
+                            <p>Navigate the insurance process like a pro. What to document, what to say, and how to maximize your claim.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 6 min read</div>
+                        </div>
+                    </article>
+
+                    <!-- Article 5 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">🔥</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Fire Safety</span>
+                            <h2><a href="/blog/fire-safety-checklist-homeowners/">Fire Safety Checklist Every Homeowner Needs</a></h2>
+                            <p>Protect your home and family with this comprehensive fire prevention and preparedness checklist.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 5 min read</div>
+                        </div>
+                    </article>
+
+                    <!-- Article 6 -->
+                    <article class="blog-card">
+                        <div class="blog-card-image">🏠</div>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">Home Maintenance</span>
+                            <h2><a href="/blog/signs-water-damage-home/">5 Signs of Hidden Water Damage In Your Home</a></h2>
+                            <p>Water damage isn't always obvious. Learn the warning signs that could save you from costly repairs.</p>
+                            <div class="blog-card-meta">December 14, 2024 • 4 min read</div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Have An Emergency?</h2>
+                <p>Don't wait - water, fire, and mold damage get worse by the hour. We respond in 60 minutes or less.</p>
+                <a href="tel:3014509487" class="btn-white">📞 Call (301) 450-9487</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Phoenix RCS</h3>
+                    <p>24/7 Emergency Restoration</p>
+                    <p>📧 <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
+                    <p>📍 10334 Vista Meadow Way, Lanham, MD 20706</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="/water-damage-restoration-maryland/">Water Damage</a></li>
+                        <li><a href="/fire-damage-restoration-maryland/">Fire Damage</a></li>
+                        <li><a href="/mold-remediation-maryland/">Mold Remediation</a></li>
+                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Locations</h3>
+                    <ul>
+                        <li><a href="/locations/lanham-restoration-services/">Lanham, MD (HQ)</a></li>
+                        <li><a href="/locations/bowie-water-damage-restoration/">Bowie, MD</a></li>
+                        <li><a href="/locations/college-park-restoration-services/">College Park, MD</a></li>
+                        <li><a href="/locations/northern-virginia-restoration-services/">Northern Virginia</a></li>
+                        <li><a href="/locations/washington-dc-restoration-services/">Washington DC</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="https://form.jotform.com/252454156592057" target="_blank">PreCheck Form</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Phoenix RCS. Licensed, Bonded & Insured. MHIC #164678</p>
+                <div class="footer-emergency">
+                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call Now</a></strong></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Call -->
+    <div class="floating-call">
+        <a href="tel:3014509487" aria-label="Call Phoenix RCS">📞</a>
+    </div>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+        }
+
+        // Dropdowns
+        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+            const trigger = dropdown.querySelector('.nav-services');
+            if (trigger) {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

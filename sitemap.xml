@@ -73,4 +73,18 @@
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <!-- Blog -->
+    <url>
+        <loc>https://phxrcs.com/blog/</loc>
+        <lastmod>2024-12-14</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://phxrcs.com/blog/what-to-do-water-damage/</loc>
+        <lastmod>2024-12-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
 </urlset>

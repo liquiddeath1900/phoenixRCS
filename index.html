@@ -227,20 +227,25 @@
             display: none;
             position: absolute;
             background-color: white;
-            min-width: 200px;
+            min-width: auto;
+            white-space: nowrap;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1000;
-            border-radius: 5px;
+            border-radius: 8px;
             top: 100%;
             left: 0;
+            padding: 8px 0;
         }
-        
+
         .dropdown-content a {
             color: #1a1a1a !important;
-            padding: 12px 16px;
+            padding: 14px 32px !important;
             text-decoration: none;
             display: block;
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
+        }
+        .dropdown-content a:last-child {
+            border-bottom: none;
         }
         
         .dropdown-content a:hover {
@@ -433,8 +438,17 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/css/styles.css?v=7">
     <link rel="stylesheet" href="assets/css/responsive.css?v=7">
-    
-    
+
+    <!-- Dropdown Override Styles - MUST be after external CSS -->
+    <style>
+        .dropdown-content {
+            padding: 12px 0 !important;
+        }
+        .dropdown-content a {
+            padding: 14px 36px !important;
+        }
+    </style>
+
     <!-- Premium Schema Markup for Wealthy Areas -->
     <!-- Enhanced LocalBusiness Schema Markup -->
     <script type="application/ld+json">
@@ -603,9 +617,16 @@
                             <a href="/locations/washington-dc-restoration-services/">Washington DC</a>
                         </div>
                     </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-services">Resources ▼</a>
+                        <div class="dropdown-content">
+                            <a href="/blog/">Blog & Tips</a>
+                            <a href="/about/">About Us</a>
+                            <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">PreCheck Form</a>
+                        </div>
+                    </div>
                     <a href="#process">Our Process</a>
                     <a href="#insurance">Insurance</a>
-                    <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">PreCheck</a>
                     <a href="#contact">Contact</a>
                 </nav>
             </div>
