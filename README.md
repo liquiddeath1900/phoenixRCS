@@ -77,7 +77,7 @@ Primary: "Maryland roofing contractors", "roofing repair Maryland", "siding inst
 ## 📞 Contact Information
 
 - **Phone**: (301) 555-0199
-- **Email**: info@phoenixrcs.com
+- **Email**: management@phxrcs.com
 - **Service Area**: All of Maryland
 - **License**: MHIC #164678
 
@@ -94,7 +94,7 @@ Primary: "Maryland roofing contractors", "roofing repair Maryland", "siding inst
 
 ### Updating Contact Info
 1. Replace phone number `(301) 555-0199` throughout files
-2. Update email `info@phoenixrcs.com` in HTML
+2. Update email `management@phxrcs.com` in HTML
 3. Update license number `MHIC #164678` in HTML
 
 ### Adding Images
