@@ -710,94 +710,33 @@
                 doc.setFontSize(10);
                 y = 35;
                 
-                // Warranties
-                doc.setFont(undefined, 'bold');
-                doc.text('Warranties:', 15, y);
-                y += 7;
+                // Terms paragraph 1
                 doc.setFont(undefined, 'normal');
-                const warranties = [
-                    'The Contractor warrants that all materials will be free from defects for the period of the',
-                    'specific material\'s manufacturer\'s warranty.',
-                    'The Contractor warrants that all workmanship or installation issues will be covered at no cost',
-                    'to the Client for the period five years from the installation date.'
-                ];
-                warranties.forEach(line => {
-                    doc.text(line, 15, y);
-                    y += 5;
-                });
-                y += 5;
-                
-                // Insurance and Licenses
-                doc.setFont(undefined, 'bold');
-                doc.text('Insurance and Licenses:', 15, y);
-                y += 7;
-                doc.setFont(undefined, 'normal');
-                const insurance = [
-                    'The Contractor will maintain necessary insurance and licenses required to perform the work',
-                    'under this Contract.',
-                    'Proof of insurance and licenses will be provided upon request.'
-                ];
-                insurance.forEach(line => {
-                    doc.text(line, 15, y);
-                    y += 5;
-                });
-                y += 5;
-                
-                // Change Orders
-                doc.setFont(undefined, 'bold');
-                doc.text('Change Orders:', 15, y);
-                y += 7;
-                doc.setFont(undefined, 'normal');
-                const changeOrders = [
-                    'Any changes to the scope of work must be documented in a written change order, signed by both',
-                    'the Client and the Contractor.',
-                    'Changes may affect the project cost and completion date.'
-                ];
-                changeOrders.forEach(line => {
-                    doc.text(line, 15, y);
-                    y += 5;
-                });
-                y += 5;
-                
-                // Dispute Resolution
-                doc.setFont(undefined, 'bold');
-                doc.text('Dispute Resolution:', 15, y);
-                y += 7;
-                doc.setFont(undefined, 'normal');
-                const dispute = [
-                    'Any disputes arising from this Contract will be resolved through mediation/arbitration in',
-                    'accordance with the rules of the applicable authority.'
-                ];
-                dispute.forEach(line => {
-                    doc.text(line, 15, y);
-                    y += 5;
-                });
-                y += 5;
-                
-                // Governing Law
-                doc.setFont(undefined, 'bold');
-                doc.text('Governing Law:', 15, y);
-                y += 7;
-                doc.setFont(undefined, 'normal');
-                doc.text('This Contract will be governed by and construed in accordance with the laws of the state of MD.', 15, y);
-                y += 10;
-                
-                // Entire Agreement
-                doc.setFont(undefined, 'bold');
-                doc.text('Entire Agreement:', 15, y);
-                y += 7;
-                doc.setFont(undefined, 'normal');
-                const agreement = [
-                    'This contract constitutes full accord and agreement of the parties, and no other understanding,',
-                    'verbal or otherwise, shall be binding unless in writing, signed by both parties.',
-                    'You, the buyer, may cancel this transaction anytime prior to midnight of the fifth business day',
-                    'after the date of this transaction.'
-                ];
-                agreement.forEach(line => {
-                    doc.text(line, 15, y);
-                    y += 5;
-                });
-                y += 10;
+                doc.setFontSize(9);
+                const para1 = doc.splitTextToSize(
+                    'In consideration of payment of one dollar ($1.00), receipt of which is hereby acknowledged, Contractor warrants that it will (1) advise Customer on the accuracy and adequacy of the Insurance Claim award; (2) perform work to industry standards; (3) utilize professional-grade products; (4) accept pricing as called for in the Insurer\'s Scope of Work, subject to any modification as agreed to by Contractor and the Insurer, including allowances for Overhead and Profit (O & P). Customer agrees to undertake the work as called for in the Insurer\'s Scope of Work, and to hire Contractor(s) to perform the job as per the Insurer\'s Scope of Work, which may be modified over time. It is understood that a Contract will be executed between Customer and Contractor reflecting tasks and prices, once the Scope of Work is available. Customer shall furnish a copy of the Insurer\'s Scope of Work to Phoenix RCS immediately upon receipt from Insurer.',
+                    180
+                );
+                doc.text(para1, 15, y);
+                y += para1.length * 4.5 + 5;
+
+                // Terms paragraph 2
+                const para2 = doc.splitTextToSize(
+                    'Should the insurer\'s award prove sufficient in the opinion of Phoenix RCS, to adequately fund the work as prescribed, Phoenix RCS reserves the right to decline some or all the assignment. Should the customer decline to undertake the restoration even though the funds were awarded for such work by the insurance company, Phoenix RCS shall be entitled to equitable compensation for all services rendered to date for documentation and office fees. Should Customer hire an alternate firm or individual to perform any work not authorized through Phoenix RCS as per agreement, Phoenix RCS shall be entitled to specific damages up to 10% of total estimate value provided by the Insurer, as a result of performing such work.',
+                    180
+                );
+                doc.text(para2, 15, y);
+                y += para2.length * 4.5 + 5;
+
+                // Terms paragraph 3
+                const para3 = doc.splitTextToSize(
+                    'This Agreement including any addenda, constitutes the complete understanding of the Parties, is intended to incorporate and supersede all negotiations (written or oral) and may not be altered or amended except in writing by all Parties. The customer may cancel this agreement at any time within (5) five business days from the date of the signature specified on the "Notice of Cancellation", or, if customer is at least 65 years old, within 7 days of the signature specified on the "Notice of Cancellation" by notifying the Contractor in writing, by certified mail. Verbal cancellation requests will not be accepted.',
+                    180
+                );
+                doc.text(para3, 15, y);
+                y += para3.length * 4.5 + 10;
+
+                doc.setFontSize(10);
                 
                 // Project dates if provided
                 const startDate = formData.get('startDate');
