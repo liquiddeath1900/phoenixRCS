@@ -37,7 +37,7 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../assets/css/styles.css?v=7">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=8">
     <link rel="stylesheet" href="../assets/css/responsive.css?v=7">
     
     <!-- Page-specific nav overrides -->
@@ -124,12 +124,7 @@
         .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
-        /* Desktop only - hover to show dropdown */
-        @media (min-width: 769px) {
-            .nav-dropdown:hover .dropdown-content {
-                display: block;
-            }
-        }
+        /* Dropdowns only open on click via JavaScript */
 
         @media (max-width: 768px) {
             .logo-img {
@@ -867,20 +862,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="../assets/js/main.js?v=7"></script>
+    <script src="../assets/js/main.js?v=9"></script>
     <script src="../assets/js/analytics.js?v=7"></script>
 
-    <!-- Mobile Dropdown Handler -->
-    <script>
-        document.querySelectorAll('.nav-dropdown').forEach(function(dropdown) {
-            const trigger = dropdown.querySelector('.nav-services');
-            if (trigger) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-    </script>
 </body>
 </html>

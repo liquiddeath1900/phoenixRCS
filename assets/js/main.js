@@ -23,54 +23,90 @@
     function initMobileMenu() {
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
-        
+
         if (!mobileMenuBtn || !navMenu) return;
 
+        // Helper function to close all dropdowns
+        function closeAllDropdowns() {
+            document.querySelectorAll('.nav-dropdown').forEach(function(dropdown) {
+                dropdown.classList.remove('active');
+            });
+        }
+
+        // Helper function to close menu and reset everything
+        function closeMenu() {
+            mobileMenuBtn.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            closeAllDropdowns();
+        }
+
         // Ensure menu starts closed immediately (no flash)
-        mobileMenuBtn.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.body.style.overflow = '';
-        
-        // Reset hamburger icon to initial state
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        closeMenu();
 
         mobileMenuBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
+
             // Toggle menu with proper state management
             const isActive = this.classList.contains('active');
-            
+
             if (isActive) {
-                // Close menu
-                this.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-                this.setAttribute('aria-expanded', 'false');
+                // Close menu and reset dropdowns
+                closeMenu();
             } else {
-                // Open menu
+                // Open menu (dropdowns start closed)
+                closeAllDropdowns();
                 this.classList.add('active');
                 navMenu.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 this.setAttribute('aria-expanded', 'true');
             }
-            
+
             // Track menu usage
             if (typeof trackEvent === 'function') {
                 trackEvent('mobile_menu', 'navigation', !isActive ? 'open' : 'close');
             }
         });
 
-        // Handle navigation link clicks - close menu after selection
-        const navLinks = navMenu.querySelectorAll('a');
+        // Handle dropdown toggles (Services, Locations, Resources)
+        const dropdownTriggers = navMenu.querySelectorAll('.nav-services');
+        dropdownTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const dropdown = this.closest('.nav-dropdown');
+
+                // Close other dropdowns first
+                document.querySelectorAll('.nav-dropdown').forEach(function(other) {
+                    if (other !== dropdown) {
+                        other.classList.remove('active');
+                    }
+                });
+
+                // Toggle this dropdown
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Prevent dropdown content clicks from closing dropdown
+        const dropdownContents = navMenu.querySelectorAll('.dropdown-content');
+        dropdownContents.forEach(content => {
+            content.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Handle regular navigation link clicks - close menu after selection
+        // But NOT dropdown triggers
+        const navLinks = navMenu.querySelectorAll('a:not(.nav-services)');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 // Small delay to allow link action to complete
                 setTimeout(() => {
-                    mobileMenuBtn.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    closeMenu();
                 }, 300);
             });
         });
@@ -78,32 +114,23 @@
         // Close menu on escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                closeMenu();
             }
         });
-        
+
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
                 !mobileMenuBtn.contains(e.target)) {
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                closeMenu();
             }
         });
-        
+
         // Ensure menu is hidden on window resize to desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
-                mobileMenuBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                closeMenu();
             }
         });
     }

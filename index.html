@@ -267,12 +267,7 @@
             color: #dc2626 !important;
         }
         
-        /* Desktop only - hover to show dropdown */
-        @media (min-width: 769px) {
-            .nav-dropdown:hover .dropdown-content {
-                display: block;
-            }
-        }
+        /* Dropdowns only open on click via JavaScript */
 
         /* Mobile Responsive */
         /* Service Cards Grid Layout */
@@ -459,7 +454,7 @@
     </style>
     
     <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css?v=7">
+    <link rel="stylesheet" href="assets/css/styles.css?v=8">
     <link rel="stylesheet" href="assets/css/responsive.css?v=7">
 
     <!-- Dropdown Override Styles - MUST be after external CSS -->
@@ -977,21 +972,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="assets/js/main.js?v=7"></script>
+    <script src="assets/js/main.js?v=9"></script>
     <script src="assets/js/analytics.js?v=7"></script>
 
-    <!-- Mobile Dropdown Handler -->
-    <script>
-        document.querySelectorAll('.nav-dropdown').forEach(function(dropdown) {
-            const trigger = dropdown.querySelector('.nav-services');
-            if (trigger) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-    </script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
