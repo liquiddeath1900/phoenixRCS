@@ -88,6 +88,7 @@
 
     .dropdown-content a {
         font-size: 1rem !important;
+        font-weight: 600 !important;
         padding: 0.8rem 1.5rem !important;
         border-bottom: 1px solid #e5e7eb;
         color: #333 !important;
