@@ -16,7 +16,7 @@
     .mobile-menu-btn {
         display: flex;
     }
-    
+
     .nav-menu {
         position: fixed;
         top: 0;
@@ -33,23 +33,46 @@
         box-shadow: 2px 0 20px rgba(0,0,0,0.1);
         z-index: 999;
     }
-    
+
     .nav-menu.active {
         left: 0;
     }
-    
-    .nav-menu a {
-        font-size: 1.8rem;
-        padding: 1.5rem 2rem;
+
+    .nav-menu > a,
+    .nav-menu > .nav-dropdown > a {
+        font-size: 1.5rem;
+        padding: 1rem;
         width: 100%;
         text-align: center;
         border-radius: 8px;
         transition: all 0.3s ease;
     }
-    
-    .nav-menu a:hover {
+
+    .nav-menu > a:hover,
+    .nav-menu > .nav-dropdown > a:hover {
         background: var(--light-gray);
         color: var(--primary-red);
+    }
+
+    /* Mobile Dropdown Styles */
+    .dropdown-content {
+        position: static;
+        display: none;
+        background-color: #f8f9fa;
+        box-shadow: none;
+        width: 100%;
+        margin-top: 1rem;
+        border-radius: 5px;
+    }
+
+    .nav-dropdown.active .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        font-size: 1.2rem !important;
+        padding: 1rem !important;
+        border-bottom: 1px solid #e5e7eb;
     }
 }
 
@@ -238,14 +261,20 @@
         visibility: visible !important;
     }
     
-    .nav-menu a {
+    .nav-menu > a,
+    .nav-menu > .nav-dropdown > a {
         font-size: 0.95rem !important;
         padding: 6px 0 !important;
         width: auto !important;
         text-align: left !important;
         border-radius: 0 !important;
     }
-    
+
+    .dropdown-content a {
+        padding: 14px 36px !important;
+        font-size: 0.95rem !important;
+    }
+
     .hero {
         padding: 130px 0 70px;
     }
@@ -343,13 +372,19 @@
         visibility: visible !important;
     }
     
-    .nav-menu a {
+    .nav-menu > a,
+    .nav-menu > .nav-dropdown > a {
         font-size: 1rem !important;
         padding: 8px 0 !important;
         width: auto !important;
         border-radius: 0 !important;
     }
-    
+
+    .dropdown-content a {
+        padding: 14px 36px !important;
+        font-size: 0.95rem !important;
+    }
+
     .hero {
         padding: 140px 0 80px;
     }

@@ -155,7 +155,8 @@ a:hover {
     align-items: center;
 }
 
-.nav-menu a {
+.nav-menu > a,
+.nav-menu > .nav-dropdown > a {
     color: var(--dark-black);
     text-decoration: none;
     font-weight: 600;
@@ -164,11 +165,13 @@ a:hover {
     position: relative;
 }
 
-.nav-menu a:hover {
+.nav-menu > a:hover,
+.nav-menu > .nav-dropdown > a:hover {
     color: var(--primary-red);
 }
 
-.nav-menu a::after {
+.nav-menu > a::after,
+.nav-menu > .nav-dropdown > a::after {
     content: '';
     position: absolute;
     width: 0;
@@ -179,8 +182,58 @@ a:hover {
     transition: width 0.3s ease;
 }
 
-.nav-menu a:hover::after {
+.nav-menu > a:hover::after,
+.nav-menu > .nav-dropdown > a:hover::after {
     width: 100%;
+}
+
+/* Navigation Dropdowns */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-services {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: auto;
+    white-space: nowrap;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    top: 100%;
+    left: 0;
+    padding: 12px 0;
+}
+
+.dropdown-content a {
+    color: #1a1a1a !important;
+    padding: 14px 36px !important;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem !important;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #dc2626 !important;
+}
+
+.dropdown-content a::after {
+    display: none;
+}
+
+.nav-dropdown:hover .dropdown-content {
+    display: block;
 }
 
 /* Hero Section */
