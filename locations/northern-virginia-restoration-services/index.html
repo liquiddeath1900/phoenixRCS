@@ -180,8 +180,12 @@
         .dropdown-content a::after {
             display: none;
         }
-        .nav-dropdown:hover .dropdown-content {
-            display: block;
+
+        /* Desktop only - hover to open dropdown */
+        @media (min-width: 769px) {
+            .nav-dropdown:hover .dropdown-content {
+                display: block;
+            }
         }
 
         /* Desktop - ensure nav is visible and hamburger hidden */
