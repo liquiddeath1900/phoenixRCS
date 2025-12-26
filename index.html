@@ -196,21 +196,35 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 30px;
-            height: 30px;
+            width: 44px;
+            height: 44px;
             background: none;
             border: none;
             cursor: pointer;
             z-index: 1001;
+            padding: 8px;
+            gap: 5px;
         }
         .mobile-menu-btn span {
             display: block;
-            width: 25px;
-            height: 3px;
+            width: 24px;
+            height: 2px;
             background: #1a1a1a;
-            margin: 3px 0;
-            transition: all 0.3s ease;
             border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        /* Hamburger to X animation */
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
         
         /* Services Dropdown */
@@ -963,22 +977,9 @@
     <script src="assets/js/main.js?v=7"></script>
     <script src="assets/js/analytics.js?v=7"></script>
 
-    <!-- Mobile Menu Script -->
+    <!-- Mobile Dropdown Handler -->
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', function() {
-                navMenu.classList.toggle('active');
-            });
-        }
-        
-        // Dropdown mobile functionality (Services & Locations)
-        const navDropdowns = document.querySelectorAll('.nav-dropdown');
-
-        navDropdowns.forEach(function(dropdown) {
+        document.querySelectorAll('.nav-dropdown').forEach(function(dropdown) {
             const trigger = dropdown.querySelector('.nav-services');
             if (trigger) {
                 trigger.addEventListener('click', function(e) {

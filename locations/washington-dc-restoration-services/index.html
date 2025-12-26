@@ -118,21 +118,35 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 30px;
-            height: 30px;
+            width: 44px;
+            height: 44px;
             background: none;
             border: none;
             cursor: pointer;
             z-index: 1001;
+            padding: 8px;
+            gap: 5px;
         }
         .mobile-menu-btn span {
             display: block;
-            width: 25px;
-            height: 3px;
+            width: 24px;
+            height: 2px;
             background: #333;
-            margin: 3px 0;
-            transition: all 0.3s ease;
             border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        /* Hamburger to X animation */
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         /* Services Dropdown */
@@ -920,20 +934,23 @@
 
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', function() {
+                mobileMenuBtn.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
         }
 
-        // Services dropdown mobile functionality
-        const navDropdown = document.querySelector('.nav-dropdown');
-        const navServices = document.querySelector('.nav-services');
+        // Dropdown mobile functionality (Services & Locations)
+        const navDropdowns = document.querySelectorAll('.nav-dropdown');
 
-        if (navServices) {
-            navServices.addEventListener('click', function(e) {
-                e.preventDefault();
-                navDropdown.classList.toggle('active');
-            });
-        }
+        navDropdowns.forEach(function(dropdown) {
+            const trigger = dropdown.querySelector('.nav-services');
+            if (trigger) {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            }
+        });
     </script>
 </body>
 </html>

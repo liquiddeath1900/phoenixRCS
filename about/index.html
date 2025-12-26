@@ -142,15 +142,35 @@
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: none;
             cursor: pointer;
-            padding: 10px;
+            z-index: 1001;
+            padding: 8px;
+            gap: 5px;
         }
         .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
+            display: block;
+            width: 24px;
+            height: 2px;
             background: #1a1a1a;
             border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
         @media (max-width: 768px) {
             .nav-menu {
@@ -725,6 +745,7 @@
         const navMenu = document.getElementById('navMenu');
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', function() {
+                mobileMenuBtn.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
         }

@@ -108,23 +108,33 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 30px;
-            height: 30px;
+            width: 44px;
+            height: 44px;
             background: none;
             border: none;
             cursor: pointer;
             z-index: 1001;
-            position: absolute;
-            right: 20px;
+            padding: 8px;
+            gap: 5px;
         }
         .mobile-menu-btn span {
             display: block;
-            width: 25px;
-            height: 3px;
+            width: 24px;
+            height: 2px;
             background: #1a1a1a;
-            margin: 3px 0;
-            transition: all 0.3s ease;
             border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
         
         /* Services Dropdown */
@@ -168,12 +178,8 @@
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .mobile-menu-btn { 
+            .mobile-menu-btn {
                 display: flex;
-                position: absolute;
-                right: 20px;
-                top: 50%;
-                transform: translateY(-50%);
             }
             .nav-menu { 
                 position: fixed;
@@ -831,6 +837,7 @@
         
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', function() {
+                mobileMenuBtn.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
         }
