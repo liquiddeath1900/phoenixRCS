@@ -232,8 +232,11 @@ a:hover {
     display: none;
 }
 
-.nav-dropdown:hover .dropdown-content {
-    display: block;
+/* Desktop: hover to open dropdowns */
+@media (min-width: 769px) {
+    .nav-dropdown:hover .dropdown-content {
+        display: block;
+    }
 }
 
 /* Hero Section */

@@ -367,6 +367,10 @@
             box-shadow: 0 4px 15px rgba(220,38,38,0.4);
         }
     </style>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="../../assets/css/styles.css?v=8">
+    <link rel="stylesheet" href="../../assets/css/responsive.css?v=8">
 </head>
 <body>
     <!-- Header -->
@@ -613,24 +617,7 @@
         <a href="tel:3014509487" aria-label="Call Phoenix RCS">📞</a>
     </div>
 
-    <script>
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenuBtn.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-        }
-        document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
-            const trigger = dropdown.querySelector('.nav-services');
-            if (trigger) {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                });
-            }
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="../../assets/js/main.js?v=9"></script>
 </body>
 </html>
