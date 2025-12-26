@@ -130,15 +130,57 @@
             gap: 2rem;
             align-items: center;
         }
-        .nav-menu a {
+        .nav-menu > a,
+        .nav-menu > .nav-dropdown > a {
             color: #1a1a1a;
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
-        .nav-menu a:hover {
+        .nav-menu > a:hover,
+        .nav-menu > .nav-dropdown > a:hover {
             color: #dc2626;
         }
+
+        /* Dropdown Styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-services {
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: auto;
+            white-space: nowrap;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            padding: 12px 0;
+        }
+        .dropdown-content a {
+            color: #1a1a1a !important;
+            padding: 14px 36px !important;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem !important;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #dc2626 !important;
+        }
+        .dropdown-content a::after {
+            display: none;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
@@ -172,6 +214,22 @@
         .mobile-menu-btn.active span:nth-child(3) {
             transform: translateY(-7px) rotate(-45deg);
         }
+        /* Desktop - ensure nav is visible and hamburger hidden */
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none !important;
+            }
+            .nav-menu {
+                display: flex !important;
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                background: transparent !important;
+                flex-direction: row !important;
+                gap: 2rem !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -442,6 +500,19 @@
             text-align: center;
             font-size: 0.9rem;
         }
+        .footer-column {
+            min-width: 200px;
+        }
+        .nap-info p {
+            margin-bottom: 0.5rem;
+        }
+        .footer-emergency {
+            margin-top: 1rem;
+        }
+        .footer-emergency a {
+            color: #dc2626;
+            font-weight: 700;
+        }
 
         /* Floating Call Button */
         .floating-call-btn {
@@ -691,45 +762,61 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div>
-                    <h3>Phoenix RCS</h3>
-                    <p>24/7 Emergency Restoration</p>
-                    <p>📞 <a href="tel:3014509487">(301) 450-9487</a></p>
-                    <p>📧 <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
-                    <p>📍 10334 Vista Meadow Way, Lanham, MD 20706</p>
+                <div class="footer-column">
+                    <h3>Phoenix RCS - Emergency Restoration Maryland</h3>
+                    <div class="nap-info">
+                        <p class="verbose-content"><strong>📞 24/7 Emergency Hotline:</strong> <a href="tel:3014509487">(301) 450-9487</a></p>
+                        <p><strong>📧 Email:</strong> <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
+                        <p><strong>📍 Address:</strong> 10334 Vista Meadow Way, Lanham, MD 20706</p>
+                        <p><strong>🌐 Website:</strong> <a href="https://phxrcs.com">phxrcs.com</a></p>
+                        <p><strong>📱 Instagram:</strong> <a href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">@phoenix.rcs</a></p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Services</h3>
+                <div class="footer-column">
+                    <h3>Emergency Restoration Services</h3>
                     <ul>
                         <li><a href="/water-damage-restoration-maryland/">Water Damage Restoration</a></li>
-                        <li><a href="/fire-damage-restoration-maryland/">Fire Damage Restoration</a></li>
+                        <li><a href="/fire-damage-restoration-maryland/">Fire &amp; Smoke Restoration</a></li>
                         <li><a href="/mold-remediation-maryland/">Mold Remediation</a></li>
-                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Restoration</a></li>
+                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Repair</a></li>
+                        <li>Flood Cleanup &amp; Water Extraction</li>
+                        <li>Contents Cleaning &amp; Pack-Out</li>
+                        <li>Reconstruction Services</li>
                     </ul>
                 </div>
-                <div>
+                <div class="footer-column">
                     <h3>Service Areas</h3>
                     <ul>
-                        <li><a href="/locations/lanham-restoration-services/">Lanham, MD</a></li>
+                        <li><a href="/locations/lanham-restoration-services/">Lanham, MD (HQ)</a></li>
                         <li><a href="/locations/bowie-water-damage-restoration/">Bowie, MD</a></li>
                         <li><a href="/locations/college-park-restoration-services/">College Park, MD</a></li>
-                        <li>Washington DC</li>
-                        <li>Northern Virginia</li>
+                        <li><a href="/locations/northern-virginia-restoration-services/">Northern Virginia</a></li>
+                        <li><a href="/locations/washington-dc-restoration-services/">Washington DC</a></li>
+                        <li>Montgomery County</li>
+                        <li>Prince George's County</li>
+                        <li>Howard County</li>
                     </ul>
                 </div>
-                <div>
-                    <h3>Why Choose Us</h3>
+                <div class="footer-column">
+                    <h3>Why Choose Phoenix RCS?</h3>
                     <ul>
-                        <li>✅ 60-Minute Response</li>
-                        <li>✅ IICRC Certified</li>
-                        <li>✅ Insurance Direct Billing</li>
-                        <li>✅ MHIC #164678</li>
-                        <li>✅ 24/7 Availability</li>
+                        <li>✅ 60-Minute Response Guaranteed</li>
+                        <li>✅ 24/7/365 Emergency Availability</li>
+                        <li>✅ Direct Insurance Billing</li>
+                        <li>✅ Free Damage Assessments</li>
+                        <li>✅ IICRC Certified Technicians</li>
+                        <li>✅ Advanced Restoration Equipment</li>
+                        <li>✅ Licensed, Bonded & Insured</li>
+                        <li>✅ 100% Satisfaction Guarantee</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Phoenix RCS. All rights reserved. | MHIC #164678 | Licensed, Bonded & Insured</p>
+                <p>&copy; 2024 Phoenix RCS - Restoration &amp; Construction Services. All rights reserved.</p>
+                <p>Licensed Maryland contractor specializing in emergency water damage restoration, fire damage restoration, mold remediation, and storm damage repair throughout Baltimore Metro, Montgomery County, Howard County, and Anne Arundel County.</p>
+                <div class="footer-emergency">
+                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call Now</a></strong></p>
+                </div>
             </div>
         </div>
     </footer>
