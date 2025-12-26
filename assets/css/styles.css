@@ -326,9 +326,12 @@ a:hover {
 
 .trust-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     margin-top: 1rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .trust-item {
@@ -402,9 +405,12 @@ a:hover {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .service-card {
@@ -768,19 +774,37 @@ a:hover {
 
 /* Responsive Grid Optimizations */
 @media (min-width: 1400px) {
-    .trust-grid, .services-grid, .process-steps {
+    .trust-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .process-steps {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (min-width: 900px) and (max-width: 1399px) {
-    .trust-grid, .services-grid, .process-steps {
+    .trust-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .process-steps {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 600px) and (max-width: 899px) {
-    .trust-grid, .services-grid, .process-steps {
+    .trust-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .process-steps {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -861,9 +885,14 @@ a:hover {
         margin-bottom: 2rem;
     }
     
-    .trust-grid, .services-grid, .process-steps {
+    .trust-grid, .process-steps {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 100%;
     }
     
     .restoration-grid {

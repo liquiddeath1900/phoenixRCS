@@ -304,12 +304,15 @@
             background: #b91c1c;
         }
         
-        /* Trust Grid */
+        /* Trust Grid - 3 items centered */
         .trust-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin: 3rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .trust-item {
             text-align: center;
@@ -338,7 +341,7 @@
                 margin: 3rem auto;
             }
             .trust-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: 2rem;
             }
         }
@@ -349,7 +352,7 @@
                 gap: 2.5rem;
             }
             .trust-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: 2rem;
             }
         }
@@ -428,9 +431,12 @@
             .hero-subtitle { font-size: 1.1rem; }
             .btn-call { width: 90%; max-width: 300px; }
             .services-grid,
-            .trust-grid,
             .restoration-grid {
                 grid-template-columns: 1fr;
+            }
+            .trust-grid {
+                grid-template-columns: 1fr;
+                max-width: 100%;
             }
         }
     </style>
@@ -678,12 +684,6 @@
                     <p class="verbose-content">Preferred contractor for State Farm, Allstate, USAA, and 50+ major insurance providers</p>
                 </div>
                 <div class="trust-item">
-                    <div class="trust-icon">🏆</div>
-                    <h3>IICRC Certified</h3>
-                    <p>Professional certified technicians</p>
-                    <p class="verbose-content">Licensed, bonded, insured with IICRC certified technicians and ongoing professional training</p>
-                </div>
-                <div class="trust-item">
                     <div class="trust-icon">💯</div>
                     <h3>100% Satisfaction</h3>
                     <p>Work guaranteed</p>
@@ -696,7 +696,7 @@
     <!-- Enhanced Emergency Services Section -->
     <section class="services" id="emergency-services">
         <div class="container">
-            <h2 class="section-title">Maryland's Premier Emergency Restoration Services</h2>
+            <h2 class="section-title">Emergency Restoration</h2>
             <div class="services-intro verbose-content">
                 <p class="services-description">From Baltimore to Annapolis, Montgomery County to Howard County - when disaster strikes, Phoenix RCS responds in 60 minutes or less. Our certified technicians are equipped to handle any restoration emergency.</p>
             </div>
@@ -828,7 +828,7 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <span class="stat-number" data-count="2500">0</span>
+                    <span class="stat-number" data-count="200">0</span>+
                     <span class="stat-label">Homes Restored</span>
                 </div>
                 <div class="stat-item">
@@ -876,78 +876,6 @@
         </div>
     </section>
 
-    <!-- Premium Service Areas Section -->
-    <section class="premium-service-areas verbose-content" id="service-areas">
-        <div class="container">
-            <h2>Specialized Restoration Services for Maryland's Premier Communities</h2>
-            
-            <div class="premium-areas-grid">
-                <div class="premium-area">
-                    <h3>Prince George's County - Our Home Base</h3>
-                    <div class="local-expertise">
-                        <h4>Lanham & Surrounding Areas</h4>
-                        <p>Headquartered in Lanham, we provide the fastest response times to 
-                        Lanham, Bowie, Greenbelt, College Park, and Laurel. Our local presence 
-                        means we understand your community's unique restoration needs.</p>
-                        
-                        <h4>Upper Marlboro & Largo</h4>
-                        <p>Specialized restoration for Upper Marlboro's historic properties and 
-                        Largo's growing residential communities. We serve Mitchellville, 
-                        Glenn Dale, Capitol Heights, and District Heights with rapid response.</p>
-                        
-                        <h4>Temple Hills & Fort Washington</h4>
-                        <p>Comprehensive restoration services for Temple Hills, Fort Washington, 
-                        Clinton, and surrounding communities. We understand the unique challenges 
-                        of older homes and new developments alike.</p>
-                        
-                        <h4>Hyattsville & Riverdale</h4>
-                        <p>Emergency response for Hyattsville, Riverdale, and the Route 1 
-                        corridor. Commercial and residential expertise for this diverse area.</p>
-                    </div>
-                </div>
-                
-                <div class="premium-area">
-                    <h3>Montgomery County Coverage</h3>
-                    <div class="montgomery-expertise">
-                        <h4>Silver Spring & Takoma Park</h4>
-                        <p>Rapid response to Silver Spring's diverse neighborhoods, from 
-                        downtown high-rises to historic Takoma Park homes. We understand 
-                        the unique restoration needs of this vibrant area.</p>
-                        
-                        <h4>Rockville & Bethesda</h4>
-                        <p>Professional restoration for Rockville Town Center, King Farm, 
-                        and Bethesda's luxury neighborhoods. Our team handles both commercial 
-                        properties and high-end residential restoration.</p>
-                        
-                        <h4>Gaithersburg & Germantown</h4>
-                        <p>Serving Kentlands, Lakelands, Crown, and surrounding planned 
-                        communities with immediate emergency response and comprehensive 
-                        restoration services.</p>
-                    </div>
-                </div>
-                
-                <div class="premium-area">
-                    <h3>Extended Service Areas</h3>
-                    <div class="extended-coverage">
-                        <h4>Charles County</h4>
-                        <p>Professional restoration services extending to Waldorf and 
-                        surrounding Charles County communities.</p>
-                        
-                        <h4>Anne Arundel County</h4>
-                        <p>Coverage for Crofton, Odenton, and other Anne Arundel County 
-                        locations within our service radius.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="insurance-partners">
-                <h3>Preferred Contractor for Premium Insurance Carriers</h3>
-                <p>We work directly with Chubb, AIG Private Client Group, PURE, 
-                Cincinnati Insurance, and all major carriers to ensure maximum 
-                coverage for your claim.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Final CTA Section -->
     <section class="final-cta" id="contact">
@@ -978,12 +906,11 @@
                 <div class="footer-column">
                     <h3>Emergency Restoration Services</h3>
                     <ul>
-                        <li><a href="/water-damage-restoration-maryland/">Water Damage Restoration Maryland</a></li>
-                        <li><a href="/fire-damage-restoration-maryland/">Fire &amp; Smoke Restoration Maryland</a></li>
-                        <li><a href="/mold-remediation-maryland/">Mold Remediation Maryland</a></li>
-                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Repair Maryland</a></li>
+                        <li><a href="/water-damage-restoration-maryland/">Water Damage Restoration</a></li>
+                        <li><a href="/fire-damage-restoration-maryland/">Fire &amp; Smoke Restoration</a></li>
+                        <li><a href="/mold-remediation-maryland/">Mold Remediation</a></li>
+                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Repair</a></li>
                         <li>Flood Cleanup &amp; Water Extraction</li>
-                        <li>Sewage Backup Cleanup</li>
                         <li>Contents Cleaning &amp; Pack-Out</li>
                         <li>Reconstruction Services</li>
                     </ul>
