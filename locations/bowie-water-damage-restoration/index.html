@@ -98,6 +98,11 @@
             padding: 120px 0 80px;
             text-align: center;
         }
+        .location-hero h1,
+        .location-hero p,
+        .location-hero .hero-subtitle {
+            color: white !important;
+        }
         
         .breadcrumb {
             background: #f8f9fa;
@@ -110,12 +115,54 @@
             text-decoration: none;
         }
         
-        .emergency-banner {
-            background: #dc2626;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-            font-weight: bold;
+        /* Nav Menu Styles */
+        .nav-menu a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #dc2626;
+        }
+
+        /* Dropdown Styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-services {
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: auto;
+            white-space: nowrap;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            padding: 12px 0;
+        }
+        .dropdown-content a {
+            color: #1a1a1a !important;
+            padding: 14px 36px !important;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem !important;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #dc2626 !important;
+        }
+        .dropdown-content a::after {
+            display: none;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
         }
         
         .content-section {
@@ -181,11 +228,6 @@
     </style>
 </head>
 <body>
-    <!-- Emergency Banner -->
-    <div class="emergency-banner">
-        💧 BOWIE WATER DAMAGE EMERGENCY? RAPID RESPONSE: (301) 450-9487 - SERVING ALL BOWIE AREAS
-    </div>
-
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
