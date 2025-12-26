@@ -124,8 +124,11 @@
         .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
-        .nav-dropdown:hover .dropdown-content {
-            display: block;
+        /* Desktop only - hover to show dropdown */
+        @media (min-width: 769px) {
+            .nav-dropdown:hover .dropdown-content {
+                display: block;
+            }
         }
 
         @media (max-width: 768px) {
@@ -778,28 +781,17 @@
     <script src="../assets/js/main.js?v=7"></script>
     <script src="../assets/js/analytics.js?v=7"></script>
 
-    <!-- Scripts -->
+    <!-- Mobile Dropdown Handler -->
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        const navDropdown = document.querySelector('.nav-dropdown');
-        const navServices = document.querySelector('.nav-services');
-        
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileMenuBtn.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-        }
-        
-        // Mobile services dropdown toggle
-        if (navServices) {
-            navServices.addEventListener('click', function(e) {
-                e.preventDefault();
-                navDropdown.classList.toggle('active');
-            });
-        }
+        document.querySelectorAll('.nav-dropdown').forEach(function(dropdown) {
+            const trigger = dropdown.querySelector('.nav-services');
+            if (trigger) {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            }
+        });
     </script>
 </body>
 </html>
