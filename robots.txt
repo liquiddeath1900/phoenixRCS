@@ -36,3 +36,13 @@ Allow: /
 
 User-agent: MJ12bot
 Allow: /
+
+# AI Crawlers - Allow for AI search visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
