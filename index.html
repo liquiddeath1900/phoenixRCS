@@ -209,6 +209,8 @@
         section.trust-bar { padding: 20px 0; }
         section.urgency-banner { padding: 0; }
         section.mid-cta { padding: 50px 0; }
+        /* Mobile shows the sticky call bar; hide the redundant floating button */
+        @media (max-width: 768px) { .floating-call-btn { display: none !important; } }
     </style>
 
     <!-- LocalBusiness Schema -->
@@ -489,7 +491,6 @@
                         <li>Basement &amp; crawl space flooding</li>
                     </ul>
                     <a href="/water-damage-restoration-maryland/" class="btn-service">Learn More</a>
-                    <div class="service-call"><a href="tel:3014509487">📞 (301) 450-9487</a></div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🔥</div>
@@ -501,7 +502,6 @@
                         <li>Full reconstruction</li>
                     </ul>
                     <a href="/fire-damage-restoration-maryland/" class="btn-service">Learn More</a>
-                    <div class="service-call"><a href="tel:3014509487">📞 (301) 450-9487</a></div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">⛈️</div>
@@ -513,7 +513,6 @@
                         <li>Insurance documentation</li>
                     </ul>
                     <a href="/storm-damage-restoration-maryland/" class="btn-service">Learn More</a>
-                    <div class="service-call"><a href="tel:3014509487">📞 (301) 450-9487</a></div>
                 </div>
             </div>
         </div>
@@ -751,9 +750,6 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 Phoenix RCS - Restoration &amp; Construction Services. All rights reserved.</p>
                 <p>Licensed Maryland contractor specializing in emergency water damage restoration, fire damage restoration, and storm damage repair throughout Montgomery County, Anne Arundel County, and Central Maryland.</p>
-                <div class="footer-emergency">
-                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call (301) 450-9487</a></strong></p>
-                </div>
             </div>
         </div>
     </footer>
