@@ -209,8 +209,11 @@
         section.trust-bar { padding: 20px 0; }
         section.urgency-banner { padding: 0; }
         section.mid-cta { padding: 50px 0; }
-        /* Mobile shows the sticky call bar; hide the redundant floating button */
-        @media (max-width: 768px) { .floating-call-btn { display: none !important; } }
+        /* Mobile: sticky call bar is the single call CTA — drop the floating button + redundant hero number */
+        @media (max-width: 768px) {
+            .floating-call-btn { display: none !important; }
+            .hero-phone { display: none !important; }
+        }
     </style>
 
     <!-- LocalBusiness Schema -->
