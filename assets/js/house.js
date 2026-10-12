@@ -28,8 +28,15 @@
     var fixing = {}, prog = {};
     PARTS.forEach(function (p) { fixing[p] = false; prog[p] = 0; });
 
+    // Focus mode (service pages): <svg data-focus="water"> starts with only that one problem
+    var focus = svg.getAttribute('data-focus');
+    if (focus && ANGLE[focus] !== undefined) {
+        PARTS.forEach(function (p) { if (p !== focus) { fixing[p] = true; prog[p] = 1; } });
+        theta = ANGLE[focus];
+    } else focus = null;
+
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var auto = !reduce, target = null, raf = null, last = 0, inView = true, clock = 0;
+    var auto = !reduce && !focus, target = null, raf = null, last = 0, inView = true, clock = 0;
     var down = null, dragging = false;
 
     // Point on a roof slope. side 1 = front, -1 = back. t 0 = eave, 1 = ridge.
@@ -219,6 +226,7 @@
             ['fire', [w, 0, 4.1], [1, 0, 0]]
         ].forEach(function (pin) {
             if (facing(pin[2]) <= 0.12) return;
+            if (focus && pin[0] !== focus) return;   // service pages show only their own problem
             var part = pin[0], xy = P(pin[1]).split(','), done = fixing[part];
             var cls = 'pin ' + (done ? 'ok' : 'bad') + (selected === part ? ' on' : '');
             var g = '<g class="' + cls + '" data-part="' + part + '">';
@@ -270,7 +278,8 @@
             b.querySelector('b').textContent = fixing[b.dataset.part] ? '✓' : NUM[b.dataset.part];
         });
         document.querySelectorAll('.panel').forEach(function (p) { p.hidden = p.dataset.panel !== selected; });
-        if (statusEl) statusEl.textContent = count === 0 ? 'This house has six problems. Tap one to fix it.' :
+        if (statusEl) statusEl.textContent = focus ? (count < 6 ? 'Tap the red number to fix it.' : 'Fixed. Drag to look around.') :
+            count === 0 ? 'This house has six problems. Tap one to fix it.' :
             count < 6 ? count + ' of 6 fixed. Keep going.' : 'All six fixed.';
         if (doneEl) doneEl.hidden = count < 6;
         if (count === 6 && !reduce) auto = true;       // victory lap
@@ -284,7 +293,7 @@
     }
     buttons.forEach(function (b) { b.addEventListener('click', function () { fix(b.dataset.part, true); }); });
     if (resetEl) resetEl.addEventListener('click', function () {
-        PARTS.forEach(function (p) { fixing[p] = false; if (reduce) prog[p] = 0; });
+        PARTS.forEach(function (p) { if (!focus || p === focus) { fixing[p] = false; if (reduce) prog[p] = 0; } });
         selected = null;
         update();
         request();

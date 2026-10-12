@@ -64,12 +64,20 @@
 
         /* Header */
         .hdr { position: sticky; top: 0; z-index: 50; background: rgba(247,245,241,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-        .hdr .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+        .hdr .wrap { display: flex; align-items: center; gap: 12px; height: 64px; }
+        .hdr-logo { margin-right: auto; }
         .hdr-logo img { height: 26px; width: auto; }
-        .hdr-nav { display: none; gap: 28px; font-weight: 600; font-size: .975rem; }
-        .hdr-nav a { text-decoration: none; }
+        .hdr-nav { display: none; gap: 26px; font-weight: 600; font-size: .95rem; }
+        .hdr-nav a { text-decoration: none; white-space: nowrap; }
         .hdr-nav a:hover { color: var(--red); }
-        .hdr-call { min-height: 44px; padding: 8px 18px; font-size: .975rem; }
+        /* Phone menu: a plain details element, no script */
+        .menu summary { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -8px; border-radius: 10px; cursor: pointer; list-style: none; }
+        .menu summary::-webkit-details-marker { display: none; }
+        .menu[open] summary { background: var(--ink); color: #fff; }
+        .menu nav a[href^="tel:"] { color: var(--red); font-family: var(--display); font-weight: 800; }
+        .menu nav { position: absolute; left: 0; right: 0; top: 64px; display: grid; background: var(--card); border-bottom: 1px solid var(--line); box-shadow: 0 18px 30px rgba(0,0,0,.12); padding: 6px var(--gutter) 14px; }
+        .menu nav a { padding: 13px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 600; }
+        .menu nav a:last-child { border-bottom: 0; }
 
         /* Hero */
         .hero { padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(40px, 6vw, 80px); }
@@ -154,8 +162,11 @@
         .ftr .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
         .ftr nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
 
-        @media (min-width: 860px) {
+        @media (min-width: 980px) {
             .hdr-nav { display: flex; }
+            .menu { display: none; }
+        }
+        @media (min-width: 860px) {
             .hdr-logo img { height: 30px; }
             .hero-grid { grid-template-columns: 1fr 1.1fr; }
             .work-head { grid-template-columns: 1fr auto; align-items: end; }
@@ -225,16 +236,11 @@
     <header class="hdr">
         <div class="wrap">
             <a href="/" class="hdr-logo"><img src="assets/images/logo/navlogo-600.png" width="600" height="79" alt="Phoenix RCS"></a>
-            <nav class="hdr-nav" aria-label="Main">
-                <a href="#services">Services</a>
-                <a href="#work">Recent work</a>
-                <a href="#claim">Insurance jobs</a>
-                <a href="#faq">Questions</a>
-            </nav>
-            <a href="tel:3014509487" class="btn hdr-call">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-                Call
-            </a>
+            <nav class="hdr-nav" aria-label="Main"><a href="/roof-replacement-maryland/">Roofing</a><a href="/siding-replacement-maryland/">Siding</a><a href="/gutter-replacement-maryland/">Gutters</a><a href="/storm-damage-restoration-maryland/">Storm</a><a href="/water-damage-restoration-maryland/">Water</a><a href="/fire-damage-restoration-maryland/">Fire</a></nav>
+            <details class="menu">
+                <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+                <nav aria-label="Main, phone"><a href="/roof-replacement-maryland/">Roofing</a><a href="/siding-replacement-maryland/">Siding</a><a href="/gutter-replacement-maryland/">Gutters</a><a href="/storm-damage-restoration-maryland/">Storm</a><a href="/water-damage-restoration-maryland/">Water</a><a href="/fire-damage-restoration-maryland/">Fire</a><a href="/about/">About</a><a href="/blog/">Blog</a><a href="tel:3014509487">Call (301) 450-9487</a></nav>
+            </details>
         </div>
     </header>
 
@@ -265,17 +271,17 @@
                     <article class="panel" data-panel="roof" hidden>
                         <h3>Roofing</h3>
                         <p>Full replacements and repairs. Lately that's mostly Owens Corning Duration shingles, plus Brava synthetic where cedar shake used to be.</p>
-                        <a class="textlink" href="#work">See recent roofs</a>
+                        <a class="textlink" href="/roof-replacement-maryland/">More on roofing</a>
                     </article>
                     <article class="panel" data-panel="siding" hidden>
                         <h3>Siding</h3>
                         <p>Vinyl siding replacement, often on the same job as the roof and gutters. Recent houses got CertainTeed MainStreet.</p>
-                        <a class="textlink" href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">See it on Instagram</a>
+                        <a class="textlink" href="/siding-replacement-maryland/">More on siding</a>
                     </article>
                     <article class="panel" data-panel="gutters" hidden>
                         <h3>Gutters</h3>
                         <p>New gutters and downspouts, usually replaced in the same job as the roof.</p>
-                        <a class="textlink" href="#claim">How an insurance job goes</a>
+                        <a class="textlink" href="/gutter-replacement-maryland/">More on gutters</a>
                     </article>
                     <article class="panel" data-panel="storm" hidden>
                         <h3>Storm damage</h3>
@@ -434,7 +440,7 @@
                     <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a>
                     <span>MHIC #164678</span>
                 </address>
-                <p class="areas">Local pages: <a href="/locations/bethesda-restoration-services/">Bethesda</a>, <a href="/locations/potomac-restoration-services/">Potomac</a>, <a href="/locations/chevy-chase-restoration-services/">Chevy Chase</a>, <a href="/locations/annapolis-restoration-services/">Annapolis</a>, <a href="/locations/severna-park-restoration-services/">Severna Park</a></p>
+                <p class="areas">Areas: <a href="/locations/lanham-restoration-services/">Lanham</a>, <a href="/locations/bethesda-restoration-services/">Bethesda</a>, <a href="/locations/potomac-restoration-services/">Potomac</a>, <a href="/locations/chevy-chase-restoration-services/">Chevy Chase</a>, <a href="/locations/annapolis-restoration-services/">Annapolis</a>, <a href="/locations/severna-park-restoration-services/">Severna Park</a></p>
             </div>
         </div>
     </section>
@@ -453,7 +459,7 @@
     </footer>
 
     <script src="assets/js/analytics.js?v=7"></script>
-    <script src="assets/js/house.js?v=2"></script>
+    <script src="assets/js/house.js?v=4"></script>
     <script>
     // Job videos play only while they are on screen, and not at all for reduced motion
     (function () {

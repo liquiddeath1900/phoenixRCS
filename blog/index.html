@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+    <!-- Built by site-builder/projects/phoenixrcs/build/build_pages.py. Edit there, not here. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRCJJLK76J"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,476 +11,112 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restoration Tips & Guides | Phoenix RCS Blog</title>
-    <meta name="description" content="Expert tips on water damage prevention, fire safety, and home maintenance from Maryland's trusted restoration company. Protect your home with our guides.">
-    <meta name="keywords" content="water damage prevention, fire safety home, restoration guides, home maintenance Maryland">
-    <meta name="author" content="Phoenix RCS">
+    <title>Blog | Phoenix RCS</title>
+    <meta name="description" content="Practical guides from Phoenix RCS on storm, water and fire damage and getting a house put back together.">
     <meta name="robots" content="index, follow">
-
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Restoration Tips & Guides | Phoenix RCS Blog">
-    <meta property="og:description" content="Expert tips on water damage prevention, fire safety, and home maintenance from Maryland's trusted restoration company.">
+    <meta property="og:title" content="Blog | Phoenix RCS">
+    <meta property="og:description" content="Practical guides from Phoenix RCS on storm, water and fire damage and getting a house put back together.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://phxrcs.com/blog/">
-    <meta property="og:image" content="https://phxrcs.com/assets/images/logo/navlogo.png">
+    <meta property="og:image" content="https://phxrcs.com/assets/images/projects/terra-cotta-roof-chimney.jpg">
     <meta property="og:site_name" content="Phoenix RCS">
-
-    <!-- Canonical tag -->
     <link rel="canonical" href="https://phxrcs.com/blog/">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; color: #1a1a1a; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo-img { max-height: 50px; }
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-        .nav-menu a {
-            color: #1a1a1a;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .nav-menu a:hover { color: #dc2626; }
-
-        /* Dropdown */
-        .nav-dropdown { position: relative; }
-        .nav-services { cursor: pointer; }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: white;
-            min-width: auto;
-            white-space: nowrap;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            border-radius: 8px;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            padding: 12px 0;
-        }
-        .dropdown-content a {
-            display: block;
-            padding: 14px 36px !important;
-            color: #1a1a1a !important;
-            font-size: 0.95rem !important;
-        }
-        .dropdown-content a:hover { background: #f1f1f1; color: #dc2626 !important; }
-        .dropdown-content a::after { display: none; }
-
-        /* Desktop only - hover to open dropdown */
-        @media (min-width: 769px) {
-            .nav-dropdown:hover .dropdown-content { display: block; }
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 44px;
-            height: 44px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1001;
-            padding: 8px;
-            gap: 5px;
-        }
-        .mobile-menu-btn span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: #1a1a1a;
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        /* Desktop - ensure nav is visible and hamburger hidden */
-        @media (min-width: 769px) {
-            .mobile-menu-btn {
-                display: none !important;
-            }
-            .nav-menu {
-                display: flex !important;
-                position: static !important;
-                width: auto !important;
-                height: auto !important;
-                background: transparent !important;
-                flex-direction: row !important;
-                gap: 2rem !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: flex; }
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh;
-                background: white;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                transition: left 0.3s;
-            }
-            .nav-menu.active { left: 0; }
-            .nav-menu a { font-size: 1.3rem; }
-            .dropdown-content { position: static; display: none; }
-            .nav-dropdown.active .dropdown-content { display: block; }
-            .logo-img { max-height: 30px; }
-        }
-
-        /* Hero */
-        .blog-hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
-            color: white;
-            padding: 120px 0 60px;
-            margin-top: 80px;
-            text-align: center;
-        }
-        .blog-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .blog-hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Blog Grid */
-        .blog-section {
-            padding: 60px 0;
-            background: #f8f9fa;
-        }
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        .blog-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .blog-card-image {
-            height: 200px;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-        }
-        .blog-card-content {
-            padding: 1.5rem;
-        }
-        .blog-card-category {
-            display: inline-block;
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-        .blog-card h2 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-        }
-        .blog-card h2 a {
-            color: #1a1a1a;
-            text-decoration: none;
-        }
-        .blog-card h2 a:hover { color: #dc2626; }
-        .blog-card p {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        .blog-card-meta {
-            color: #999;
-            font-size: 0.85rem;
-        }
-
-        /* CTA */
-        .cta-section {
-            background: #dc2626;
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-        }
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .cta-section p {
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-        }
-        .btn-white {
-            display: inline-block;
-            background: white;
-            color: #dc2626;
-            padding: 15px 35px;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 5px;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1a1a1a;
-            color: #f5f5f5;
-            padding: 60px 0 30px;
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        .footer-column h3 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        .footer ul { list-style: none; }
-        .footer li { padding: 0.3rem 0; font-size: 0.9rem; }
-        .footer a { color: #94a3b8; text-decoration: none; }
-        .footer a:hover { color: #dc2626; }
-        .footer-bottom {
-            border-top: 1px solid #333;
-            padding-top: 2rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-        .footer-emergency a { color: #dc2626; font-weight: 700; }
-
-        /* Floating CTA */
-        .floating-call {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 999;
-        }
-        .floating-call a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: #dc2626;
-            color: white;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(220,38,38,0.4);
-        }
-    </style>
-
-    <!-- External CSS -->
-    <link rel="stylesheet" href="../assets/css/styles.css?v=8">
-    <link rel="stylesheet" href="../assets/css/responsive.css?v=8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/site.css?v=3">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://phxrcs.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://phxrcs.com/blog/"
+    }
+  ]
+}
+    </script>
 </head>
 <body>
-    <a href="#main" class="skip-link" style="position:absolute;top:-40px;left:6px;background:#dc2626;color:white;padding:8px;text-decoration:none;z-index:1000;">Skip to content</a>
+    <a href="#main" class="skip">Skip to content</a>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="/" class="logo">
-                    <img src="/assets/images/logo/navlogo.png" alt="Phoenix RCS" class="logo-img">
-                </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <nav class="nav-menu" id="navMenu">
-                    <div class="nav-dropdown">
-                        <a href="#" class="nav-services">Services ▼</a>
-                        <div class="dropdown-content">
-                            <a href="/water-damage-restoration-maryland/">Water Damage</a>
-                            <a href="/fire-damage-restoration-maryland/">Fire Damage</a>
-                            <a href="/storm-damage-restoration-maryland/">Storm Damage</a>
-                        </div>
-                    </div>
-                    <div class="nav-dropdown">
-                        <a href="#" class="nav-services">Locations ▼</a>
-                        <div class="dropdown-content">
-                            <a href="/locations/bethesda-restoration-services/">Bethesda, MD</a>
-                            <a href="/locations/potomac-restoration-services/">Potomac, MD</a>
-                            <a href="/locations/chevy-chase-restoration-services/">Chevy Chase, MD</a>
-                            <a href="/locations/annapolis-restoration-services/">Annapolis, MD</a>
-                            <a href="/locations/severna-park-restoration-services/">Severna Park, MD</a>
-                        </div>
-                    </div>
-                    <div class="nav-dropdown">
-                        <a href="#" class="nav-services">Resources ▼</a>
-                        <div class="dropdown-content">
-                            <a href="/blog/">Blog & Tips</a>
-                            <a href="/about/">About Us</a>
-                            <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">PreCheck Form</a>
-                        </div>
-                    </div>
-                    <a href="/#process">Our Process</a>
-                    <a href="/#insurance">Insurance</a>
-                    <a href="/#contact">Contact</a>
-                </nav>
-            </div>
+    <header class="hdr">
+        <div class="wrap">
+            <a href="/" class="hdr-logo"><img src="/assets/images/logo/navlogo-600.png" width="600" height="79" alt="Phoenix RCS home"></a>
+            <nav class="hdr-nav" aria-label="Main"><a href="/roof-replacement-maryland/">Roofing</a><a href="/siding-replacement-maryland/">Siding</a><a href="/gutter-replacement-maryland/">Gutters</a><a href="/storm-damage-restoration-maryland/">Storm</a><a href="/water-damage-restoration-maryland/">Water</a><a href="/fire-damage-restoration-maryland/">Fire</a></nav>
+            <details class="menu">
+                <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+                <nav aria-label="Main, phone"><a href="/roof-replacement-maryland/">Roofing</a><a href="/siding-replacement-maryland/">Siding</a><a href="/gutter-replacement-maryland/">Gutters</a><a href="/storm-damage-restoration-maryland/">Storm</a><a href="/water-damage-restoration-maryland/">Water</a><a href="/fire-damage-restoration-maryland/">Fire</a><a href="/about/">About</a><a href="/blog/">Blog</a><a href="tel:3014509487">Call (301) 450-9487</a></nav>
+            </details>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="blog-hero">
-        <div class="container">
-            <h1>Restoration Tips & Guides</h1>
-            <p>Expert advice to help you prevent damage, protect your home, and know what to do when disaster strikes.</p>
+    <main id="main">
+
+    <section class="hero">
+        <div class="wrap">
+            <p class="crumbs"><a href="/">Home</a> / Blog</p>
+            <h1>Guides</h1>
+            <p class="lede">Plain advice for the day something goes wrong with your house.</p>
+            <div class="cards"><div class="card"><h3><a href="/blog/what-to-do-water-damage/" style="text-decoration:none">What to do in the first 24 hours after water damage</a></h3><p>A burst pipe or a flooded basement: what to do in the first half hour, what is safe to do while you wait for help, and what not to touch.</p><a class="textlink" href="/blog/what-to-do-water-damage/">Read it</a></div></div>
         </div>
     </section>
 
-    <main id="main">
-        <!-- Blog Grid -->
-        <section class="blog-section">
-            <div class="container">
-                <div class="blog-grid">
-                    <!-- Article 1 -->
-                    <article class="blog-card">
-                        <div class="blog-card-image">💧</div>
-                        <div class="blog-card-content">
-                            <span class="blog-card-category">Water Damage</span>
-                            <h2><a href="/blog/what-to-do-water-damage/">What To Do In The First 24 Hours After Water Damage</a></h2>
-                            <p>Quick action can save thousands. Learn the critical steps to take immediately after discovering water damage in your home.</p>
-                            <div class="blog-card-meta">December 14, 2024 • 5 min read</div>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="cta-section">
-            <div class="container">
-                <h2>Have An Emergency?</h2>
-                <p>Don't wait - water and fire damage get worse by the hour. We respond in 60 minutes or less.</p>
-                <a href="tel:3014509487" class="btn-white">📞 Call (301) 450-9487</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Phoenix RCS - Emergency Restoration Maryland</h3>
-                    <div class="nap-info">
-                        <p><strong>📧 Email:</strong> <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a></p>
-                        <p><strong>📍 Address:</strong> 10334 Vista Meadow Way, Lanham, MD 20706</p>
-                        <p><strong>🌐 Website:</strong> <a href="https://phxrcs.com">phxrcs.com</a></p>
-                        <p><strong>📱 Instagram:</strong> <a href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">@phoenix.rcs</a></p>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Emergency Restoration Services</h3>
-                    <ul>
-                        <li><a href="/water-damage-restoration-maryland/">Water Damage Restoration</a></li>
-                        <li><a href="/fire-damage-restoration-maryland/">Fire &amp; Smoke Restoration</a></li>
-                        <li><a href="/storm-damage-restoration-maryland/">Storm Damage Repair</a></li>
-                        <li>Flood Cleanup &amp; Water Extraction</li>
-                        <li>Contents Cleaning &amp; Pack-Out</li>
-                        <li>Reconstruction Services</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Service Areas</h3>
-                    <ul>
-                        <li><a href="/locations/bethesda-restoration-services/">Bethesda, MD</a></li>
-                        <li><a href="/locations/potomac-restoration-services/">Potomac, MD</a></li>
-                        <li><a href="/locations/chevy-chase-restoration-services/">Chevy Chase, MD</a></li>
-                        <li><a href="/locations/annapolis-restoration-services/">Annapolis, MD</a></li>
-                        <li><a href="/locations/severna-park-restoration-services/">Severna Park, MD</a></li>
-                        <li>Montgomery County</li>
-                        <li>Prince George's County</li>
-                        <li>Howard County</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Why Choose Phoenix RCS?</h3>
-                    <ul>
-                        <li>✅ 60-Minute Response Guaranteed</li>
-                        <li>✅ 24/7/365 Emergency Availability</li>
-                        <li>✅ Direct Insurance Billing</li>
-                        <li>✅ Free Damage Assessments</li>
-                        <li>✅ IICRC Certified Technicians</li>
-                        <li>✅ Advanced Restoration Equipment</li>
-                        <li>✅ Licensed, Bonded & Insured</li>
-                        <li>✅ 100% Satisfaction Guarantee</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Phoenix RCS - Restoration &amp; Construction Services. All rights reserved.</p>
-                <p>Licensed Maryland contractor specializing in emergency water damage restoration, fire damage restoration, and storm damage repair throughout Baltimore Metro, Montgomery County, Howard County, and Anne Arundel County.</p>
-                <div class="footer-emergency">
-                    <p><strong>24/7 EMERGENCY: <a href="tel:3014509487">Call Now</a></strong></p>
-                </div>
+    <section class="contact" id="contact">
+        <div class="wrap">
+            <div>
+                <h2>Tell us what happened.</h2>
+                <p class="lede">Send the free assessment and we reply within 24 to 48 hours. If water is coming in right now, call.</p>
+                <a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer" class="btn">Start your free assessment</a>
+                <p class="contact-or">Or call <a class="textlink" href="tel:3014509487">(301) 450-9487</a></p>
             </div>
         </div>
+    </section>
+
+    </main>
+
+    <footer class="ftr">
+        <div class="wrap">
+            <div class="ftr-grid">
+                <address class="nap">
+                    <strong>Phoenix RCS</strong>
+                    <span>10334 Vista Meadow Way, Lanham, MD 20706</span>
+                    <a href="tel:3014509487">(301) 450-9487</a>
+                    <a href="mailto:Management@phxrcs.com">Management@phxrcs.com</a>
+                    <span>MHIC #164678</span>
+                </address>
+                <div><h2>Services</h2><ul><li><a href="/roof-replacement-maryland/">Roof replacement</a></li><li><a href="/siding-replacement-maryland/">Siding replacement</a></li><li><a href="/gutter-replacement-maryland/">Gutter replacement</a></li><li><a href="/storm-damage-restoration-maryland/">Storm damage</a></li><li><a href="/water-damage-restoration-maryland/">Water damage</a></li><li><a href="/fire-damage-restoration-maryland/">Fire and smoke</a></li></ul></div>
+                <div><h2>Areas</h2><ul><li><a href="/locations/lanham-restoration-services/">Lanham</a></li><li><a href="/locations/bethesda-restoration-services/">Bethesda</a></li><li><a href="/locations/potomac-restoration-services/">Potomac</a></li><li><a href="/locations/chevy-chase-restoration-services/">Chevy Chase</a></li><li><a href="/locations/annapolis-restoration-services/">Annapolis</a></li><li><a href="/locations/severna-park-restoration-services/">Severna Park</a></li></ul></div>
+                <div><h2>Company</h2><ul><li><a href="/about/">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="https://www.instagram.com/phoenix.rcs/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://form.jotform.com/252454156592057" target="_blank" rel="noopener noreferrer">Free assessment</a></li></ul></div>
+            </div>
+            <p class="ftr-base">&copy; 2026 Phoenix RCS. Licensed and insured Maryland home improvement contractor.</p>
+        </div>
     </footer>
-
-    <!-- Floating Call -->
-    <div class="floating-call">
-        <a href="tel:3014509487" aria-label="Call Phoenix RCS">📞</a>
-    </div>
-
-    <!-- Scripts -->
-    <script src="../assets/js/main.js?v=9"></script>
+    <script src="/assets/js/analytics.js?v=7"></script>
+    <script>
+    // Job videos play only while they are on screen, and not at all for reduced motion
+    (function () {
+        var clips = document.querySelectorAll('video.clip');
+        if (!clips.length || !('IntersectionObserver' in window)) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { clips.forEach(function (v) { v.controls = true; }); return; }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                var v = en.target, p;
+                if (en.isIntersecting) { p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; }); }
+                else v.pause();
+            });
+        }, { threshold: 0.35 });
+        clips.forEach(function (v) { io.observe(v); });
+    })();
+    </script>
 </body>
 </html>
