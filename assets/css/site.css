@@ -46,11 +46,18 @@ section { padding: clamp(52px, 8vw, 96px) 0; }
 .menu nav a { padding: 13px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 600; }
 .menu nav a:last-child { border-bottom: 0; }
 
+/* Google rating badge and social buttons. Rating read from the Google profile on 2026-10-12. */
+.g-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 14px 8px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); font-size: .92rem; text-decoration: none; }
+.g-badge:hover { border-color: var(--ink); }
+.g-badge strong { font-family: var(--display); font-weight: 800; }
+.logo-g, .logo-ig { width: 20px; height: 20px; flex: none; }
+.stars { color: #f5b400; letter-spacing: 1px; }
+
 /* Page hero */
 .hero { padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(40px, 6vw, 80px); }
 .hero-grid { display: grid; gap: clamp(24px, 4vw, 48px); align-items: center; }
 .hero p.lede { font-size: clamp(1.0625rem, 2.2vw, 1.2rem); max-width: 42ch; margin: 18px 0 26px; }
-.hero-proof { margin-top: 20px; font-size: .9rem; color: var(--muted); }
+.hero-proof { margin-top: 14px; font-size: .9rem; color: var(--muted); }
 .crumbs { font-size: .85rem; color: var(--muted); margin-bottom: 14px; }
 .crumbs a { text-underline-offset: 3px; }
 .stage { min-width: 0; }
